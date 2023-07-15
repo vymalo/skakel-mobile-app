@@ -8,3 +8,7 @@
 - ```bash
   flutter pub run flutter_launcher_icons
   ```
+
+- ```bash
+  flutter packages pub run build_runner build
+  ```

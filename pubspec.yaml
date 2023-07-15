@@ -36,6 +36,16 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   pushy_flutter: ^2.0.16
+  upgrader: ^7.1.0
+  in_app_review: ^2.0.6
+  adaptive_theme: ^3.3.0
+  isar: 3.1.0
+  isar_flutter_libs: 3.1.0
+  auto_route: ^7.7.0
+  flex_color_scheme: ^7.1.2
+  path_provider: ^2.0.15
+  hooks_riverpod: ^2.3.6
+  flutter_hooks: ^0.18.6
 
 dev_dependencies:
   flutter_test:
@@ -49,6 +59,20 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.3.1
+  auto_route_generator: ^7.2.0
+  build_runner: ^2.4.6
+  isar_generator:
+    git:
+      url: https://github.com/Kiruel/isar
+      ref: fix/web_build
+      path: packages/isar_generator
+
+dependency_overrides:
+  isar_generator:
+    git:
+      url: https://github.com/Kiruel/isar
+      ref: fix/web_build
+      path: packages/isar_generator
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
