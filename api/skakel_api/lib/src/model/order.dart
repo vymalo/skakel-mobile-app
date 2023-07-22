@@ -42,7 +42,7 @@ abstract class Order implements Built<Order, OrderBuilder> {
 
   @BuiltValueField(wireName: r'syncStatus')
   SyncStatus? get syncStatus;
-  // enum syncStatusEnum {  Synced,  Created,  Updated,  Deleted,  };
+  // enum syncStatusEnum {  Synced,  Updated,  Deleted,  };
 
   @BuiltValueField(wireName: r'items')
   BuiltList<Product> get items;

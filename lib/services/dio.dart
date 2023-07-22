@@ -1,6 +1,7 @@
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:skakel_mobile/services/dio/shared_dio.dart';
+import 'package:skakel_mobile/utils/logging.dart';
 
 final dioProvider = Provider((ref) {
   final dio = getDio();
@@ -9,7 +10,7 @@ final dioProvider = Provider((ref) {
 
   dio.interceptors.add(RetryInterceptor(
     dio: dio,
-    logPrint: print, // specify log function (optional)
+    logPrint: log.d,
     retries: 3, // retry count (optional)
     retryDelays: const [
       // set delays between retries (optional)

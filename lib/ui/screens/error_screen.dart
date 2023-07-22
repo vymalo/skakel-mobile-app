@@ -15,8 +15,7 @@ class ErrorScreen extends HookWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView(
           children: [
             const Text('App Error'),
             const SizedBox(height: 20),

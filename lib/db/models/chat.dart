@@ -4,7 +4,11 @@ import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/db/models/user.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'chat.g.dart';
+
+@JsonSerializable()
 class Chat with ModelToCompanion<ChatEntityCompanion> implements BaseModel {
   @override
   int id;
@@ -46,4 +50,10 @@ class Chat with ModelToCompanion<ChatEntityCompanion> implements BaseModel {
       name: Value(name),
     );
   }
+
+  // Add this factory method to create an instance from JSON data
+  factory Chat.fromJson(Map<String, dynamic> json) => _$ChatFromJson(json);
+
+  // Add this method to convert the instance to JSON data
+  Map<String, dynamic> toJson() => _$ChatToJson(this);
 }

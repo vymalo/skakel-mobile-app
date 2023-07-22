@@ -40,7 +40,7 @@ abstract class Call implements Built<Call, CallBuilder> {
 
   @BuiltValueField(wireName: r'syncStatus')
   SyncStatus? get syncStatus;
-  // enum syncStatusEnum {  Synced,  Created,  Updated,  Deleted,  };
+  // enum syncStatusEnum {  Synced,  Updated,  Deleted,  };
 
   @BuiltValueField(wireName: r'startTime')
   DateTime get startTime;

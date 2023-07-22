@@ -41,7 +41,7 @@ abstract class ChatMessage implements Built<ChatMessage, ChatMessageBuilder> {
 
   @BuiltValueField(wireName: r'syncStatus')
   SyncStatus? get syncStatus;
-  // enum syncStatusEnum {  Synced,  Created,  Updated,  Deleted,  };
+  // enum syncStatusEnum {  Synced,  Updated,  Deleted,  };
 
   @BuiltValueField(wireName: r'content')
   String get content;

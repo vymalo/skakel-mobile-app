@@ -59,5 +59,3 @@ lib/src/model/user.dart
 lib/src/model/user_settings.dart
 lib/src/serializers.dart
 pubspec.yaml
-test/chat_reaction_test.dart
-test/sync_status_test.dart

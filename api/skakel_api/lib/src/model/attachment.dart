@@ -37,7 +37,7 @@ abstract class Attachment implements Built<Attachment, AttachmentBuilder> {
 
   @BuiltValueField(wireName: r'syncStatus')
   SyncStatus? get syncStatus;
-  // enum syncStatusEnum {  Synced,  Created,  Updated,  Deleted,  };
+  // enum syncStatusEnum {  Synced,  Updated,  Deleted,  };
 
   @BuiltValueField(wireName: r'type')
   String get type;

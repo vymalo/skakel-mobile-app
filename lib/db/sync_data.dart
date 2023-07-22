@@ -35,6 +35,7 @@ class SyncManager {
 }
 
 final syncManagerProvider = Provider<SyncManager>((ref) {
+  log.d('Initializing SyncManager...');
   final repos = ref.watch(allRepoProvider);
   final connectivity = ref.watch(connectivityProvider);
   return SyncManager(repos: repos, connectivity: connectivity);

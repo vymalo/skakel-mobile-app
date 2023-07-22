@@ -1,9 +1,13 @@
 import 'package:drift/drift.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:skakel_mobile/db/base/base_model.dart';
 import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
+part 'chat_member.g.dart';
+
+@JsonSerializable()
 class ChatMember
     with ModelToCompanion<ChatMemberEntityCompanion>
     implements BaseModel {
@@ -48,4 +52,10 @@ class ChatMember
       memberId: Value(memberId),
     );
   }
+
+  // Add this factory method to create an instance from JSON data
+  factory ChatMember.fromJson(Map<String, dynamic> json) => _$ChatMemberFromJson(json);
+
+  // Add this method to convert the instance to JSON data
+  Map<String, dynamic> toJson() => _$ChatMemberToJson(this);
 }

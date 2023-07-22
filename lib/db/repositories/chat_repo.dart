@@ -7,6 +7,7 @@ import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/db/models/chat.dart';
 import 'package:skakel_mobile/db/remote_api.dart';
 import 'package:skakel_mobile/services/connection_status.dart';
+import 'package:skakel_mobile/utils/logging.dart';
 
 class ChatRepo extends AbstractAppRepo<Chat> {
   ChatRepo(
@@ -21,6 +22,7 @@ class ChatRepo extends AbstractAppRepo<Chat> {
 }
 
 final chatRepoProvider = Provider<ChatRepo>((ref) {
+  log.d('Initializing ChatRepo...');
   final db = ref.watch(dbProvider);
   final api = ref.watch(apiProvider);
   final connectionStatus = ref.watch(connectivityProvider);

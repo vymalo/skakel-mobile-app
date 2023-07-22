@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:skakel_mobile/utils/logging.dart';
 
 class ConnectionStatus {
   bool get online => _online;
@@ -17,17 +18,14 @@ class ConnectionStatus {
   }
 
   Future<void> _init() async {
-    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      if (result == ConnectivityResult.none) {
-        _online = false;
-      } else {
-        _online = true;
-      }
-
+    Connectivity().onConnectivityChanged.listen((result) {
+      _online = result == ConnectivityResult.none ? false : true;
       _controller.add(_online);
     });
   }
 }
 
-final connectivityProvider =
-    Provider<ConnectionStatus>((ref) => ConnectionStatus());
+final connectivityProvider = Provider<ConnectionStatus>((ref) {
+  log.d('Initializing ConnectionStatus...');
+  return ConnectionStatus();
+});

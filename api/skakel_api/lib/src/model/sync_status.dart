@@ -13,8 +13,6 @@ class SyncStatus extends EnumClass {
 
   @BuiltValueEnumConst(wireName: r'Synced')
   static const SyncStatus synced = _$synced;
-  @BuiltValueEnumConst(wireName: r'Created')
-  static const SyncStatus created = _$created;
   @BuiltValueEnumConst(wireName: r'Updated')
   static const SyncStatus updated = _$updated;
   @BuiltValueEnumConst(wireName: r'Deleted')

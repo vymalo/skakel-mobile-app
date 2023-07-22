@@ -43,7 +43,7 @@ abstract class PaymentTransaction implements Built<PaymentTransaction, PaymentTr
 
   @BuiltValueField(wireName: r'syncStatus')
   SyncStatus? get syncStatus;
-  // enum syncStatusEnum {  Synced,  Created,  Updated,  Deleted,  };
+  // enum syncStatusEnum {  Synced,  Updated,  Deleted,  };
 
   @BuiltValueField(wireName: r'amount')
   num get amount;

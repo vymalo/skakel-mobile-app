@@ -6,6 +6,7 @@ import 'package:skakel_mobile/services/init_providers.dart';
 import 'package:skakel_mobile/ui/router/router.dart';
 import 'package:skakel_mobile/ui/screens/error_screen.dart';
 import 'package:skakel_mobile/ui/screens/splash_screen.dart';
+import 'package:skakel_mobile/utils/logging.dart';
 
 class MyApp extends HookConsumerWidget {
   const MyApp({
@@ -34,10 +35,13 @@ class MyApp extends HookConsumerWidget {
         builder: (context, child) => initializer.when(
           data: (_) => child!,
           loading: () => const SplashScreen(),
-          error: (error, stacktrace) => ErrorScreen(
+          error: (error, stacktrace) {
+            log.e('Error initializing app:', error, stacktrace);
+            return ErrorScreen(
             error: error,
             stacktrace: stacktrace,
-          ),
+          );
+          },
         ),
       ),
     );

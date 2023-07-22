@@ -36,13 +36,13 @@ abstract class User implements Built<User, UserBuilder> {
 
   @BuiltValueField(wireName: r'syncStatus')
   SyncStatus? get syncStatus;
-  // enum syncStatusEnum {  Synced,  Created,  Updated,  Deleted,  };
+  // enum syncStatusEnum {  Synced,  Updated,  Deleted,  };
 
   @BuiltValueField(wireName: r'username')
   String get username;
 
   @BuiltValueField(wireName: r'phoneNumber')
-  String get phoneNumber;
+  String? get phoneNumber;
 
   @BuiltValueField(wireName: r'profilePicture')
   String? get profilePicture;
@@ -110,11 +110,13 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
       object.username,
       specifiedType: const FullType(String),
     );
-    yield r'phoneNumber';
-    yield serializers.serialize(
-      object.phoneNumber,
-      specifiedType: const FullType(String),
-    );
+    if (object.phoneNumber != null) {
+      yield r'phoneNumber';
+      yield serializers.serialize(
+        object.phoneNumber,
+        specifiedType: const FullType(String),
+      );
+    }
     if (object.profilePicture != null) {
       yield r'profilePicture';
       yield serializers.serialize(

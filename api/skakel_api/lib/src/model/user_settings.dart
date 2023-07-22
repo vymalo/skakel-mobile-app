@@ -41,7 +41,7 @@ abstract class UserSettings implements Built<UserSettings, UserSettingsBuilder> 
 
   @BuiltValueField(wireName: r'syncStatus')
   SyncStatus? get syncStatus;
-  // enum syncStatusEnum {  Synced,  Created,  Updated,  Deleted,  };
+  // enum syncStatusEnum {  Synced,  Updated,  Deleted,  };
 
   @BuiltValueField(wireName: r'user')
   User get user;
