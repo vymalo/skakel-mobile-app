@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pushy_flutter/pushy_flutter.dart';
 import 'package:skakel_mobile/utils/logging.dart';
@@ -44,4 +42,3 @@ void backgroundNotificationListener(Map<String, dynamic> data) async {
 final pushyProvider = Provider((ref) {
   return PushyProvider();
 });
-

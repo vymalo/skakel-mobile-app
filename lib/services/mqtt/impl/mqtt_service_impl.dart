@@ -1,14 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mqtt_client/mqtt_browser_client.dart';
 import 'package:mqtt_client/mqtt_client.dart';
-import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:skakel_mobile/services/auth/auth.dart';
 import 'package:skakel_mobile/services/auth/auth_impl.dart';
+import 'package:skakel_mobile/services/mqtt/impl/client/mqtt_shared_client.dart';
 import 'package:skakel_mobile/services/mqtt/mqtt_service.dart';
 import 'package:skakel_mobile/utils/logging.dart';
 
@@ -28,9 +26,7 @@ class MqttServiceImpl implements MqttService {
     this._authService, {
     required String brokerUrl,
     required String clientId,
-  }) : _client = kIsWeb
-            ? MqttBrowserClient(brokerUrl, clientId)
-            : MqttServerClient(brokerUrl, clientId) {
+  }) : _client = getClient(brokerUrl, clientId) {
     log.d('MqttService initialized!');
   }
 
