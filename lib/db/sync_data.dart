@@ -13,7 +13,7 @@ class SyncManager {
     required this.connectivity,
   });
 
-  Future<void> init() async {
+  void init() async {
     // Subscribe to connectivity changes
     connectivity.stream.listen((online) {
       if (online) {

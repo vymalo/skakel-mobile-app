@@ -3,7 +3,7 @@ import 'package:pushy_flutter/pushy_flutter.dart';
 import 'package:skakel_mobile/utils/logging.dart';
 
 class PushyProvider {
-  Future<void> init() async {
+  void init() async {
     Pushy.listen();
 
     _pushyRegister();
