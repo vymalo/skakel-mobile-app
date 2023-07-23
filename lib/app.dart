@@ -36,8 +36,14 @@ class MyApp extends HookConsumerWidget {
         darkTheme: darkTheme,
         routerConfig: _appRouter.config(),
         builder: (context, child) => initializer.when(
-          data: (_) => child!,
-          loading: () => const SplashScreen(),
+          data: (_) {
+            log.i('App initialized!');
+            return child!;
+          },
+          loading: () {
+            log.d('Initializing app...');
+            return const SplashScreen();
+          },
           error: (error, stacktrace) {
             log.e('Error initializing app:', error, stacktrace);
             return ErrorScreen(

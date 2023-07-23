@@ -51,7 +51,7 @@ String _maxName(String name) {
 void setupLogging() {
   Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
   Logger.root.onRecord.listen((record) {
-    print(_keyMapper[record.level.name]!('${record.time}: \t${_maxName(record.loggerName)} ${record.message}'));
+    print(_keyMapper[record.level.name]!('${record.time}: ${_maxName(record.loggerName)} ${record.message}'));
   });
 }
 
