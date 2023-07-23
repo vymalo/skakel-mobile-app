@@ -130,7 +130,7 @@ abstract class AbstractAppRepo<T extends BaseModel>
       var localItem = await _localRepo.fetchById(remoteItem.id);
 
       if (localItem == null ||
-          remoteItem.updatedAt.isAfter(localItem!.updatedAt) ||
+          remoteItem.updatedAt.isAfter(localItem.updatedAt) ||
           (remoteItem.updatedAt == localItem.updatedAt &&
               remoteItem.version > localItem.version)) {
         try {
@@ -158,7 +158,7 @@ abstract class AbstractAppRepo<T extends BaseModel>
       var remoteItem = await _remoteRepo.fetchById(localItem.id);
 
       if (remoteItem == null ||
-          localItem.updatedAt.isAfter(remoteItem!.updatedAt) ||
+          localItem.updatedAt.isAfter(remoteItem.updatedAt) ||
           (localItem.updatedAt == remoteItem.updatedAt &&
               localItem.version > remoteItem.version)) {
         try {
