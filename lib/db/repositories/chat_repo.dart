@@ -5,8 +5,8 @@ import 'package:skakel_mobile/db/base/abstract_app_repo.dart';
 import 'package:skakel_mobile/db/data_sources/local/chat_local_data_source.dart';
 import 'package:skakel_mobile/db/data_sources/remote/chat_remote_data_source.dart';
 import 'package:skakel_mobile/db/db.dart';
-import 'package:skakel_mobile/db/models/chat.dart';
 import 'package:skakel_mobile/db/remote_api.dart';
+import 'package:skakel_mobile/models/chat.dart';
 import 'package:skakel_mobile/services/connection_status.dart';
 import 'package:skakel_mobile/utils/logging.dart';
 

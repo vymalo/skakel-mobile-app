@@ -3,15 +3,19 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:sentry_dio/sentry_dio.dart';
 import 'package:skakel_mobile/services/dio/shared_dio.dart';
+import 'package:skakel_mobile/utils/env.dart';
 import 'package:skakel_mobile/utils/logging.dart';
 
 final log = Logger('Dio');
 
 final dioProvider = Provider((ref) {
+  // Create a new Dio instance.
   final dio = getDio();
 
-  dio.options.baseUrl = "https://skakel-api.herokuapp.com/";
+  // Set default configs
+  dio.options.baseUrl = Env.apiUrl;
 
+  // Add interceptors
   dio.interceptors.add(RetryInterceptor(
     dio: dio,
     logPrint: log.d,
@@ -24,6 +28,7 @@ final dioProvider = Provider((ref) {
     ],
   ));
 
+  // Add the sentry interceptor
   dio.addSentry();
 
   return dio;

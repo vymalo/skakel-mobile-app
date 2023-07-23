@@ -1,5 +1,6 @@
 import 'package:openapi_generator_annotations/openapi_generator_annotations.dart';
 
+/// This is the configuration for the OpenAPI generator.
 @Openapi(
   additionalProperties: AdditionalProperties(
     pubName: 'skakel_api',

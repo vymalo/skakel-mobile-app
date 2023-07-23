@@ -2,8 +2,10 @@ import 'package:ansicolor/ansicolor.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 
+/// Wrapper for log level.
 typedef Wrapper = String Function(String);
 
+/// Map of log level and wrapper.
 final _keyMapper = <String, Wrapper>{}
   ..putIfAbsent(Level.OFF.name, () {
     final pen = AnsiPen()..gray(level: 0.2);
@@ -41,20 +43,25 @@ final _keyMapper = <String, Wrapper>{}
 /// Returns a string with a maximum length of 20 characters.
 /// Complete with empty spaces if the name is shorter than 20 characters.
 /// Add an ellipsis if the name is longer than 20 characters.
-String _maxName(String name) {
-  if (name.length > 20) {
-    return '${name.substring(0, 17)}...';
+String _maxName(String name, {max = 24}) {
+  if (name.length > max) {
+    return '${name.substring(0, max - 3)}...';
   }
-  return name.padRight(20);
+  return name.padRight(max);
 }
 
+/// Setup logging.
 void setupLogging() {
   Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
   Logger.root.onRecord.listen((record) {
-    print(_keyMapper[record.level.name]!('${record.time}: ${_maxName(record.loggerName)} ${record.message}'));
+    print(_keyMapper[record.level.name]!(
+        '${record.time}: ${_maxName(record.loggerName)} ${record.message}'));
   });
 }
 
+/// Extension for [Logger].
+/// Add a method for each log level.
+/// The method name is the first letter of the log level.
 extension AppLogger on Logger {
   d(Object? message, [Object? error, StackTrace? stackTrace]) {
     config(message, error, stackTrace);

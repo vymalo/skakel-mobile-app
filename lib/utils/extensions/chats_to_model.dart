@@ -1,10 +1,11 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:skakel_api/skakel_api.dart' as api;
 import 'package:skakel_mobile/db/db.dart';
-import 'package:skakel_mobile/db/models/chat.dart';
+import 'package:skakel_mobile/models/chat.dart';
 import 'package:skakel_mobile/utils/extensions/sync_status_mapper.dart';
 import 'package:skakel_mobile/utils/extensions/users_to_model.dart';
 
+/// This extension is used to convert a list of models to a list of api objects.
 extension ModelToApiChat on Chat {
   api.Chat toApi() {
     final apiChat = api.ChatBuilder()
@@ -20,6 +21,7 @@ extension ModelToApiChat on Chat {
   }
 }
 
+/// This extension is used to convert a list of api models to a list of models.
 extension ApiChatsToModel on Iterable<api.Chat> {
   List<Chat> toModel() {
     return map((e) => e.toModel()).toList();

@@ -10,6 +10,7 @@ import 'package:skakel_mobile/utils/logging.dart';
 
 final log = Logger('MqttManager');
 
+/// Manages the MQTT connection and message handlers.
 class MqttManager {
   final MqttService _mqttService;
   final List<MqttMessageHandler> _messageHandlers;

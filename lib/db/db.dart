@@ -5,8 +5,8 @@ import 'package:skakel_mobile/db/entities/chat_entity.dart';
 import 'package:skakel_mobile/db/entities/chat_member_entity.dart';
 import 'package:skakel_mobile/db/entities/chat_message_entity.dart';
 import 'package:skakel_mobile/db/entities/user_entity.dart';
-import 'package:skakel_mobile/db/models/user.dart';
 import 'package:skakel_mobile/db/sqlite_connection/shared_connection.dart';
+import 'package:skakel_mobile/models/user.dart';
 import 'package:tuple/tuple.dart';
 
 import 'base/sync_status.dart';
@@ -15,6 +15,7 @@ part 'db.g.dart';
 
 typedef ExtendedChat = Tuple2<chats, List<users>>;
 
+/// The app database
 @DriftDatabase(tables: [
   ChatEntity,
   UserEntity,

@@ -1,3 +1,4 @@
+/// Interface for MQTT message handlers.
 abstract class MqttMessageHandler {
   /// Provides a list of custom topics the handler supports.
   List<String> get customTopics => [];

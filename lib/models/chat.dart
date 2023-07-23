@@ -1,10 +1,10 @@
 import 'package:drift/drift.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:skakel_mobile/db/base/base_model.dart';
 import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_mobile/db/db.dart';
-import 'package:skakel_mobile/db/models/user.dart';
+import 'package:skakel_mobile/models/user.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 part 'chat.g.dart';
 

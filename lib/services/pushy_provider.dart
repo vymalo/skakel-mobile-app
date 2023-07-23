@@ -6,14 +6,20 @@ import 'package:skakel_mobile/utils/logging.dart';
 final log = Logger('PushyProvider');
 
 class PushyProvider {
+
+  /// This method is used to initialize Pushy.
   void init() async {
+    // Start the Pushy service
     Pushy.listen();
 
+    // Register the user for push notifications
     _pushyRegister();
 
+    // Set the background notification callback handler
     Pushy.setNotificationListener(backgroundNotificationListener);
   }
 
+  /// This method is used to register the user for push notifications.
   Future _pushyRegister() async {
     // Register the user for push notifications
     String deviceToken = await Pushy.register();

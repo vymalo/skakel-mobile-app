@@ -7,6 +7,7 @@ import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_mobile/services/connection_status.dart';
 import 'package:skakel_mobile/utils/logging.dart';
 
+/// Base class for all repositories that need to sync data with a remote server.
 abstract class AbstractAppRepo<T extends BaseModel>
     implements BaseRepo<T>, SyncableRepo<T> {
   final BaseRepo<T> _localRepo;
@@ -124,9 +125,11 @@ abstract class AbstractAppRepo<T extends BaseModel>
 
   /// Syncs from remote to local
   Future<void> _syncFromRemoteToLocal() async {
+    // Fetch all remote items
     var remoteItems = await _remoteRepo.streamAll().first;
 
     for (var remoteItem in remoteItems) {
+      // Fetch the local item
       var localItem = await _localRepo.fetchById(remoteItem.id);
 
       if (localItem == null ||
@@ -150,6 +153,7 @@ abstract class AbstractAppRepo<T extends BaseModel>
 
   /// Syncs from local to remote
   Future<void> _syncFromLocalToRemote() async {
+    // Fetch all local items
     var localItems = await _localRepo.streamAll().first;
     var itemsToSync =
         localItems.where((item) => item.syncStatus != SyncStatus.synced);

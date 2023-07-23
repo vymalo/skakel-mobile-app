@@ -7,6 +7,7 @@ import 'package:skakel_mobile/utils/logging.dart';
 
 final log = Logger('SyncManager');
 
+/// Manages the synchronization of all repositories.
 class SyncManager {
   final List<SyncableRepo> repos;
   final ConnectionStatus connectivity;
@@ -16,6 +17,7 @@ class SyncManager {
     required this.connectivity,
   });
 
+  /// Initializes the sync manager.
   void init() async {
     // Subscribe to connectivity changes
     connectivity.stream.listen((online) {
@@ -26,6 +28,7 @@ class SyncManager {
     });
   }
 
+  /// Syncs all repositories.
   Future<void> syncAll() async {
     for (var repo in repos) {
       try {

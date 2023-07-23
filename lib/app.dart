@@ -11,6 +11,7 @@ import 'package:skakel_mobile/utils/logging.dart';
 
 final log = Logger('MyApp');
 
+/// The main entry point for the application.
 class MyApp extends HookConsumerWidget {
   const MyApp({
     super.key,
@@ -26,6 +27,10 @@ class MyApp extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     final initializer = ref.watch(initProvider);
 
+    /// The [AdaptiveTheme] widget is used to provide the app with adaptive
+    /// theme support. It is used to provide the app with a light and dark
+    /// theme, and to provide the app with a theme mode that is either
+    /// light, dark or system.
     return AdaptiveTheme(
       debugShowFloatingThemeButton: true,
       light: FlexThemeData.light(scheme: FlexScheme.mango),

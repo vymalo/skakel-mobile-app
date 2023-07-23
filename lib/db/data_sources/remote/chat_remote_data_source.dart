@@ -1,7 +1,7 @@
 import 'package:logging/logging.dart';
 import 'package:skakel_api/skakel_api.dart' as api;
 import 'package:skakel_mobile/db/base/base_repo.dart';
-import 'package:skakel_mobile/db/models/chat.dart';
+import 'package:skakel_mobile/models/chat.dart';
 import 'package:skakel_mobile/utils/extensions/chats_to_model.dart';
 import 'package:skakel_mobile/utils/logging.dart';
 

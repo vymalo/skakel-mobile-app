@@ -1,6 +1,6 @@
 import 'package:skakel_mobile/db/base/base_repo.dart';
 import 'package:skakel_mobile/db/db.dart';
-import 'package:skakel_mobile/db/models/chat.dart';
+import 'package:skakel_mobile/models/chat.dart';
 import 'package:skakel_mobile/utils/extensions/chats_to_model.dart';
 
 class ChatLocalDataSource extends BaseRepo<Chat> {

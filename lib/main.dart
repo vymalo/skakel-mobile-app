@@ -8,6 +8,7 @@ import 'package:skakel_mobile/ui/router/router.dart';
 import 'package:skakel_mobile/utils/env.dart';
 import 'package:skakel_mobile/utils/logging.dart';
 
+/// The main entry point for the application.
 void main() async {
   setupLogging();
 

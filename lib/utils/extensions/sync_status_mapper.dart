@@ -1,6 +1,7 @@
 import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_api/skakel_api.dart' as api;
 
+/// This extension is used to convert a SyncStatus to an api SyncStatus.
 extension SyncStatusToApi on SyncStatus {
   api.SyncStatus toApi() {
     switch (this) {
@@ -16,6 +17,7 @@ extension SyncStatusToApi on SyncStatus {
   }
 }
 
+/// This extension is used to convert an api SyncStatus to a SyncStatus.
 extension ApiToSyncStatus on api.SyncStatus {
   SyncStatus toModel() {
     switch (this) {
