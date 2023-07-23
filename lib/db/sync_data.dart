@@ -1,8 +1,11 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'package:skakel_mobile/db/base/base_repo.dart';
 import 'package:skakel_mobile/db/repositories/shared.dart';
 import 'package:skakel_mobile/services/connection_status.dart';
 import 'package:skakel_mobile/utils/logging.dart';
+
+final log = Logger('SyncManager');
 
 class SyncManager {
   final List<SyncableRepo> repos;

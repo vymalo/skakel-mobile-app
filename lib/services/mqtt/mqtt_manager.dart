@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'package:skakel_mobile/services/connection_status.dart';
 import 'package:skakel_mobile/services/mqtt/impl/chat_mqtt_message_handler.dart';
 import 'package:skakel_mobile/services/mqtt/impl/logging_mqtt_message_handler.dart';
@@ -6,6 +7,8 @@ import 'package:skakel_mobile/services/mqtt/impl/mqtt_service_impl.dart';
 import 'package:skakel_mobile/services/mqtt/mqtt_message_handler.dart';
 import 'package:skakel_mobile/services/mqtt/mqtt_service.dart';
 import 'package:skakel_mobile/utils/logging.dart';
+
+final log = Logger('MqttManager');
 
 class MqttManager {
   final MqttService _mqttService;

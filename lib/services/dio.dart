@@ -1,7 +1,11 @@
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logging/logging.dart';
+import 'package:sentry_dio/sentry_dio.dart';
 import 'package:skakel_mobile/services/dio/shared_dio.dart';
 import 'package:skakel_mobile/utils/logging.dart';
+
+final log = Logger('Dio');
 
 final dioProvider = Provider((ref) {
   final dio = getDio();
@@ -19,6 +23,8 @@ final dioProvider = Provider((ref) {
       Duration(seconds: 3), // wait 3 sec before third retry
     ],
   ));
+
+  dio.addSentry();
 
   return dio;
 });

@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'package:skakel_mobile/utils/logging.dart';
+
+final log = Logger('ConnectionStatus');
 
 class ConnectionStatus {
   bool get online => _online;

@@ -1,14 +1,17 @@
 import 'dart:async';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:skakel_mobile/services/auth/auth.dart';
 import 'package:skakel_mobile/services/auth/auth_impl.dart';
 import 'package:skakel_mobile/services/mqtt/impl/client/mqtt_shared_client.dart';
 import 'package:skakel_mobile/services/mqtt/mqtt_service.dart';
+import 'package:skakel_mobile/utils/env.dart';
 import 'package:skakel_mobile/utils/logging.dart';
+
+final log = Logger('MqttServiceImpl');
 
 class MqttServiceImpl implements MqttService {
   final AuthService _authService;
@@ -140,7 +143,7 @@ final mqttServiceProvider = Provider<MqttService>((ref) {
   final authService = ref.watch(authServiceProvider);
   return MqttServiceImpl(
     authService,
-    brokerUrl: dotenv.env['BROKER_URL']!,
-    clientId: dotenv.env['BROKER_CLIENT_ID']!,
+    brokerUrl: Env.brokerUrl,
+    clientId: Env.brokerClientId,
   );
 });

@@ -1,6 +1,9 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'package:pushy_flutter/pushy_flutter.dart';
 import 'package:skakel_mobile/utils/logging.dart';
+
+final log = Logger('PushyProvider');
 
 class PushyProvider {
   void init() async {

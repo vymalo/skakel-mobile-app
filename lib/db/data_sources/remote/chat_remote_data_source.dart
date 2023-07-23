@@ -1,8 +1,11 @@
+import 'package:logging/logging.dart';
 import 'package:skakel_api/skakel_api.dart' as api;
 import 'package:skakel_mobile/db/base/base_repo.dart';
 import 'package:skakel_mobile/db/models/chat.dart';
 import 'package:skakel_mobile/utils/extensions/chats_to_model.dart';
 import 'package:skakel_mobile/utils/logging.dart';
+
+final log = Logger('ChatRemoteDataSource');
 
 class ChatRemoteDataSource extends BaseRepo<Chat> {
   final api.ChatApi _chatApi;
@@ -18,7 +21,7 @@ class ChatRemoteDataSource extends BaseRepo<Chat> {
   Stream<Chat> getById(int id) async* {
     final data = await fetchById(id);
     if (data == null) {
-      log.d('ChatRemoteDataSource.getById: data is null');
+      log.d('Data is null');
       return;
     }
 
@@ -41,7 +44,7 @@ class ChatRemoteDataSource extends BaseRepo<Chat> {
     final response = await _chatApi.getAllChats();
     final data = response.data;
     if (data == null) {
-      log.d('ChatRemoteDataSource.streamAll: data is null');
+      log.d('Data is null');
       return;
     }
 

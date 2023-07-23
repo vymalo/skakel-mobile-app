@@ -1,5 +1,8 @@
+import 'package:logging/logging.dart';
 import 'package:skakel_mobile/services/mqtt/mqtt_message_handler.dart';
 import 'package:skakel_mobile/utils/logging.dart';
+
+final log = Logger('LoggingMqttMessageHandler');
 
 /// A [MqttMessageHandler] that logs all messages received on any topic
 class LoggingMqttMessageHandler extends MqttMessageHandler {
