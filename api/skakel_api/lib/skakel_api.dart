@@ -24,6 +24,7 @@ export 'package:skakel_api/src/model/call.dart';
 export 'package:skakel_api/src/model/chat.dart';
 export 'package:skakel_api/src/model/chat_message.dart';
 export 'package:skakel_api/src/model/chat_reaction.dart';
+export 'package:skakel_api/src/model/chat_type.dart';
 export 'package:skakel_api/src/model/order.dart';
 export 'package:skakel_api/src/model/order_info.dart';
 export 'package:skakel_api/src/model/payment_info.dart';

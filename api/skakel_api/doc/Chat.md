@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **syncStatus** | [**SyncStatus**](SyncStatus.md) |  | [optional] 
 **name** | **String** |  | 
 **members** | [**BuiltList&lt;User&gt;**](User.md) |  | 
-**callType** | **String** |  | [optional] 
+**chatType** | [**ChatType**](ChatType.md) |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -6,6 +6,7 @@ import 'package:skakel_mobile/db/entities/chat_member_entity.dart';
 import 'package:skakel_mobile/db/entities/chat_message_entity.dart';
 import 'package:skakel_mobile/db/entities/user_entity.dart';
 import 'package:skakel_mobile/db/sqlite_connection/shared_connection.dart';
+import 'package:skakel_mobile/models/chat_type.dart';
 import 'package:skakel_mobile/models/user.dart';
 import 'package:tuple/tuple.dart';
 

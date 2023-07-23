@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:skakel_api/skakel_api.dart' as api;
 import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/models/chat.dart';
+import 'package:skakel_mobile/utils/extensions/chat_type_mapper.dart';
 import 'package:skakel_mobile/utils/extensions/sync_status_mapper.dart';
 import 'package:skakel_mobile/utils/extensions/users_to_model.dart';
 
@@ -31,14 +32,14 @@ extension ApiChatsToModel on Iterable<api.Chat> {
 extension ApiChatToModel on api.Chat {
   Chat toModel() {
     return Chat(
-      id: id!,
-      createdAt: createdAt!,
-      updatedAt: updatedAt!,
-      syncStatus: syncStatus!.toModel(),
-      version: version!,
-      name: name,
-      members: members.toModel(),
-    );
+        id: id!,
+        createdAt: createdAt!,
+        updatedAt: updatedAt!,
+        syncStatus: syncStatus!.toModel(),
+        version: version!,
+        name: name,
+        members: members.toModel(),
+        chatType: chatType.toModel());
   }
 }
 
@@ -78,6 +79,7 @@ extension ChatToModel on ExtendedChat {
       version: chat.version,
       name: chat.name,
       members: members.toModel(),
+      chatType: chat.chatType,
     );
   }
 }

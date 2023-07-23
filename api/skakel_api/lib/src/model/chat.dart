@@ -6,6 +6,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:skakel_api/src/model/user.dart';
 import 'package:skakel_api/src/model/sync_status.dart';
+import 'package:skakel_api/src/model/chat_type.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -21,7 +22,7 @@ part 'chat.g.dart';
 /// * [syncStatus] 
 /// * [name] 
 /// * [members] 
-/// * [callType] 
+/// * [chatType] 
 @BuiltValue()
 abstract class Chat implements Built<Chat, ChatBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -46,9 +47,9 @@ abstract class Chat implements Built<Chat, ChatBuilder> {
   @BuiltValueField(wireName: r'members')
   BuiltList<User> get members;
 
-  @BuiltValueField(wireName: r'callType')
-  ChatCallTypeEnum? get callType;
-  // enum callTypeEnum {  Simple,  Group,  };
+  @BuiltValueField(wireName: r'chatType')
+  ChatType get chatType;
+  // enum chatTypeEnum {  Simple,  Group,  };
 
   Chat._();
 
@@ -118,13 +119,11 @@ class _$ChatSerializer implements PrimitiveSerializer<Chat> {
       object.members,
       specifiedType: const FullType(BuiltList, [FullType(User)]),
     );
-    if (object.callType != null) {
-      yield r'callType';
-      yield serializers.serialize(
-        object.callType,
-        specifiedType: const FullType(ChatCallTypeEnum),
-      );
-    }
+    yield r'chatType';
+    yield serializers.serialize(
+      object.chatType,
+      specifiedType: const FullType(ChatType),
+    );
   }
 
   @override
@@ -197,12 +196,12 @@ class _$ChatSerializer implements PrimitiveSerializer<Chat> {
           ) as BuiltList<User>;
           result.members.replace(valueDes);
           break;
-        case r'callType':
+        case r'chatType':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(ChatCallTypeEnum),
-          ) as ChatCallTypeEnum;
-          result.callType = valueDes;
+            specifiedType: const FullType(ChatType),
+          ) as ChatType;
+          result.chatType = valueDes;
           break;
         default:
           unhandled.add(key);
@@ -231,20 +230,5 @@ class _$ChatSerializer implements PrimitiveSerializer<Chat> {
     );
     return result.build();
   }
-}
-
-class ChatCallTypeEnum extends EnumClass {
-
-  @BuiltValueEnumConst(wireName: r'Simple')
-  static const ChatCallTypeEnum simple = _$chatCallTypeEnum_simple;
-  @BuiltValueEnumConst(wireName: r'Group')
-  static const ChatCallTypeEnum group = _$chatCallTypeEnum_group;
-
-  static Serializer<ChatCallTypeEnum> get serializer => _$chatCallTypeEnumSerializer;
-
-  const ChatCallTypeEnum._(String name): super(name);
-
-  static BuiltSet<ChatCallTypeEnum> get values => _$chatCallTypeEnumValues;
-  static ChatCallTypeEnum valueOf(String name) => _$chatCallTypeEnumValueOf(name);
 }
 

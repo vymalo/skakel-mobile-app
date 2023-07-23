@@ -10,6 +10,7 @@ doc/ChatApi.md
 doc/ChatMessage.md
 doc/ChatMessageApi.md
 doc/ChatReaction.md
+doc/ChatType.md
 doc/Order.md
 doc/OrderApi.md
 doc/OrderInfo.md
@@ -47,6 +48,7 @@ lib/src/model/call.dart
 lib/src/model/chat.dart
 lib/src/model/chat_message.dart
 lib/src/model/chat_reaction.dart
+lib/src/model/chat_type.dart
 lib/src/model/date.dart
 lib/src/model/order.dart
 lib/src/model/order_info.dart

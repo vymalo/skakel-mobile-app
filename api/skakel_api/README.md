@@ -118,6 +118,7 @@ Class | Method | HTTP request | Description
  - [Chat](doc/Chat.md)
  - [ChatMessage](doc/ChatMessage.md)
  - [ChatReaction](doc/ChatReaction.md)
+ - [ChatType](doc/ChatType.md)
  - [Order](doc/Order.md)
  - [OrderInfo](doc/OrderInfo.md)
  - [PaymentInfo](doc/PaymentInfo.md)

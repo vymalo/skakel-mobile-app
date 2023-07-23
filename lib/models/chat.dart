@@ -3,6 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:skakel_mobile/db/base/base_model.dart';
 import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_mobile/db/db.dart';
+import 'package:skakel_mobile/models/chat_type.dart';
 import 'package:skakel_mobile/models/user.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
@@ -29,6 +30,8 @@ class Chat with ModelToCompanion<ChatEntityCompanion> implements BaseModel {
 
   List<User> members;
 
+  ChatType chatType;
+
   Chat({
     required this.id,
     required this.version,
@@ -36,6 +39,7 @@ class Chat with ModelToCompanion<ChatEntityCompanion> implements BaseModel {
     required this.updatedAt,
     required this.syncStatus,
     required this.members,
+    required this.chatType,
     this.name,
   });
 
@@ -48,6 +52,7 @@ class Chat with ModelToCompanion<ChatEntityCompanion> implements BaseModel {
       updatedAt: Value(updatedAt),
       syncStatus: Value(syncStatus),
       name: Value(name),
+      chatType: Value(chatType),
     );
   }
 

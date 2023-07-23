@@ -1181,14 +1181,17 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/User"
-        callType:
-          type: string
-          enum:
-            - Simple
-            - Group
+        chatType:
+          $ref: "#/components/schemas/ChatType"
       required:
         - name
         - members
+        - chatType
+    ChatType:
+      type: string
+      enum:
+        - Simple
+        - Group
     ChatMessage:
       type: object
       properties:

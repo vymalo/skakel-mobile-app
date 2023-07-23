@@ -19,6 +19,7 @@ import 'package:skakel_api/src/model/call.dart';
 import 'package:skakel_api/src/model/chat.dart';
 import 'package:skakel_api/src/model/chat_message.dart';
 import 'package:skakel_api/src/model/chat_reaction.dart';
+import 'package:skakel_api/src/model/chat_type.dart';
 import 'package:skakel_api/src/model/order.dart';
 import 'package:skakel_api/src/model/order_info.dart';
 import 'package:skakel_api/src/model/payment_info.dart';
@@ -37,6 +38,7 @@ part 'serializers.g.dart';
   Chat,
   ChatMessage,
   ChatReaction,
+  ChatType,
   Order,
   OrderInfo,
   PaymentInfo,
