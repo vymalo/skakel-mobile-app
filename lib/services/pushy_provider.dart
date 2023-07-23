@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:pushy_flutter/pushy_flutter.dart';
+import 'package:skakel_mobile/utils/env.dart';
 import 'package:skakel_mobile/utils/logging.dart';
 
 final log = Logger('PushyProvider');
@@ -11,6 +13,11 @@ class PushyProvider {
   void init() async {
     // Start the Pushy service
     Pushy.listen();
+
+    if (kIsWeb) {
+      // Set Pushy App ID (required for Web Push)
+      Pushy.setAppId(Env.pusherWebAppId);
+    }
 
     // Register the user for push notifications
     _pushyRegister();

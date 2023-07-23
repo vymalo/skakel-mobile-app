@@ -20,4 +20,8 @@ abstract class Env {
   /// This is the API URL.
   @EnviedField(varName: 'API_URL')
   static const String apiUrl = _Env.apiUrl;
+
+  /// This is the API URL.
+  @EnviedField(varName: 'PUSHER_WEB_APP_ID')
+  static const String pusherWebAppId = _Env.pusherWebAppId;
 }

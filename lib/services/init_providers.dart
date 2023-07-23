@@ -14,7 +14,7 @@ final initProvider = FutureProvider((ref) async {
   ref.watch(connectivityProvider).init();
   ref.watch(syncManagerProvider).init();
   ref.watch(mqttManagerProvider).init();
-  if (!kIsWeb) ref.watch(pushyProvider).init();
+  ref.watch(pushyProvider).init();
   log.i('Providers initialized!');
   return true;
 });
