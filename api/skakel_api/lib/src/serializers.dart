@@ -15,6 +15,7 @@ import 'package:skakel_api/src/date_serializer.dart';
 import 'package:skakel_api/src/model/date.dart';
 
 import 'package:skakel_api/src/model/attachment.dart';
+import 'package:skakel_api/src/model/attachment_type.dart';
 import 'package:skakel_api/src/model/call.dart';
 import 'package:skakel_api/src/model/chat.dart';
 import 'package:skakel_api/src/model/chat_message.dart';
@@ -34,6 +35,7 @@ part 'serializers.g.dart';
 
 @SerializersFor([
   Attachment,
+  AttachmentType,
   Call,
   Chat,
   ChatMessage,

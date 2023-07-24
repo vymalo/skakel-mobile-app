@@ -4,6 +4,7 @@
 
 // ignore_for_file: unused_element
 import 'package:skakel_api/src/model/sync_status.dart';
+import 'package:skakel_api/src/model/attachment_type.dart';
 import 'package:skakel_api/src/model/chat_message.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -18,7 +19,7 @@ part 'attachment.g.dart';
 /// * [updatedAt] 
 /// * [version] 
 /// * [syncStatus] 
-/// * [type] 
+/// * [attachmentType] 
 /// * [url] 
 /// * [message] 
 @BuiltValue()
@@ -39,8 +40,9 @@ abstract class Attachment implements Built<Attachment, AttachmentBuilder> {
   SyncStatus? get syncStatus;
   // enum syncStatusEnum {  Synced,  Updated,  Deleted,  };
 
-  @BuiltValueField(wireName: r'type')
-  String get type;
+  @BuiltValueField(wireName: r'attachmentType')
+  AttachmentType? get attachmentType;
+  // enum attachmentTypeEnum {  Image,  Video,  Audio,  Document,  };
 
   @BuiltValueField(wireName: r'url')
   String get url;
@@ -106,11 +108,13 @@ class _$AttachmentSerializer implements PrimitiveSerializer<Attachment> {
         specifiedType: const FullType(SyncStatus),
       );
     }
-    yield r'type';
-    yield serializers.serialize(
-      object.type,
-      specifiedType: const FullType(String),
-    );
+    if (object.attachmentType != null) {
+      yield r'attachmentType';
+      yield serializers.serialize(
+        object.attachmentType,
+        specifiedType: const FullType(AttachmentType),
+      );
+    }
     yield r'url';
     yield serializers.serialize(
       object.url,
@@ -179,12 +183,12 @@ class _$AttachmentSerializer implements PrimitiveSerializer<Attachment> {
           ) as SyncStatus;
           result.syncStatus = valueDes;
           break;
-        case r'type':
+        case r'attachmentType':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.type = valueDes;
+            specifiedType: const FullType(AttachmentType),
+          ) as AttachmentType;
+          result.attachmentType = valueDes;
           break;
         case r'url':
           final valueDes = serializers.deserialize(

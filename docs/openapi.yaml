@@ -742,7 +742,7 @@ paths:
           schema:
             type: integer
             format: int64
-        - name: type
+        - name: attachmentType
           in: query
           description: Type of attachments (e.g., image, document, video)
           required: false
@@ -1273,8 +1273,8 @@ components:
           type: integer
         syncStatus:
           $ref: "#/components/schemas/SyncStatus"
-        type:
-          type: string
+        attachmentType:
+          $ref: "#/components/schemas/AttachmentType"
         url:
           type: string
         message:
@@ -1283,6 +1283,13 @@ components:
         - type
         - url
         - message
+    AttachmentType:
+      type: string
+      enum:
+        - Image
+        - Video
+        - Audio
+        - Document
     PaymentTransaction:
       type: object
       properties:

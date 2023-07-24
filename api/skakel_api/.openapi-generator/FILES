@@ -3,6 +3,7 @@ README.md
 analysis_options.yaml
 doc/Attachment.md
 doc/AttachmentApi.md
+doc/AttachmentType.md
 doc/Call.md
 doc/CallApi.md
 doc/Chat.md
@@ -44,6 +45,7 @@ lib/src/auth/bearer_auth.dart
 lib/src/auth/oauth.dart
 lib/src/date_serializer.dart
 lib/src/model/attachment.dart
+lib/src/model/attachment_type.dart
 lib/src/model/call.dart
 lib/src/model/chat.dart
 lib/src/model/chat_message.dart
@@ -61,3 +63,4 @@ lib/src/model/user.dart
 lib/src/model/user_settings.dart
 lib/src/serializers.dart
 pubspec.yaml
+test/attachment_type_test.dart

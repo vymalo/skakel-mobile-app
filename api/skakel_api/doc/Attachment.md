@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **updatedAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **version** | **int** |  | [optional] 
 **syncStatus** | [**SyncStatus**](SyncStatus.md) |  | [optional] 
-**type** | **String** |  | 
+**attachmentType** | [**AttachmentType**](AttachmentType.md) |  | [optional] 
 **url** | **String** |  | 
 **message** | [**ChatMessage**](ChatMessage.md) |  | 
 

@@ -158,7 +158,7 @@ class AttachmentApi {
   /// Parameters:
   /// * [chatId] - ID of the chat associated with the attachments
   /// * [userId] - ID of the user associated with the attachments
-  /// * [type] - Type of attachments (e.g., image, document, video)
+  /// * [attachmentType] - Type of attachments (e.g., image, document, video)
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -171,7 +171,7 @@ class AttachmentApi {
   Future<Response<BuiltList<Attachment>>> getAttachmentsByQuery({ 
     int? chatId,
     int? userId,
-    String? type,
+    String? attachmentType,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -201,7 +201,7 @@ class AttachmentApi {
     final _queryParameters = <String, dynamic>{
       if (chatId != null) r'chatId': encodeQueryParameter(_serializers, chatId, const FullType(int)),
       if (userId != null) r'userId': encodeQueryParameter(_serializers, userId, const FullType(int)),
-      if (type != null) r'type': encodeQueryParameter(_serializers, type, const FullType(String)),
+      if (attachmentType != null) r'attachmentType': encodeQueryParameter(_serializers, attachmentType, const FullType(String)),
     };
 
     final _response = await _dio.request<Object>(

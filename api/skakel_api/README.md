@@ -114,6 +114,7 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [Attachment](doc/Attachment.md)
+ - [AttachmentType](doc/AttachmentType.md)
  - [Call](doc/Call.md)
  - [Chat](doc/Chat.md)
  - [ChatMessage](doc/ChatMessage.md)

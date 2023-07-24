@@ -103,7 +103,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getAttachmentsByQuery**
-> BuiltList<Attachment> getAttachmentsByQuery(chatId, userId, type)
+> BuiltList<Attachment> getAttachmentsByQuery(chatId, userId, attachmentType)
 
 Get attachments by query parameters
 
@@ -117,10 +117,10 @@ import 'package:skakel_api/api.dart';
 final api = SkakelApi().getAttachmentApi();
 final int chatId = 789; // int | ID of the chat associated with the attachments
 final int userId = 789; // int | ID of the user associated with the attachments
-final String type = type_example; // String | Type of attachments (e.g., image, document, video)
+final String attachmentType = attachmentType_example; // String | Type of attachments (e.g., image, document, video)
 
 try {
-    final response = api.getAttachmentsByQuery(chatId, userId, type);
+    final response = api.getAttachmentsByQuery(chatId, userId, attachmentType);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling AttachmentApi->getAttachmentsByQuery: $e\n');
@@ -133,7 +133,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **chatId** | **int**| ID of the chat associated with the attachments | [optional] 
  **userId** | **int**| ID of the user associated with the attachments | [optional] 
- **type** | **String**| Type of attachments (e.g., image, document, video) | [optional] 
+ **attachmentType** | **String**| Type of attachments (e.g., image, document, video) | [optional] 
 
 ### Return type
 

@@ -20,6 +20,7 @@ export 'package:skakel_api/src/api/user_api.dart';
 export 'package:skakel_api/src/api/user_settings_api.dart';
 
 export 'package:skakel_api/src/model/attachment.dart';
+export 'package:skakel_api/src/model/attachment_type.dart';
 export 'package:skakel_api/src/model/call.dart';
 export 'package:skakel_api/src/model/chat.dart';
 export 'package:skakel_api/src/model/chat_message.dart';
