@@ -5,8 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:skakel_mobile/services/auth/auth.dart';
-import 'package:skakel_mobile/services/auth/auth_impl.dart';
 import 'package:skakel_mobile/services/mqtt/impl/client/mqtt_shared_client.dart';
 import 'package:skakel_mobile/services/mqtt/mqtt_service.dart';
 import 'package:skakel_mobile/utils/env.dart';
@@ -15,7 +13,6 @@ import 'package:skakel_mobile/utils/logging.dart';
 final log = Logger('MqttServiceImpl');
 
 class MqttServiceImpl implements MqttService {
-  final AuthService _authService;
   final MqttClient _client;
   StreamSubscription<List<MqttReceivedMessage<MqttMessage>>>?
       _messageSubscription;
@@ -26,7 +23,7 @@ class MqttServiceImpl implements MqttService {
   final BehaviorSubject<bool> _connectedController =
       BehaviorSubject<bool>.seeded(false);
 
-  MqttServiceImpl(this._authService) : _client = getClient() {
+  MqttServiceImpl() : _client = getClient() {
     log.d('MqttService initialized!');
     _client.logging(on: !kReleaseMode);
     _client.keepAlivePeriod = 30;
@@ -51,21 +48,8 @@ class MqttServiceImpl implements MqttService {
   Future<void> connect() async {
     log.d('Connecting to MQTT broker...');
 
-    // TODO: Check if the token comes really before connecting
-    // _client.onAutoReconnect = () async {
-    //   log.d('Reconnecting to MQTT broker...');
-    //   // final token = await _authService.getToken();
-    //   _client.connectionMessage?.authenticateAs(
-    //     Env.brokerUsername,
-    //     Env.brokerPassword,
-    //   );
-    // };
-
     try {
       _client.autoReconnect = true;
-
-      log.d('Getting token...');
-      // final token = await _authService.getToken();
 
       log.d('Actual connection...');
       await _client.connect(
@@ -146,6 +130,5 @@ class MqttServiceImpl implements MqttService {
 
 final mqttServiceProvider = Provider<MqttService>((ref) {
   log.d('Initializing MqttService...');
-  final authService = ref.watch(authServiceProvider.notifier);
-  return MqttServiceImpl(authService);
+  return MqttServiceImpl();
 });
