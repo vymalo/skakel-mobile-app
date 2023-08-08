@@ -5,7 +5,6 @@ import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/models/chat_member.dart';
 import 'package:skakel_mobile/models/chat_type.dart';
-import 'package:skakel_mobile/models/user.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
 part 'chat.g.dart';
