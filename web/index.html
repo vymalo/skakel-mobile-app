@@ -126,6 +126,14 @@
         }
       });
     });
+
+    window.addEventListener('load', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      if (code) {
+        window.opener.postMessage(window.location.href, window.location.origin);
+      }
+    });
   </script>
 
 

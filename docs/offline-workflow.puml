@@ -1,0 +1,65 @@
+@startuml
+
+!define Color_White_OrangeOrange #FFF3E5
+!define Color_OrangeOrange_White #E67E22
+
+skinparam class {
+  BackgroundColor Color_White_OrangeOrange
+  BorderColor Black
+  ArrowColor Color_OrangeOrange_White
+}
+
+interface BaseRepo<E> {
+    + save(e: E): Future<E>
+    + delete(e: E): Future<void>
+    + getById(id: ID): Future<void>
+    + fetchById(id: ID): Future<E | Null>
+    + streamAll(query: Map<String, dynamic> | Null): Stream<List<E>>
+}
+
+package Offline <<Database>> {
+    class ChatLocalRepository implements .BaseRepo {
+        + db: Drift
+    }
+
+    ChatLocalRepository --|> SQLite: Drift
+}
+
+package Remote <<Cloud>> {
+    class ChatRemoteRepository implements .BaseRepo {
+        + dio: Dio
+    }
+
+    ChatRemoteRepository --|> Backend: Dio
+}
+
+
+package Service <<Frame>> {
+    class ChatRepo implements .BaseRepo {
+        + local: ChatLocalRepository
+        + remote: ChatRemoteRepository
+        + connectionWatcher: ConnectionWatcher
+        + sync(): Future<void>
+    }
+
+    class ConnectionWatcher {
+        + isConnected: bool
+    }
+
+    ConnectionWatcher --|> ChatRepo
+
+    ChatRepo --|> ChatLocalRepository: Sync with local
+    ChatRepo --|> ChatRemoteRepository: Push to remote
+
+}
+
+package UI <<Frame>> {
+    class ChatScreen {
+        + repo: ChatRepo
+    }
+
+    ChatScreen --|> ChatRepo: Interact with service repo
+}
+
+
+@enduml

@@ -22,15 +22,12 @@ void main() async {
     },
     appRunner: () async {
       WidgetsFlutterBinding.ensureInitialized();
-
       final savedThemeMode = await AdaptiveTheme.getThemeMode();
-      final appRouter = AppRouter();
 
       runApp(
         ProviderScope(
           child: SentryScreenshotWidget(
             child: MyApp(
-              appRouter: appRouter,
               savedThemeMode: savedThemeMode,
             ),
           ),

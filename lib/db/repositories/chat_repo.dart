@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logging/logging.dart';
-import 'package:skakel_api/skakel_api.dart' as api;
+import 'package:skakel_api/skakel_api.dart' show SkakelApi;
 import 'package:skakel_mobile/db/base/abstract_app_repo.dart';
 import 'package:skakel_mobile/db/data_sources/local/chat_local_data_source.dart';
 import 'package:skakel_mobile/db/data_sources/remote/chat_remote_data_source.dart';
@@ -15,13 +15,15 @@ final log = Logger('ChatRepo');
 class ChatRepo extends AbstractAppRepo<Chat> {
   ChatRepo(
     AppDatabase db,
-    api.SkakelApi skakelApi,
+    SkakelApi skakelApi,
     ConnectionStatus connectionStatus,
   ) : super(
           ChatLocalDataSource(db),
           ChatRemoteDataSource(skakelApi.getChatApi()),
           connectionStatus,
-        );
+        ) {
+    log.d('ChatRepo initialized!');
+  }
 }
 
 final chatRepoProvider = Provider<ChatRepo>((ref) {

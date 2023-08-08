@@ -14,46 +14,68 @@ class ChatRemoteDataSource extends BaseRepo<Chat> {
 
   @override
   Future<void> delete(Chat entity) async {
-    await _chatApi.deleteChat(id: entity.id);
+    try {
+      await _chatApi.deleteChat(id: entity.id);
+    } catch (e, s) {
+      log.e('Error deleting chat:', e, s);
+    }
   }
 
   @override
   Stream<Chat> getById(int id) async* {
-    final data = await fetchById(id);
-    if (data == null) {
-      log.d('Data is null');
-      return;
-    }
+    try {
+      final data = await fetchById(id);
+      if (data == null) {
+        log.d('Data is null');
+        return;
+      }
 
-    yield data;
+      yield data;
+    } catch (e, s) {
+      log.e('Error getting chat by id:', e, s);
+    }
   }
 
   @override
   Future<Chat> save(Chat entity) async {
-    final response = await _chatApi.createChat(chat: entity.toApi());
-    final data = response.data;
-    if (data == null) {
-      throw Exception('ChatRemoteDataSource.getById: data is null');
-    }
+    try {
+      final response = await _chatApi.createChat(chat: entity.toApi());
+      final data = response.data;
+      if (data == null) {
+        throw Exception('ChatRemoteDataSource.getById: data is null');
+      }
 
-    return data.toModel();
+      return data.toModel();
+    } catch (e, s) {
+      log.e('Error saving chat:', e, s);
+      rethrow;
+    }
   }
 
   @override
   Stream<List<Chat>> streamAll({Map<String, dynamic>? query}) async* {
-    final response = await _chatApi.getAllChats();
-    final data = response.data;
-    if (data == null) {
-      log.d('Data is null');
-      return;
-    }
+    try {
+      final response = await _chatApi.getAllChats();
+      final data = response.data;
+      if (data == null) {
+        log.d('Data is null');
+        return;
+      }
 
-    yield data.toModel();
+      yield data.toModel();
+    } catch (e, s) {
+      log.e('Error streaming all chats:', e, s);
+    }
   }
 
   @override
   Future<Chat?> fetchById(int id) async {
-    final response = await _chatApi.getChatById(id: id);
-    return response.data?.toModel();
+    try {
+      final response = await _chatApi.getChatById(id: id);
+      return response.data?.toModel();
+    } catch (e, s) {
+      log.e('Error fetching chat by id:', e, s);
+      return null;
+    }
   }
 }

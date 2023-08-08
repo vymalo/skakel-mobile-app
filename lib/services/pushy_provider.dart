@@ -16,7 +16,7 @@ class PushyProvider {
 
     if (kIsWeb) {
       // Set Pushy App ID (required for Web Push)
-      Pushy.setAppId(Env.pusherWebAppId);
+      Pushy.setAppId(Env.pushyWebAppId);
     }
 
     // Register the user for push notifications

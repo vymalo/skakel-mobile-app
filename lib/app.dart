@@ -3,6 +3,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logging/logging.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:skakel_mobile/services/init_providers.dart';
 import 'package:skakel_mobile/ui/router/router.dart';
 import 'package:skakel_mobile/ui/screens/error_screen.dart';
@@ -15,17 +16,17 @@ final log = Logger('MyApp');
 class MyApp extends HookConsumerWidget {
   const MyApp({
     super.key,
-    required AppRouter appRouter,
-    required AdaptiveThemeMode? savedThemeMode,
-  })  : _appRouter = appRouter,
-        _savedThemeMode = savedThemeMode;
+    AdaptiveThemeMode? savedThemeMode,
+  }) : _savedThemeMode = savedThemeMode;
 
-  final AppRouter _appRouter;
   final AdaptiveThemeMode? _savedThemeMode;
 
   @override
   Widget build(BuildContext context, ref) {
     final initializer = ref.watch(initProvider);
+    final appRouter = ref.watch(appRouterProvider);
+
+    log.d('Starting app...');
 
     /// The [AdaptiveTheme] widget is used to provide the app with adaptive
     /// theme support. It is used to provide the app with a light and dark
@@ -33,13 +34,21 @@ class MyApp extends HookConsumerWidget {
     /// light, dark or system.
     return AdaptiveTheme(
       debugShowFloatingThemeButton: true,
-      light: FlexThemeData.light(scheme: FlexScheme.mango),
-      dark: FlexThemeData.dark(scheme: FlexScheme.mango),
+      light: FlexThemeData.light(
+        scheme: FlexScheme.purpleM3,
+        pageTransitionsTheme: pageTransition,
+      ),
+      dark: FlexThemeData.dark(
+        scheme: FlexScheme.purpleM3,
+        pageTransitionsTheme: pageTransition,
+      ),
       initial: _savedThemeMode ?? AdaptiveThemeMode.light,
       builder: (theme, darkTheme) => MaterialApp.router(
         theme: theme,
         darkTheme: darkTheme,
-        routerConfig: _appRouter.config(),
+        routerConfig: appRouter.config(
+          navigatorObservers: () => [SentryNavigatorObserver()],
+        ),
         builder: (context, child) => initializer.when(
           data: (_) {
             log.i('App initialized!');

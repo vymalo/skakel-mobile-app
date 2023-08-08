@@ -1,5 +1,5 @@
 import 'package:mqtt_client/mqtt_client.dart';
 
-MqttClient getClient(String brokerUrl, String clientId) {
+MqttClient getClient() {
   throw UnsupportedError('Cannot create a client on this platform');
 }

@@ -25,8 +25,10 @@ abstract class AbstractAppRepo<T extends BaseModel>
 
   @override
   Stream<List<T>> streamAll({Map<String, dynamic>? query}) {
+    log.d('StreamAll $T[]');
     return _connectionStatus.stream.flatMap(
       (online) {
+        log.d('StreamAll $T[] online: $online');
         // If we're offline, just stream the local data.
         final remoteStream =
             _remoteRepo.streamAll(query: query).asyncMap((remotes) async {

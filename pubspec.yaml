@@ -76,6 +76,7 @@ dependencies:
   envied: ^0.3.0+3
   package_info_plus: ^4.0.2
   device_info_plus: ^9.0.2
+  oauth2_client: ^3.2.1
 
 dev_dependencies:
   flutter_test:
@@ -94,6 +95,9 @@ dev_dependencies:
   json_serializable: ^6.7.1
   openapi_generator: 4.10.0
   envied_generator: ^0.3.0+3
+
+dependency_overrides:
+  http: ^0.13.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

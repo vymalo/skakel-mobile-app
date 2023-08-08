@@ -52,6 +52,18 @@
 
         <!-- End Pushy Declarations -->
 
+        <activity android:name="com.linusu.flutter_web_auth_2.CallbackActivity" android:exported="true">
+            <intent-filter android:label="flutter_web_auth_2">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="com.ssegning.skakel.mobile.skakel_mobile" />
+                <data android:scheme="https"
+                      android:host="skakel.ssegning.com"
+                      android:pathPrefix="/oauth2redirect" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

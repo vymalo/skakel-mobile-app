@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:mqtt_client/mqtt_client.dart';
@@ -25,12 +26,10 @@ class MqttServiceImpl implements MqttService {
   final BehaviorSubject<bool> _connectedController =
       BehaviorSubject<bool>.seeded(false);
 
-  MqttServiceImpl(
-    this._authService, {
-    required String brokerUrl,
-    required String clientId,
-  }) : _client = getClient(brokerUrl, clientId) {
+  MqttServiceImpl(this._authService) : _client = getClient() {
     log.d('MqttService initialized!');
+    _client.logging(on: !kReleaseMode);
+    _client.keepAlivePeriod = 30;
   }
 
   @override
@@ -53,20 +52,27 @@ class MqttServiceImpl implements MqttService {
     log.d('Connecting to MQTT broker...');
 
     // TODO: Check if the token comes really before connecting
-    _client.onAutoReconnect = () async {
-      log.d('Reconnecting to MQTT broker...');
-      final token = await _authService.getToken();
-      _client.connectionMessage?.authenticateAs('username', token);
-    };
+    // _client.onAutoReconnect = () async {
+    //   log.d('Reconnecting to MQTT broker...');
+    //   // final token = await _authService.getToken();
+    //   _client.connectionMessage?.authenticateAs(
+    //     Env.brokerUsername,
+    //     Env.brokerPassword,
+    //   );
+    // };
 
     try {
+      _client.autoReconnect = true;
+
       log.d('Getting token...');
-      final token = await _authService.getToken();
+      // final token = await _authService.getToken();
 
       log.d('Actual connection...');
-      await _client.connect('token', token);
+      await _client.connect(
+        Env.brokerUsername,
+        Env.brokerPassword,
+      );
 
-      _client.autoReconnect = true;
       _connectedController.add(true);
     } catch (e) {
       _connectedController.add(false);
@@ -140,10 +146,6 @@ class MqttServiceImpl implements MqttService {
 
 final mqttServiceProvider = Provider<MqttService>((ref) {
   log.d('Initializing MqttService...');
-  final authService = ref.watch(authServiceProvider);
-  return MqttServiceImpl(
-    authService,
-    brokerUrl: Env.brokerUrl,
-    clientId: Env.brokerClientId,
-  );
+  final authService = ref.watch(authServiceProvider.notifier);
+  return MqttServiceImpl(authService);
 });
