@@ -90,8 +90,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '200':
           description: User retrieved successfully
@@ -114,8 +113,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       requestBody:
         description: User object that needs to be updated
         content:
@@ -144,8 +142,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '204':
           description: User deleted successfully
@@ -165,8 +162,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '200':
           description: User settings retrieved successfully
@@ -189,8 +185,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       requestBody:
         description: User settings object that needs to be updated
         content:
@@ -258,8 +253,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '200':
           description: Chat retrieved successfully
@@ -282,8 +276,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       requestBody:
         description: Chat object that needs to be updated
         content:
@@ -312,8 +305,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '204':
           description: Chat deleted successfully
@@ -334,8 +326,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       requestBody:
         description: ChatMessage object that needs to be sent
         content:
@@ -363,8 +354,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       requestBody:
         description: User object that needs to be added as a member
         content:
@@ -392,14 +382,12 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
         - name: userId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '204':
           description: Member removed successfully
@@ -436,8 +424,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '200':
           description: Chat message retrieved successfully
@@ -460,8 +447,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       requestBody:
         description: ChatMessage object that needs to be updated
         content:
@@ -490,8 +476,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '204':
           description: Chat message deleted successfully
@@ -511,8 +496,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       requestBody:
         description: Reaction object that needs to be added to the chat message
         content:
@@ -538,8 +522,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
         - name: reaction
           in: path
           required: true
@@ -564,8 +547,7 @@ paths:
           description: ID of the user associated with the calls
           required: false
           schema:
-            type: integer
-            format: int64
+            type: string
         - name: callType
           in: query
           description: Type of calls (e.g., Video, Audio)
@@ -632,8 +614,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '200':
           description: Call retrieved successfully
@@ -656,8 +637,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '204':
           description: Call ended successfully
@@ -677,8 +657,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       requestBody:
         description: User object that needs to be invited as a participant
         content:
@@ -706,14 +685,12 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
         - name: userId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '204':
           description: Participant removed successfully
@@ -733,15 +710,13 @@ paths:
           description: ID of the chat associated with the attachments
           required: false
           schema:
-            type: integer
-            format: int64
+            type: string
         - name: userId
           in: query
           description: ID of the user associated with the attachments
           required: false
           schema:
-            type: integer
-            format: int64
+            type: string
         - name: attachmentType
           in: query
           description: Type of attachments (e.g., image, document, video)
@@ -795,8 +770,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '200':
           description: Attachment retrieved successfully
@@ -820,8 +794,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '204':
           description: Attachment deleted successfully
@@ -862,8 +835,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '200':
           description: Payment transaction retrieved successfully
@@ -887,8 +859,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '200':
           description: Payment transaction confirmed successfully
@@ -912,8 +883,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '200':
           description: Payment transaction canceled successfully
@@ -937,8 +907,7 @@ paths:
           description: ID of the user who placed the orders
           required: false
           schema:
-            type: integer
-            format: int64
+            type: string
         - name: status
           in: query
           description: Status of the orders (e.g., pending, shipped, delivered)
@@ -1002,8 +971,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '200':
           description: Order retrieved successfully
@@ -1027,8 +995,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '200':
           description: Order canceled successfully
@@ -1058,14 +1025,14 @@ paths:
           description: Minimum price of the products
           required: false
           schema:
-            type: number
+            type: integer
             format: float
         - name: maxPrice
           in: query
           description: Maximum price of the products
           required: false
           schema:
-            type: number
+            type: integer
             format: float
         - name: inStock
           in: query
@@ -1117,8 +1084,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '200':
           description: Product retrieved successfully
@@ -1128,7 +1094,24 @@ paths:
                 $ref: '#/components/schemas/Product'
         '404':
           description: Product not found
-
+    delete:
+      security:
+        - oauth2: [ ]
+      tags:
+        - product
+      summary: Delete a product by ID
+      operationId: deleteProductById
+      responses:
+        '204':
+          description: Product deleted successfully
+        '404':
+          description: Product not found
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
 components:
   schemas:
     SyncStatus:
@@ -1141,7 +1124,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
         createdAt:
           type: string
           format: date-time
@@ -1164,7 +1147,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
         createdAt:
           type: string
           format: date-time
@@ -1180,13 +1163,35 @@ components:
         members:
           type: array
           items:
-            $ref: "#/components/schemas/User"
+            $ref: "#/components/schemas/ChatMember"
         chatType:
           $ref: "#/components/schemas/ChatType"
       required:
         - name
         - members
         - chatType
+    ChatMember:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        version:
+          type: integer
+        syncStatus:
+          $ref: "#/components/schemas/SyncStatus"
+        userId:
+          type: string
+        chatId:
+          type: string
+      required:
+        - userId
+        - chatId
     ChatType:
       type: string
       enum:
@@ -1196,7 +1201,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
         createdAt:
           type: string
           format: date-time
@@ -1209,23 +1214,23 @@ components:
           $ref: "#/components/schemas/SyncStatus"
         content:
           type: string
-        author:
-          $ref: "#/components/schemas/User"
-        chat:
-          $ref: "#/components/schemas/Chat"
+        authorId:
+          type: string
+        chatId:
+          type: string
         attachments:
           type: array
           items:
             $ref: "#/components/schemas/Attachment"
       required:
         - content
-        - author
-        - chat
+        - authorId
+        - chatId
     Call:
       type: object
       properties:
         id:
-          type: integer
+          type: string
         createdAt:
           type: string
           format: date-time
@@ -1262,7 +1267,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
         createdAt:
           type: string
           format: date-time
@@ -1294,7 +1299,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
         createdAt:
           type: string
           format: date-time
@@ -1306,7 +1311,7 @@ components:
         syncStatus:
           $ref: "#/components/schemas/SyncStatus"
         amount:
-          type: number
+          type: integer
           format: decimal
         currency:
           type: string
@@ -1345,7 +1350,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
         createdAt:
           type: string
           format: date-time
@@ -1359,9 +1364,9 @@ components:
         items:
           type: array
           items:
-            $ref: "#/components/schemas/Product"
+            $ref: "#/components/schemas/OrderItem"
         totalAmount:
-          type: number
+          type: integer
           format: decimal
         timestamp:
           type: string
@@ -1381,7 +1386,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
         createdAt:
           type: string
           format: date-time
@@ -1397,7 +1402,7 @@ components:
         description:
           type: string
         price:
-          type: number
+          type: integer
           format: decimal
         seller:
           $ref: "#/components/schemas/User"
@@ -1413,7 +1418,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
         createdAt:
           type: string
           format: date-time
@@ -1432,12 +1437,10 @@ components:
           type: string
         notifications:
           type: boolean
-        themeData:
-          type: boolean
         blockedUsers:
           type: array
           items:
-            $ref: "#/components/schemas/User"
+            $ref: "#/components/schemas/BlockedUser"
       required:
         - user
     ProductInfo:
@@ -1448,7 +1451,7 @@ components:
         description:
           type: string
         price:
-          type: number
+          type: integer
           format: decimal
         seller:
           $ref: "#/components/schemas/User"
@@ -1466,9 +1469,9 @@ components:
         items:
           type: array
           items:
-            $ref: "#/components/schemas/Product"
+            $ref: "#/components/schemas/OrderItem"
         totalAmount:
-          type: number
+          type: integer
           format: decimal
         timestamp:
           type: string
@@ -1484,11 +1487,60 @@ components:
         - totalAmount
         - buyer
         - seller
+    OrderItem:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        version:
+          type: integer
+        syncStatus:
+          $ref: "#/components/schemas/SyncStatus"
+        productId:
+          type: string
+        orderId:
+          type: string
+        quantity:
+          type: integer
+        notes:
+          type: string
+      required:
+        - productId
+        - quantity
+        - orderId
+    BlockedUser:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        version:
+          type: integer
+        syncStatus:
+          $ref: "#/components/schemas/SyncStatus"
+        userSettingId:
+          type: string
+        blockedUserId:
+          type: string
+      required:
+        - userSettingId
+        - blockedUserId
     PaymentInfo:
       type: object
       properties:
         amount:
-          type: number
+          type: integer
           format: decimal
         currency:
           type: string

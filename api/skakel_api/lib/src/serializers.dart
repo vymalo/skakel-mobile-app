@@ -16,13 +16,16 @@ import 'package:skakel_api/src/model/date.dart';
 
 import 'package:skakel_api/src/model/attachment.dart';
 import 'package:skakel_api/src/model/attachment_type.dart';
+import 'package:skakel_api/src/model/blocked_user.dart';
 import 'package:skakel_api/src/model/call.dart';
 import 'package:skakel_api/src/model/chat.dart';
+import 'package:skakel_api/src/model/chat_member.dart';
 import 'package:skakel_api/src/model/chat_message.dart';
 import 'package:skakel_api/src/model/chat_reaction.dart';
 import 'package:skakel_api/src/model/chat_type.dart';
 import 'package:skakel_api/src/model/order.dart';
 import 'package:skakel_api/src/model/order_info.dart';
+import 'package:skakel_api/src/model/order_item.dart';
 import 'package:skakel_api/src/model/payment_info.dart';
 import 'package:skakel_api/src/model/payment_transaction.dart';
 import 'package:skakel_api/src/model/product.dart';
@@ -36,13 +39,16 @@ part 'serializers.g.dart';
 @SerializersFor([
   Attachment,
   AttachmentType,
+  BlockedUser,
   Call,
   Chat,
+  ChatMember,
   ChatMessage,
   ChatReaction,
   ChatType,
   Order,
   OrderInfo,
+  OrderItem,
   PaymentInfo,
   PaymentTransaction,
   Product,

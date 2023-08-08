@@ -8,7 +8,7 @@ import 'package:skakel_api/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **int** |  | [optional] 
+**id** | **String** |  | [optional] 
 **createdAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **updatedAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **version** | **int** |  | [optional] 
@@ -17,8 +17,7 @@ Name | Type | Description | Notes
 **language** | **String** |  | [optional] 
 **theme** | **String** |  | [optional] 
 **notifications** | **bool** |  | [optional] 
-**themeData** | **bool** |  | [optional] 
-**blockedUsers** | [**BuiltList&lt;User&gt;**](User.md) |  | [optional] 
+**blockedUsers** | [**BuiltList&lt;BlockedUser&gt;**](BlockedUser.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

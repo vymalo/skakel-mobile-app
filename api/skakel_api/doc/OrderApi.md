@@ -28,7 +28,7 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getOrderApi();
-final int id = 789; // int | 
+final String id = id_example; // String | 
 
 try {
     final response = api.cancelOrder(id);
@@ -42,7 +42,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -72,7 +72,7 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getOrderApi();
-final int id = 789; // int | 
+final String id = id_example; // String | 
 
 try {
     final response = api.getOrderById(id);
@@ -86,7 +86,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -116,7 +116,7 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getOrderApi();
-final int userId = 789; // int | ID of the user who placed the orders
+final String userId = userId_example; // String | ID of the user who placed the orders
 final String status = status_example; // String | Status of the orders (e.g., pending, shipped, delivered)
 final Date startDate = 2013-10-20; // Date | Start date for filtering orders (format yyyy-mm-dd)
 final Date endDate = 2013-10-20; // Date | End date for filtering orders (format yyyy-mm-dd)
@@ -133,7 +133,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **userId** | **int**| ID of the user who placed the orders | [optional] 
+ **userId** | **String**| ID of the user who placed the orders | [optional] 
  **status** | **String**| Status of the orders (e.g., pending, shipped, delivered) | [optional] 
  **startDate** | **Date**| Start date for filtering orders (format yyyy-mm-dd) | [optional] 
  **endDate** | **Date**| End date for filtering orders (format yyyy-mm-dd) | [optional] 

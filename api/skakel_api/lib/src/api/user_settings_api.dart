@@ -32,7 +32,7 @@ class UserSettingsApi {
   /// Returns a [Future] containing a [Response] with a [UserSettings] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<UserSettings>> getUserSettingsById({ 
-    required int id,
+    required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -114,7 +114,7 @@ class UserSettingsApi {
   /// Returns a [Future] containing a [Response] with a [UserSettings] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<UserSettings>> updateUserSettings({ 
-    required int id,
+    required String id,
     UserSettings? userSettings,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,

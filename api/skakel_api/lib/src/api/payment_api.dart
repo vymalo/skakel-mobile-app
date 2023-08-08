@@ -33,7 +33,7 @@ class PaymentApi {
   /// Returns a [Future] containing a [Response] with a [PaymentTransaction] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<PaymentTransaction>> cancelPaymentTransaction({ 
-    required int id,
+    required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -114,7 +114,7 @@ class PaymentApi {
   /// Returns a [Future] containing a [Response] with a [PaymentTransaction] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<PaymentTransaction>> confirmPaymentTransaction({ 
-    required int id,
+    required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -195,7 +195,7 @@ class PaymentApi {
   /// Returns a [Future] containing a [Response] with a [PaymentTransaction] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<PaymentTransaction>> getPaymentTransactionById({ 
-    required int id,
+    required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,

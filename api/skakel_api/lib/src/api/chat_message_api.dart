@@ -35,7 +35,7 @@ class ChatMessageApi {
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
   Future<Response<void>> addReactionToChatMessage({ 
-    required int id,
+    required String id,
     ChatReaction? chatReaction,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -109,7 +109,7 @@ class ChatMessageApi {
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
   Future<Response<void>> deleteChatMessage({ 
-    required int id,
+    required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -241,7 +241,7 @@ class ChatMessageApi {
   /// Returns a [Future] containing a [Response] with a [ChatMessage] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<ChatMessage>> getChatMessageById({ 
-    required int id,
+    required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -323,7 +323,7 @@ class ChatMessageApi {
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
   Future<Response<void>> removeReactionFromChatMessage({ 
-    required int id,
+    required String id,
     required String reaction,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -378,7 +378,7 @@ class ChatMessageApi {
   /// Returns a [Future] containing a [Response] with a [ChatMessage] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<ChatMessage>> sendMessageToChat({ 
-    required int id,
+    required String id,
     ChatMessage? chatMessage,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -481,7 +481,7 @@ class ChatMessageApi {
   /// Returns a [Future] containing a [Response] with a [ChatMessage] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<ChatMessage>> updateChatMessage({ 
-    required int id,
+    required String id,
     ChatMessage? chatMessage,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,

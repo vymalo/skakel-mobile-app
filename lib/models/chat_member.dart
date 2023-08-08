@@ -12,7 +12,7 @@ class ChatMember
     with ModelToCompanion<ChatMemberEntityCompanion>
     implements BaseModel {
   @override
-  int id;
+  String id;
 
   @override
   DateTime createdAt;
@@ -26,9 +26,8 @@ class ChatMember
   @override
   SyncStatus syncStatus;
 
-  int chatId;
-
-  int memberId;
+  String chatId;
+  String memberId;
 
   ChatMember({
     required this.id,

@@ -22,7 +22,7 @@ class ChatRemoteDataSource extends BaseRepo<Chat> {
   }
 
   @override
-  Stream<Chat> getById(int id) async* {
+  Stream<Chat> getById(String id) async* {
     try {
       final data = await fetchById(id);
       if (data == null) {
@@ -42,7 +42,7 @@ class ChatRemoteDataSource extends BaseRepo<Chat> {
       final response = await _chatApi.createChat(chat: entity.toApi());
       final data = response.data;
       if (data == null) {
-        throw Exception('ChatRemoteDataSource.getById: data is null');
+        throw Exception('ChatRemoteDataSource.save: data is null');
       }
 
       return data.toModel();
@@ -69,7 +69,7 @@ class ChatRemoteDataSource extends BaseRepo<Chat> {
   }
 
   @override
-  Future<Chat?> fetchById(int id) async {
+  Future<Chat?> fetchById(String id) async {
     try {
       final response = await _chatApi.getChatById(id: id);
       return response.data?.toModel();

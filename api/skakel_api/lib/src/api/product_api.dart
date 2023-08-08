@@ -121,6 +121,59 @@ class ProductApi {
     );
   }
 
+  /// Delete a product by ID
+  /// 
+  ///
+  /// Parameters:
+  /// * [id] 
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future]
+  /// Throws [DioError] if API call or serialization fails
+  Future<Response<void>> deleteProductById({ 
+    required String id,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/products/{id}'.replaceAll('{' r'id' '}', id.toString());
+    final _options = Options(
+      method: r'DELETE',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'oauth2',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    return _response;
+  }
+
   /// Get a product by ID
   /// 
   ///
@@ -136,7 +189,7 @@ class ProductApi {
   /// Returns a [Future] containing a [Response] with a [Product] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<Product>> getProductById({ 
-    required int id,
+    required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -221,8 +274,8 @@ class ProductApi {
   /// Throws [DioError] if API call or serialization fails
   Future<Response<BuiltList<Product>>> getProductsByQuery({ 
     String? category,
-    double? minPrice,
-    double? maxPrice,
+    int? minPrice,
+    int? maxPrice,
     bool? inStock,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -252,8 +305,8 @@ class ProductApi {
 
     final _queryParameters = <String, dynamic>{
       if (category != null) r'category': encodeQueryParameter(_serializers, category, const FullType(String)),
-      if (minPrice != null) r'minPrice': encodeQueryParameter(_serializers, minPrice, const FullType(double)),
-      if (maxPrice != null) r'maxPrice': encodeQueryParameter(_serializers, maxPrice, const FullType(double)),
+      if (minPrice != null) r'minPrice': encodeQueryParameter(_serializers, minPrice, const FullType(int)),
+      if (maxPrice != null) r'maxPrice': encodeQueryParameter(_serializers, maxPrice, const FullType(int)),
       if (inStock != null) r'inStock': encodeQueryParameter(_serializers, inStock, const FullType(bool)),
     };
 

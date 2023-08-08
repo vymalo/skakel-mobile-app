@@ -8,7 +8,7 @@ import 'package:skakel_api/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**amount** | **num** |  | 
+**amount** | **int** |  | 
 **currency** | **String** |  | 
 **timestamp** | [**DateTime**](DateTime.md) |  | [optional] 
 **sender** | [**User**](User.md) |  | 

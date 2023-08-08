@@ -35,7 +35,7 @@ class ChatApi {
   /// Returns a [Future] containing a [Response] with a [Chat] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<Chat>> addMemberToChat({ 
-    required int id,
+    required String id,
     User? user,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -238,7 +238,7 @@ class ChatApi {
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
   Future<Response<void>> deleteChat({ 
-    required int id,
+    required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -370,7 +370,7 @@ class ChatApi {
   /// Returns a [Future] containing a [Response] with a [Chat] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<Chat>> getChatById({ 
-    required int id,
+    required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -452,8 +452,8 @@ class ChatApi {
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
   Future<Response<void>> removeMemberFromChat({ 
-    required int id,
-    required int userId,
+    required String id,
+    required String userId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -507,7 +507,7 @@ class ChatApi {
   /// Returns a [Future] containing a [Response] with a [Chat] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<Chat>> updateChat({ 
-    required int id,
+    required String id,
     Chat? chat,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,

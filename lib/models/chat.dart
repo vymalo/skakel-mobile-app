@@ -3,6 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:skakel_mobile/db/base/base_model.dart';
 import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_mobile/db/db.dart';
+import 'package:skakel_mobile/models/chat_member.dart';
 import 'package:skakel_mobile/models/chat_type.dart';
 import 'package:skakel_mobile/models/user.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
@@ -12,7 +13,7 @@ part 'chat.g.dart';
 @JsonSerializable()
 class Chat with ModelToCompanion<ChatEntityCompanion> implements BaseModel {
   @override
-  int id;
+  String id;
 
   @override
   DateTime createdAt;
@@ -28,7 +29,7 @@ class Chat with ModelToCompanion<ChatEntityCompanion> implements BaseModel {
 
   String? name;
 
-  List<User> members;
+  List<ChatMember> members;
 
   ChatType chatType;
 

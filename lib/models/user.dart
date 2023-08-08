@@ -11,7 +11,7 @@ part 'user.g.dart';
 class User with ModelToCompanion<UserEntityCompanion> implements BaseModel {
 
   @override
-  int id;
+  String id;
 
   @override
   DateTime createdAt;

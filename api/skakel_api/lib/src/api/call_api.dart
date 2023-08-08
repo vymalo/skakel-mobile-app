@@ -35,7 +35,7 @@ class CallApi {
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
   Future<Response<void>> endCall({ 
-    required int id,
+    required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -88,7 +88,7 @@ class CallApi {
   /// Returns a [Future] containing a [Response] with a [Call] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<Call>> getCallById({ 
-    required int id,
+    required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -172,7 +172,7 @@ class CallApi {
   /// Returns a [Future] containing a [Response] with a [BuiltList<Call>] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<BuiltList<Call>>> getCallsByQuery({ 
-    int? userId,
+    String? userId,
     String? callType,
     DateTime? startTime,
     DateTime? endTime,
@@ -203,7 +203,7 @@ class CallApi {
     );
 
     final _queryParameters = <String, dynamic>{
-      if (userId != null) r'userId': encodeQueryParameter(_serializers, userId, const FullType(int)),
+      if (userId != null) r'userId': encodeQueryParameter(_serializers, userId, const FullType(String)),
       if (callType != null) r'callType': encodeQueryParameter(_serializers, callType, const FullType(String)),
       if (startTime != null) r'startTime': encodeQueryParameter(_serializers, startTime, const FullType(DateTime)),
       if (endTime != null) r'endTime': encodeQueryParameter(_serializers, endTime, const FullType(DateTime)),
@@ -366,7 +366,7 @@ class CallApi {
   /// Returns a [Future] containing a [Response] with a [Call] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<Call>> inviteParticipantToCall({ 
-    required int id,
+    required String id,
     User? user,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -469,8 +469,8 @@ class CallApi {
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
   Future<Response<void>> removeParticipantFromCall({ 
-    required int id,
-    required int userId,
+    required String id,
+    required String userId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,

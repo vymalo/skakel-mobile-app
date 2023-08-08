@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **String** |  | 
 **description** | **String** |  | [optional] 
-**price** | **num** |  | 
+**price** | **int** |  | 
 **seller** | [**User**](User.md) |  | 
 **content** | [**JsonObject**](.md) |  | [optional] 
 **productType** | **String** |  | [optional] 

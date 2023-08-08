@@ -28,7 +28,7 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getPaymentApi();
-final int id = 789; // int | 
+final String id = id_example; // String | 
 
 try {
     final response = api.cancelPaymentTransaction(id);
@@ -42,7 +42,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -72,7 +72,7 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getPaymentApi();
-final int id = 789; // int | 
+final String id = id_example; // String | 
 
 try {
     final response = api.confirmPaymentTransaction(id);
@@ -86,7 +86,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -116,7 +116,7 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getPaymentApi();
-final int id = 789; // int | 
+final String id = id_example; // String | 
 
 try {
     final response = api.getPaymentTransactionById(id);
@@ -130,7 +130,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **String**|  | 
 
 ### Return type
 

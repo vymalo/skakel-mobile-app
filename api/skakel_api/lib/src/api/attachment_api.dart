@@ -35,7 +35,7 @@ class AttachmentApi {
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
   Future<Response<void>> deleteAttachment({ 
-    required int id,
+    required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -88,7 +88,7 @@ class AttachmentApi {
   /// Returns a [Future] containing a [Response] with a [Uint8List] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<Uint8List>> getAttachmentById({ 
-    required int id,
+    required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -169,8 +169,8 @@ class AttachmentApi {
   /// Returns a [Future] containing a [Response] with a [BuiltList<Attachment>] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<BuiltList<Attachment>>> getAttachmentsByQuery({ 
-    int? chatId,
-    int? userId,
+    String? chatId,
+    String? userId,
     String? attachmentType,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -199,8 +199,8 @@ class AttachmentApi {
     );
 
     final _queryParameters = <String, dynamic>{
-      if (chatId != null) r'chatId': encodeQueryParameter(_serializers, chatId, const FullType(int)),
-      if (userId != null) r'userId': encodeQueryParameter(_serializers, userId, const FullType(int)),
+      if (chatId != null) r'chatId': encodeQueryParameter(_serializers, chatId, const FullType(String)),
+      if (userId != null) r'userId': encodeQueryParameter(_serializers, userId, const FullType(String)),
       if (attachmentType != null) r'attachmentType': encodeQueryParameter(_serializers, attachmentType, const FullType(String)),
     };
 

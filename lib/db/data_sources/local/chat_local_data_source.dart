@@ -14,7 +14,7 @@ class ChatLocalDataSource extends BaseRepo<Chat> {
   }
 
   @override
-  Stream<Chat> getById(int id) {
+  Stream<Chat> getById(String id) {
     return _db.watchChat(id).toModel();
   }
 
@@ -34,6 +34,6 @@ class ChatLocalDataSource extends BaseRepo<Chat> {
   }
 
   @override
-  Future<Chat?> fetchById(int id) =>
+  Future<Chat?> fetchById(String id) =>
       _db.getChat(id).then((value) => value?.toModel());
 }

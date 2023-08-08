@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:skakel_mobile/db/base/sync_status.dart';
 
 abstract class BaseModel<T extends UpdateCompanion> {
-  int get id;
+  String get id;
 
   DateTime get createdAt;
 

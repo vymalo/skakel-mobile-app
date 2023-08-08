@@ -13,7 +13,7 @@ class ChatMessage
     implements BaseModel {
 
   @override
-  int id;
+  String id;
 
   @override
   DateTime createdAt;
@@ -29,9 +29,9 @@ class ChatMessage
 
   String content;
 
-  int chatId;
+  String chatId;
 
-  int authorId;
+  String authorId;
 
   ChatMessage({
     required this.id,

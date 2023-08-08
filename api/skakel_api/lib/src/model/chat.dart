@@ -3,8 +3,8 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:skakel_api/src/model/chat_member.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:skakel_api/src/model/user.dart';
 import 'package:skakel_api/src/model/sync_status.dart';
 import 'package:skakel_api/src/model/chat_type.dart';
 import 'package:built_value/built_value.dart';
@@ -26,7 +26,7 @@ part 'chat.g.dart';
 @BuiltValue()
 abstract class Chat implements Built<Chat, ChatBuilder> {
   @BuiltValueField(wireName: r'id')
-  int? get id;
+  String? get id;
 
   @BuiltValueField(wireName: r'createdAt')
   DateTime? get createdAt;
@@ -45,7 +45,7 @@ abstract class Chat implements Built<Chat, ChatBuilder> {
   String get name;
 
   @BuiltValueField(wireName: r'members')
-  BuiltList<User> get members;
+  BuiltList<ChatMember> get members;
 
   @BuiltValueField(wireName: r'chatType')
   ChatType get chatType;
@@ -78,7 +78,7 @@ class _$ChatSerializer implements PrimitiveSerializer<Chat> {
       yield r'id';
       yield serializers.serialize(
         object.id,
-        specifiedType: const FullType(int),
+        specifiedType: const FullType(String),
       );
     }
     if (object.createdAt != null) {
@@ -117,7 +117,7 @@ class _$ChatSerializer implements PrimitiveSerializer<Chat> {
     yield r'members';
     yield serializers.serialize(
       object.members,
-      specifiedType: const FullType(BuiltList, [FullType(User)]),
+      specifiedType: const FullType(BuiltList, [FullType(ChatMember)]),
     );
     yield r'chatType';
     yield serializers.serialize(
@@ -150,8 +150,8 @@ class _$ChatSerializer implements PrimitiveSerializer<Chat> {
         case r'id':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(int),
-          ) as int;
+            specifiedType: const FullType(String),
+          ) as String;
           result.id = valueDes;
           break;
         case r'createdAt':
@@ -192,8 +192,8 @@ class _$ChatSerializer implements PrimitiveSerializer<Chat> {
         case r'members':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(BuiltList, [FullType(User)]),
-          ) as BuiltList<User>;
+            specifiedType: const FullType(BuiltList, [FullType(ChatMember)]),
+          ) as BuiltList<ChatMember>;
           result.members.replace(valueDes);
           break;
         case r'chatType':

@@ -21,13 +21,16 @@ export 'package:skakel_api/src/api/user_settings_api.dart';
 
 export 'package:skakel_api/src/model/attachment.dart';
 export 'package:skakel_api/src/model/attachment_type.dart';
+export 'package:skakel_api/src/model/blocked_user.dart';
 export 'package:skakel_api/src/model/call.dart';
 export 'package:skakel_api/src/model/chat.dart';
+export 'package:skakel_api/src/model/chat_member.dart';
 export 'package:skakel_api/src/model/chat_message.dart';
 export 'package:skakel_api/src/model/chat_reaction.dart';
 export 'package:skakel_api/src/model/chat_type.dart';
 export 'package:skakel_api/src/model/order.dart';
 export 'package:skakel_api/src/model/order_info.dart';
+export 'package:skakel_api/src/model/order_item.dart';
 export 'package:skakel_api/src/model/payment_info.dart';
 export 'package:skakel_api/src/model/payment_transaction.dart';
 export 'package:skakel_api/src/model/product.dart';

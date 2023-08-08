@@ -31,7 +31,7 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getChatApi();
-final int id = 789; // int | 
+final String id = id_example; // String | 
 final User user = ; // User | User object that needs to be added as a member
 
 try {
@@ -46,7 +46,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **String**|  | 
  **user** | [**User**](User.md)| User object that needs to be added as a member | [optional] 
 
 ### Return type
@@ -121,7 +121,7 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getChatApi();
-final int id = 789; // int | 
+final String id = id_example; // String | 
 
 try {
     api.deleteChat(id);
@@ -134,7 +134,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -204,7 +204,7 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getChatApi();
-final int id = 789; // int | 
+final String id = id_example; // String | 
 
 try {
     final response = api.getChatById(id);
@@ -218,7 +218,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -248,8 +248,8 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getChatApi();
-final int id = 789; // int | 
-final int userId = 789; // int | 
+final String id = id_example; // String | 
+final String userId = userId_example; // String | 
 
 try {
     api.removeMemberFromChat(id, userId);
@@ -262,8 +262,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
- **userId** | **int**|  | 
+ **id** | **String**|  | 
+ **userId** | **String**|  | 
 
 ### Return type
 
@@ -293,7 +293,7 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getChatApi();
-final int id = 789; // int | 
+final String id = id_example; // String | 
 final Chat chat = ; // Chat | Chat object that needs to be updated
 
 try {
@@ -308,7 +308,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **String**|  | 
  **chat** | [**Chat**](Chat.md)| Chat object that needs to be updated | [optional] 
 
 ### Return type

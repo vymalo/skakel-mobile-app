@@ -27,7 +27,7 @@ part 'call.g.dart';
 @BuiltValue()
 abstract class Call implements Built<Call, CallBuilder> {
   @BuiltValueField(wireName: r'id')
-  int? get id;
+  String? get id;
 
   @BuiltValueField(wireName: r'createdAt')
   DateTime? get createdAt;
@@ -85,7 +85,7 @@ class _$CallSerializer implements PrimitiveSerializer<Call> {
       yield r'id';
       yield serializers.serialize(
         object.id,
-        specifiedType: const FullType(int),
+        specifiedType: const FullType(String),
       );
     }
     if (object.createdAt != null) {
@@ -169,8 +169,8 @@ class _$CallSerializer implements PrimitiveSerializer<Call> {
         case r'id':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(int),
-          ) as int;
+            specifiedType: const FullType(String),
+          ) as String;
           result.id = valueDes;
           break;
         case r'createdAt':

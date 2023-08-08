@@ -28,7 +28,7 @@ part 'product.g.dart';
 @BuiltValue()
 abstract class Product implements Built<Product, ProductBuilder> {
   @BuiltValueField(wireName: r'id')
-  int? get id;
+  String? get id;
 
   @BuiltValueField(wireName: r'createdAt')
   DateTime? get createdAt;
@@ -50,7 +50,7 @@ abstract class Product implements Built<Product, ProductBuilder> {
   String? get description;
 
   @BuiltValueField(wireName: r'price')
-  num get price;
+  int get price;
 
   @BuiltValueField(wireName: r'seller')
   User get seller;
@@ -88,7 +88,7 @@ class _$ProductSerializer implements PrimitiveSerializer<Product> {
       yield r'id';
       yield serializers.serialize(
         object.id,
-        specifiedType: const FullType(int),
+        specifiedType: const FullType(String),
       );
     }
     if (object.createdAt != null) {
@@ -134,7 +134,7 @@ class _$ProductSerializer implements PrimitiveSerializer<Product> {
     yield r'price';
     yield serializers.serialize(
       object.price,
-      specifiedType: const FullType(num),
+      specifiedType: const FullType(int),
     );
     yield r'seller';
     yield serializers.serialize(
@@ -181,8 +181,8 @@ class _$ProductSerializer implements PrimitiveSerializer<Product> {
         case r'id':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(int),
-          ) as int;
+            specifiedType: const FullType(String),
+          ) as String;
           result.id = valueDes;
           break;
         case r'createdAt':
@@ -230,8 +230,8 @@ class _$ProductSerializer implements PrimitiveSerializer<Product> {
         case r'price':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(num),
-          ) as num;
+            specifiedType: const FullType(int),
+          ) as int;
           result.price = valueDes;
           break;
         case r'seller':

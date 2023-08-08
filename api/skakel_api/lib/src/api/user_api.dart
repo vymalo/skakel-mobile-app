@@ -134,7 +134,7 @@ class UserApi {
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
   Future<Response<void>> deleteUser({ 
-    required int id,
+    required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -266,7 +266,7 @@ class UserApi {
   /// Returns a [Future] containing a [Response] with a [User] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<User>> getUserById({ 
-    required int id,
+    required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -348,7 +348,7 @@ class UserApi {
   /// Returns a [Future] containing a [Response] with a [User] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<User>> updateUser({ 
-    required int id,
+    required String id,
     User? user,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,

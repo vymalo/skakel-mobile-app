@@ -21,7 +21,7 @@ abstract class AbstractAppRepo<T extends BaseModel>
   );
 
   @override
-  Future<T?> fetchById(int id) => _localRepo.fetchById(id);
+  Future<T?> fetchById(String id) => _localRepo.fetchById(id);
 
   @override
   Stream<List<T>> streamAll({Map<String, dynamic>? query}) {
@@ -96,7 +96,7 @@ abstract class AbstractAppRepo<T extends BaseModel>
   }
 
   @override
-  Stream<T> getById(int id) => Rx.combineLatest3(
+  Stream<T> getById(String id) => Rx.combineLatest3(
         _localRepo.getById(id),
         _remoteRepo.getById(id),
         _connectionStatus.stream,

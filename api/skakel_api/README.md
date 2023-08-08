@@ -51,7 +51,7 @@ import 'package:skakel_api/skakel_api.dart';
 
 
 final api = SkakelApi().getAttachmentApi();
-final int id = 789; // int | 
+final String id = id_example; // String | 
 
 try {
     api.deleteAttachment(id);
@@ -100,6 +100,7 @@ Class | Method | HTTP request | Description
 [*PaymentApi*](doc/PaymentApi.md) | [**getPaymentTransactionById**](doc/PaymentApi.md#getpaymenttransactionbyid) | **GET** /payment/transactions/{id} | Get a payment transaction by ID
 [*PaymentApi*](doc/PaymentApi.md) | [**initiatePaymentTransaction**](doc/PaymentApi.md#initiatepaymenttransaction) | **POST** /payment/transactions | Initiate a new payment transaction
 [*ProductApi*](doc/ProductApi.md) | [**addProduct**](doc/ProductApi.md#addproduct) | **POST** /products | Add a new product
+[*ProductApi*](doc/ProductApi.md) | [**deleteProductById**](doc/ProductApi.md#deleteproductbyid) | **DELETE** /products/{id} | Delete a product by ID
 [*ProductApi*](doc/ProductApi.md) | [**getProductById**](doc/ProductApi.md#getproductbyid) | **GET** /products/{id} | Get a product by ID
 [*ProductApi*](doc/ProductApi.md) | [**getProductsByQuery**](doc/ProductApi.md#getproductsbyquery) | **GET** /products | Get products by query parameters
 [*UserApi*](doc/UserApi.md) | [**createUser**](doc/UserApi.md#createuser) | **POST** /users | Create a new user
@@ -115,13 +116,16 @@ Class | Method | HTTP request | Description
 
  - [Attachment](doc/Attachment.md)
  - [AttachmentType](doc/AttachmentType.md)
+ - [BlockedUser](doc/BlockedUser.md)
  - [Call](doc/Call.md)
  - [Chat](doc/Chat.md)
+ - [ChatMember](doc/ChatMember.md)
  - [ChatMessage](doc/ChatMessage.md)
  - [ChatReaction](doc/ChatReaction.md)
  - [ChatType](doc/ChatType.md)
  - [Order](doc/Order.md)
  - [OrderInfo](doc/OrderInfo.md)
+ - [OrderItem](doc/OrderItem.md)
  - [PaymentInfo](doc/PaymentInfo.md)
  - [PaymentTransaction](doc/PaymentTransaction.md)
  - [Product](doc/Product.md)

@@ -5,7 +5,7 @@ import 'package:skakel_mobile/db/entities/user_entity.dart';
 
 @DataClassName('chat_members')
 class ChatMemberEntity extends Table with BaseEntity {
-  IntColumn get chatId => integer().references(ChatEntity, #id)();
+  TextColumn get chatId => text().references(ChatEntity, #id)();
 
-  IntColumn get memberId => integer().references(UserEntity, #id)();
+  TextColumn get memberId => text().references(UserEntity, #id)();
 }

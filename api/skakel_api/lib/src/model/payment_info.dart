@@ -23,7 +23,7 @@ part 'payment_info.g.dart';
 @BuiltValue()
 abstract class PaymentInfo implements Built<PaymentInfo, PaymentInfoBuilder> {
   @BuiltValueField(wireName: r'amount')
-  num get amount;
+  int get amount;
 
   @BuiltValueField(wireName: r'currency')
   String get currency;
@@ -70,7 +70,7 @@ class _$PaymentInfoSerializer implements PrimitiveSerializer<PaymentInfo> {
     yield r'amount';
     yield serializers.serialize(
       object.amount,
-      specifiedType: const FullType(num),
+      specifiedType: const FullType(int),
     );
     yield r'currency';
     yield serializers.serialize(
@@ -130,8 +130,8 @@ class _$PaymentInfoSerializer implements PrimitiveSerializer<PaymentInfo> {
         case r'amount':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(num),
-          ) as num;
+            specifiedType: const FullType(int),
+          ) as int;
           result.amount = valueDes;
           break;
         case r'currency':

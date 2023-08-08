@@ -26,7 +26,7 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getUserSettingsApi();
-final int id = 789; // int | 
+final String id = id_example; // String | 
 
 try {
     final response = api.getUserSettingsById(id);
@@ -40,7 +40,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -70,7 +70,7 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getUserSettingsApi();
-final int id = 789; // int | 
+final String id = id_example; // String | 
 final UserSettings userSettings = ; // UserSettings | User settings object that needs to be updated
 
 try {
@@ -85,7 +85,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **String**|  | 
  **userSettings** | [**UserSettings**](UserSettings.md)| User settings object that needs to be updated | [optional] 
 
 ### Return type

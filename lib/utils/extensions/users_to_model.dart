@@ -71,6 +71,18 @@ extension UserStreamToModel on Stream<users> {
   }
 }
 
+extension FutureToModel on Future<users> {
+  Future<User> toModel() {
+    return then((cm) => cm.toModel());
+  }
+}
+
+extension FutureNullableToModel on Future<users?> {
+  Future<User?> toModel() {
+    return then((cm) => cm?.toModel());
+  }
+}
+
 /// This extension is used to convert a db model to a model.
 extension UserToModel on users {
   User toModel() {

@@ -36,7 +36,7 @@ class OrderApi {
   /// Returns a [Future] containing a [Response] with a [Order] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<Order>> cancelOrder({ 
-    required int id,
+    required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -117,7 +117,7 @@ class OrderApi {
   /// Returns a [Future] containing a [Response] with a [Order] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<Order>> getOrderById({ 
-    required int id,
+    required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -201,7 +201,7 @@ class OrderApi {
   /// Returns a [Future] containing a [Response] with a [BuiltList<Order>] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<BuiltList<Order>>> getOrdersByQuery({ 
-    int? userId,
+    String? userId,
     String? status,
     Date? startDate,
     Date? endDate,
@@ -232,7 +232,7 @@ class OrderApi {
     );
 
     final _queryParameters = <String, dynamic>{
-      if (userId != null) r'userId': encodeQueryParameter(_serializers, userId, const FullType(int)),
+      if (userId != null) r'userId': encodeQueryParameter(_serializers, userId, const FullType(String)),
       if (status != null) r'status': encodeQueryParameter(_serializers, status, const FullType(String)),
       if (startDate != null) r'startDate': encodeQueryParameter(_serializers, startDate, const FullType(Date)),
       if (endDate != null) r'endDate': encodeQueryParameter(_serializers, endDate, const FullType(Date)),

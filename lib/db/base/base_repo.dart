@@ -6,10 +6,10 @@ abstract class BaseRepo<E> {
   Future<void> delete(E entity);
 
   /// Gets the entity by id
-  Stream<E> getById(int id);
+  Stream<E> getById(String id);
 
   /// Gets the entity by id
-  Future<E?> fetchById(int id);
+  Future<E?> fetchById(String id);
 
   /// Streams all entities
   Stream<List<E>> streamAll({

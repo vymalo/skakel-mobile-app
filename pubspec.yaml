@@ -77,6 +77,8 @@ dependencies:
   package_info_plus: ^4.0.2
   device_info_plus: ^9.0.2
   oauth2_client: ^3.2.1
+  uuid: ^3.0.7
+  built_value: ^8.6.1
 
 dev_dependencies:
   flutter_test:

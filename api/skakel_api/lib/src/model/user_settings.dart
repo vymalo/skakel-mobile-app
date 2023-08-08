@@ -6,6 +6,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:skakel_api/src/model/user.dart';
 import 'package:skakel_api/src/model/sync_status.dart';
+import 'package:skakel_api/src/model/blocked_user.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -23,12 +24,11 @@ part 'user_settings.g.dart';
 /// * [language] 
 /// * [theme] 
 /// * [notifications] 
-/// * [themeData] 
 /// * [blockedUsers] 
 @BuiltValue()
 abstract class UserSettings implements Built<UserSettings, UserSettingsBuilder> {
   @BuiltValueField(wireName: r'id')
-  int? get id;
+  String? get id;
 
   @BuiltValueField(wireName: r'createdAt')
   DateTime? get createdAt;
@@ -55,11 +55,8 @@ abstract class UserSettings implements Built<UserSettings, UserSettingsBuilder> 
   @BuiltValueField(wireName: r'notifications')
   bool? get notifications;
 
-  @BuiltValueField(wireName: r'themeData')
-  bool? get themeData;
-
   @BuiltValueField(wireName: r'blockedUsers')
-  BuiltList<User>? get blockedUsers;
+  BuiltList<BlockedUser>? get blockedUsers;
 
   UserSettings._();
 
@@ -88,7 +85,7 @@ class _$UserSettingsSerializer implements PrimitiveSerializer<UserSettings> {
       yield r'id';
       yield serializers.serialize(
         object.id,
-        specifiedType: const FullType(int),
+        specifiedType: const FullType(String),
       );
     }
     if (object.createdAt != null) {
@@ -145,18 +142,11 @@ class _$UserSettingsSerializer implements PrimitiveSerializer<UserSettings> {
         specifiedType: const FullType(bool),
       );
     }
-    if (object.themeData != null) {
-      yield r'themeData';
-      yield serializers.serialize(
-        object.themeData,
-        specifiedType: const FullType(bool),
-      );
-    }
     if (object.blockedUsers != null) {
       yield r'blockedUsers';
       yield serializers.serialize(
         object.blockedUsers,
-        specifiedType: const FullType(BuiltList, [FullType(User)]),
+        specifiedType: const FullType(BuiltList, [FullType(BlockedUser)]),
       );
     }
   }
@@ -185,8 +175,8 @@ class _$UserSettingsSerializer implements PrimitiveSerializer<UserSettings> {
         case r'id':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(int),
-          ) as int;
+            specifiedType: const FullType(String),
+          ) as String;
           result.id = valueDes;
           break;
         case r'createdAt':
@@ -245,18 +235,11 @@ class _$UserSettingsSerializer implements PrimitiveSerializer<UserSettings> {
           ) as bool;
           result.notifications = valueDes;
           break;
-        case r'themeData':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool;
-          result.themeData = valueDes;
-          break;
         case r'blockedUsers':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(BuiltList, [FullType(User)]),
-          ) as BuiltList<User>;
+            specifiedType: const FullType(BuiltList, [FullType(BlockedUser)]),
+          ) as BuiltList<BlockedUser>;
           result.blockedUsers.replace(valueDes);
           break;
         default:

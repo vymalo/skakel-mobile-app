@@ -30,7 +30,7 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getCallApi();
-final int id = 789; // int | 
+final String id = id_example; // String | 
 
 try {
     api.endCall(id);
@@ -43,7 +43,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -73,7 +73,7 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getCallApi();
-final int id = 789; // int | 
+final String id = id_example; // String | 
 
 try {
     final response = api.getCallById(id);
@@ -87,7 +87,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -117,7 +117,7 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getCallApi();
-final int userId = 789; // int | ID of the user associated with the calls
+final String userId = userId_example; // String | ID of the user associated with the calls
 final String callType = callType_example; // String | Type of calls (e.g., Video, Audio)
 final DateTime startTime = 2013-10-20T19:20:30+01:00; // DateTime | Start time for filtering calls (format yyyy-mm-ddTHH:mm:ssZ)
 final DateTime endTime = 2013-10-20T19:20:30+01:00; // DateTime | End time for filtering calls (format yyyy-mm-ddTHH:mm:ssZ)
@@ -134,7 +134,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **userId** | **int**| ID of the user associated with the calls | [optional] 
+ **userId** | **String**| ID of the user associated with the calls | [optional] 
  **callType** | **String**| Type of calls (e.g., Video, Audio) | [optional] 
  **startTime** | **DateTime**| Start time for filtering calls (format yyyy-mm-ddTHH:mm:ssZ) | [optional] 
  **endTime** | **DateTime**| End time for filtering calls (format yyyy-mm-ddTHH:mm:ssZ) | [optional] 
@@ -211,7 +211,7 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getCallApi();
-final int id = 789; // int | 
+final String id = id_example; // String | 
 final User user = ; // User | User object that needs to be invited as a participant
 
 try {
@@ -226,7 +226,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **String**|  | 
  **user** | [**User**](User.md)| User object that needs to be invited as a participant | [optional] 
 
 ### Return type
@@ -257,8 +257,8 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getCallApi();
-final int id = 789; // int | 
-final int userId = 789; // int | 
+final String id = id_example; // String | 
+final String userId = userId_example; // String | 
 
 try {
     api.removeParticipantFromCall(id, userId);
@@ -271,8 +271,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
- **userId** | **int**|  | 
+ **id** | **String**|  | 
+ **userId** | **String**|  | 
 
 ### Return type
 

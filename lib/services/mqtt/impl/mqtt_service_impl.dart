@@ -18,10 +18,8 @@ class MqttServiceImpl implements MqttService {
       _messageSubscription;
   final List<EventHandler> _listeners = [];
 
-  final BehaviorSubject<String> _messageReceivedController =
-      BehaviorSubject<String>();
-  final BehaviorSubject<bool> _connectedController =
-      BehaviorSubject<bool>.seeded(false);
+  final _messageReceivedController = BehaviorSubject<String>();
+  final _connectedController = BehaviorSubject<bool>.seeded(false);
 
   MqttServiceImpl() : _client = getClient() {
     log.d('MqttService initialized!');

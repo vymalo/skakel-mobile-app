@@ -1,8 +1,10 @@
 import 'package:drift/drift.dart';
 import 'package:skakel_mobile/db/base/sync_status.dart';
+import 'package:skakel_mobile/utils/id.dart';
 
 mixin BaseEntity on Table {
-  IntColumn get id => integer().autoIncrement()();
+  TextColumn get id =>
+      text().unique().clientDefault(() => generator.getId())();
 
   DateTimeColumn get createdAt => dateTime()();
 

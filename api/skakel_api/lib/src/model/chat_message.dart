@@ -4,10 +4,8 @@
 
 // ignore_for_file: unused_element
 import 'package:built_collection/built_collection.dart';
-import 'package:skakel_api/src/model/user.dart';
 import 'package:skakel_api/src/model/sync_status.dart';
 import 'package:skakel_api/src/model/attachment.dart';
-import 'package:skakel_api/src/model/chat.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -22,13 +20,13 @@ part 'chat_message.g.dart';
 /// * [version] 
 /// * [syncStatus] 
 /// * [content] 
-/// * [author] 
-/// * [chat] 
+/// * [authorId] 
+/// * [chatId] 
 /// * [attachments] 
 @BuiltValue()
 abstract class ChatMessage implements Built<ChatMessage, ChatMessageBuilder> {
   @BuiltValueField(wireName: r'id')
-  int? get id;
+  String? get id;
 
   @BuiltValueField(wireName: r'createdAt')
   DateTime? get createdAt;
@@ -46,11 +44,11 @@ abstract class ChatMessage implements Built<ChatMessage, ChatMessageBuilder> {
   @BuiltValueField(wireName: r'content')
   String get content;
 
-  @BuiltValueField(wireName: r'author')
-  User get author;
+  @BuiltValueField(wireName: r'authorId')
+  String get authorId;
 
-  @BuiltValueField(wireName: r'chat')
-  Chat get chat;
+  @BuiltValueField(wireName: r'chatId')
+  String get chatId;
 
   @BuiltValueField(wireName: r'attachments')
   BuiltList<Attachment>? get attachments;
@@ -82,7 +80,7 @@ class _$ChatMessageSerializer implements PrimitiveSerializer<ChatMessage> {
       yield r'id';
       yield serializers.serialize(
         object.id,
-        specifiedType: const FullType(int),
+        specifiedType: const FullType(String),
       );
     }
     if (object.createdAt != null) {
@@ -118,15 +116,15 @@ class _$ChatMessageSerializer implements PrimitiveSerializer<ChatMessage> {
       object.content,
       specifiedType: const FullType(String),
     );
-    yield r'author';
+    yield r'authorId';
     yield serializers.serialize(
-      object.author,
-      specifiedType: const FullType(User),
+      object.authorId,
+      specifiedType: const FullType(String),
     );
-    yield r'chat';
+    yield r'chatId';
     yield serializers.serialize(
-      object.chat,
-      specifiedType: const FullType(Chat),
+      object.chatId,
+      specifiedType: const FullType(String),
     );
     if (object.attachments != null) {
       yield r'attachments';
@@ -161,8 +159,8 @@ class _$ChatMessageSerializer implements PrimitiveSerializer<ChatMessage> {
         case r'id':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(int),
-          ) as int;
+            specifiedType: const FullType(String),
+          ) as String;
           result.id = valueDes;
           break;
         case r'createdAt':
@@ -200,19 +198,19 @@ class _$ChatMessageSerializer implements PrimitiveSerializer<ChatMessage> {
           ) as String;
           result.content = valueDes;
           break;
-        case r'author':
+        case r'authorId':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(User),
-          ) as User;
-          result.author.replace(valueDes);
+            specifiedType: const FullType(String),
+          ) as String;
+          result.authorId = valueDes;
           break;
-        case r'chat':
+        case r'chatId':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(Chat),
-          ) as Chat;
-          result.chat.replace(valueDes);
+            specifiedType: const FullType(String),
+          ) as String;
+          result.chatId = valueDes;
           break;
         case r'attachments':
           final valueDes = serializers.deserialize(

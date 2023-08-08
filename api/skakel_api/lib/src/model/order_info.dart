@@ -3,9 +3,9 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:skakel_api/src/model/order_item.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:skakel_api/src/model/user.dart';
-import 'package:skakel_api/src/model/product.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -23,10 +23,10 @@ part 'order_info.g.dart';
 @BuiltValue()
 abstract class OrderInfo implements Built<OrderInfo, OrderInfoBuilder> {
   @BuiltValueField(wireName: r'items')
-  BuiltList<Product> get items;
+  BuiltList<OrderItem> get items;
 
   @BuiltValueField(wireName: r'totalAmount')
-  num get totalAmount;
+  int get totalAmount;
 
   @BuiltValueField(wireName: r'timestamp')
   DateTime? get timestamp;
@@ -66,12 +66,12 @@ class _$OrderInfoSerializer implements PrimitiveSerializer<OrderInfo> {
     yield r'items';
     yield serializers.serialize(
       object.items,
-      specifiedType: const FullType(BuiltList, [FullType(Product)]),
+      specifiedType: const FullType(BuiltList, [FullType(OrderItem)]),
     );
     yield r'totalAmount';
     yield serializers.serialize(
       object.totalAmount,
-      specifiedType: const FullType(num),
+      specifiedType: const FullType(int),
     );
     if (object.timestamp != null) {
       yield r'timestamp';
@@ -123,15 +123,15 @@ class _$OrderInfoSerializer implements PrimitiveSerializer<OrderInfo> {
         case r'items':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(BuiltList, [FullType(Product)]),
-          ) as BuiltList<Product>;
+            specifiedType: const FullType(BuiltList, [FullType(OrderItem)]),
+          ) as BuiltList<OrderItem>;
           result.items.replace(valueDes);
           break;
         case r'totalAmount':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(num),
-          ) as num;
+            specifiedType: const FullType(int),
+          ) as int;
           result.totalAmount = valueDes;
           break;
         case r'timestamp':

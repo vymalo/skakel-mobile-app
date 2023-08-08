@@ -28,7 +28,7 @@ abstract class ProductInfo implements Built<ProductInfo, ProductInfoBuilder> {
   String? get description;
 
   @BuiltValueField(wireName: r'price')
-  num get price;
+  int get price;
 
   @BuiltValueField(wireName: r'seller')
   User get seller;
@@ -77,7 +77,7 @@ class _$ProductInfoSerializer implements PrimitiveSerializer<ProductInfo> {
     yield r'price';
     yield serializers.serialize(
       object.price,
-      specifiedType: const FullType(num),
+      specifiedType: const FullType(int),
     );
     yield r'seller';
     yield serializers.serialize(
@@ -138,8 +138,8 @@ class _$ProductInfoSerializer implements PrimitiveSerializer<ProductInfo> {
         case r'price':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(num),
-          ) as num;
+            specifiedType: const FullType(int),
+          ) as int;
           result.price = valueDes;
           break;
         case r'seller':

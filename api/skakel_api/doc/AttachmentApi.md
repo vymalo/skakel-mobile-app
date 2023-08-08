@@ -28,7 +28,7 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getAttachmentApi();
-final int id = 789; // int | 
+final String id = id_example; // String | 
 
 try {
     api.deleteAttachment(id);
@@ -41,7 +41,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -71,7 +71,7 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getAttachmentApi();
-final int id = 789; // int | 
+final String id = id_example; // String | 
 
 try {
     final response = api.getAttachmentById(id);
@@ -85,7 +85,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -115,8 +115,8 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getAttachmentApi();
-final int chatId = 789; // int | ID of the chat associated with the attachments
-final int userId = 789; // int | ID of the user associated with the attachments
+final String chatId = chatId_example; // String | ID of the chat associated with the attachments
+final String userId = userId_example; // String | ID of the user associated with the attachments
 final String attachmentType = attachmentType_example; // String | Type of attachments (e.g., image, document, video)
 
 try {
@@ -131,8 +131,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **chatId** | **int**| ID of the chat associated with the attachments | [optional] 
- **userId** | **int**| ID of the user associated with the attachments | [optional] 
+ **chatId** | **String**| ID of the chat associated with the attachments | [optional] 
+ **userId** | **String**| ID of the user associated with the attachments | [optional] 
  **attachmentType** | **String**| Type of attachments (e.g., image, document, video) | [optional] 
 
 ### Return type

@@ -30,7 +30,7 @@ part 'payment_transaction.g.dart';
 @BuiltValue()
 abstract class PaymentTransaction implements Built<PaymentTransaction, PaymentTransactionBuilder> {
   @BuiltValueField(wireName: r'id')
-  int? get id;
+  String? get id;
 
   @BuiltValueField(wireName: r'createdAt')
   DateTime? get createdAt;
@@ -46,7 +46,7 @@ abstract class PaymentTransaction implements Built<PaymentTransaction, PaymentTr
   // enum syncStatusEnum {  Synced,  Updated,  Deleted,  };
 
   @BuiltValueField(wireName: r'amount')
-  num get amount;
+  int get amount;
 
   @BuiltValueField(wireName: r'currency')
   String get currency;
@@ -98,7 +98,7 @@ class _$PaymentTransactionSerializer implements PrimitiveSerializer<PaymentTrans
       yield r'id';
       yield serializers.serialize(
         object.id,
-        specifiedType: const FullType(int),
+        specifiedType: const FullType(String),
       );
     }
     if (object.createdAt != null) {
@@ -132,7 +132,7 @@ class _$PaymentTransactionSerializer implements PrimitiveSerializer<PaymentTrans
     yield r'amount';
     yield serializers.serialize(
       object.amount,
-      specifiedType: const FullType(num),
+      specifiedType: const FullType(int),
     );
     yield r'currency';
     yield serializers.serialize(
@@ -197,8 +197,8 @@ class _$PaymentTransactionSerializer implements PrimitiveSerializer<PaymentTrans
         case r'id':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(int),
-          ) as int;
+            specifiedType: const FullType(String),
+          ) as String;
           result.id = valueDes;
           break;
         case r'createdAt':
@@ -232,8 +232,8 @@ class _$PaymentTransactionSerializer implements PrimitiveSerializer<PaymentTrans
         case r'amount':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(num),
-          ) as num;
+            specifiedType: const FullType(int),
+          ) as int;
           result.amount = valueDes;
           break;
         case r'currency':
