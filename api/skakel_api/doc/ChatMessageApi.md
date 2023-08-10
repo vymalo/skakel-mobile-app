@@ -5,63 +5,16 @@
 import 'package:skakel_api/api.dart';
 ```
 
-All URIs are relative to *https://skakel.ssegning.com/dev*
+All URIs are relative to *https://skakel.apps.ssegning.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**addReactionToChatMessage**](ChatMessageApi.md#addreactiontochatmessage) | **POST** /chat-messages/{id}/reactions | Add a reaction to a chat message
 [**deleteChatMessage**](ChatMessageApi.md#deletechatmessage) | **DELETE** /chat-messages/{id} | Delete a chat message by ID
 [**getAllChatMessages**](ChatMessageApi.md#getallchatmessages) | **GET** /chat-messages | Get all chat messages
 [**getChatMessageById**](ChatMessageApi.md#getchatmessagebyid) | **GET** /chat-messages/{id} | Get a chat message by ID
-[**removeReactionFromChatMessage**](ChatMessageApi.md#removereactionfromchatmessage) | **DELETE** /chat-messages/{id}/reactions/{reaction} | Remove a reaction from a chat message
-[**sendMessageToChat**](ChatMessageApi.md#sendmessagetochat) | **POST** /chats/{id}/messages | Send a message to a chat
+[**sendMessageToChat**](ChatMessageApi.md#sendmessagetochat) | **POST** /chats-messages | Send a message to a chat
 [**updateChatMessage**](ChatMessageApi.md#updatechatmessage) | **PUT** /chat-messages/{id} | Update an existing chat message
 
-
-# **addReactionToChatMessage**
-> addReactionToChatMessage(id, chatReaction)
-
-Add a reaction to a chat message
-
-### Example
-```dart
-import 'package:skakel_api/api.dart';
-// TODO Configure HTTP basic authorization: oauth2
-//defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').username = 'YOUR_USERNAME'
-//defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
-
-final api = SkakelApi().getChatMessageApi();
-final String id = id_example; // String | 
-final ChatReaction chatReaction = ; // ChatReaction | Reaction object that needs to be added to the chat message
-
-try {
-    api.addReactionToChatMessage(id, chatReaction);
-} catch on DioError (e) {
-    print('Exception when calling ChatMessageApi->addReactionToChatMessage: $e\n');
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **String**|  | 
- **chatReaction** | [**ChatReaction**](ChatReaction.md)| Reaction object that needs to be added to the chat message | [optional] 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **deleteChatMessage**
 > deleteChatMessage(id)
@@ -190,53 +143,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **removeReactionFromChatMessage**
-> removeReactionFromChatMessage(id, reaction)
-
-Remove a reaction from a chat message
-
-### Example
-```dart
-import 'package:skakel_api/api.dart';
-// TODO Configure HTTP basic authorization: oauth2
-//defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').username = 'YOUR_USERNAME'
-//defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
-
-final api = SkakelApi().getChatMessageApi();
-final String id = id_example; // String | 
-final String reaction = reaction_example; // String | 
-
-try {
-    api.removeReactionFromChatMessage(id, reaction);
-} catch on DioError (e) {
-    print('Exception when calling ChatMessageApi->removeReactionFromChatMessage: $e\n');
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **String**|  | 
- **reaction** | **String**|  | 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **sendMessageToChat**
-> ChatMessage sendMessageToChat(id, chatMessage)
+> ChatMessage sendMessageToChat(chatMessageInfo)
 
 Send a message to a chat
 
@@ -248,11 +156,10 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getChatMessageApi();
-final String id = id_example; // String | 
-final ChatMessage chatMessage = ; // ChatMessage | ChatMessage object that needs to be sent
+final ChatMessageInfo chatMessageInfo = ; // ChatMessageInfo | ChatMessage object that needs to be sent
 
 try {
-    final response = api.sendMessageToChat(id, chatMessage);
+    final response = api.sendMessageToChat(chatMessageInfo);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling ChatMessageApi->sendMessageToChat: $e\n');
@@ -263,8 +170,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  | 
- **chatMessage** | [**ChatMessage**](ChatMessage.md)| ChatMessage object that needs to be sent | [optional] 
+ **chatMessageInfo** | [**ChatMessageInfo**](ChatMessageInfo.md)| ChatMessage object that needs to be sent | 
 
 ### Return type
 
@@ -282,7 +188,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updateChatMessage**
-> ChatMessage updateChatMessage(id, chatMessage)
+> ChatMessage updateChatMessage(id, chatMessageInfo)
 
 Update an existing chat message
 
@@ -295,10 +201,10 @@ import 'package:skakel_api/api.dart';
 
 final api = SkakelApi().getChatMessageApi();
 final String id = id_example; // String | 
-final ChatMessage chatMessage = ; // ChatMessage | ChatMessage object that needs to be updated
+final ChatMessageInfo chatMessageInfo = ; // ChatMessageInfo | ChatMessage object that needs to be updated
 
 try {
-    final response = api.updateChatMessage(id, chatMessage);
+    final response = api.updateChatMessage(id, chatMessageInfo);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling ChatMessageApi->updateChatMessage: $e\n');
@@ -310,7 +216,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**|  | 
- **chatMessage** | [**ChatMessage**](ChatMessage.md)| ChatMessage object that needs to be updated | [optional] 
+ **chatMessageInfo** | [**ChatMessageInfo**](ChatMessageInfo.md)| ChatMessage object that needs to be updated | [optional] 
 
 ### Return type
 

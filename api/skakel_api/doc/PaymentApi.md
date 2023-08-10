@@ -5,7 +5,7 @@
 import 'package:skakel_api/api.dart';
 ```
 
-All URIs are relative to *https://skakel.ssegning.com/dev*
+All URIs are relative to *https://skakel.apps.ssegning.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -148,7 +148,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **initiatePaymentTransaction**
-> PaymentTransaction initiatePaymentTransaction(paymentInfo)
+> PaymentTransaction initiatePaymentTransaction(paymentTransactionInfo)
 
 Initiate a new payment transaction
 
@@ -160,10 +160,10 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getPaymentApi();
-final PaymentInfo paymentInfo = ; // PaymentInfo | Payment information for the transaction
+final PaymentTransactionInfo paymentTransactionInfo = ; // PaymentTransactionInfo | Payment information for the transaction
 
 try {
-    final response = api.initiatePaymentTransaction(paymentInfo);
+    final response = api.initiatePaymentTransaction(paymentTransactionInfo);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling PaymentApi->initiatePaymentTransaction: $e\n');
@@ -174,7 +174,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **paymentInfo** | [**PaymentInfo**](PaymentInfo.md)| Payment information for the transaction | [optional] 
+ **paymentTransactionInfo** | [**PaymentTransactionInfo**](PaymentTransactionInfo.md)| Payment information for the transaction | [optional] 
 
 ### Return type
 

@@ -5,67 +5,19 @@
 import 'package:skakel_api/api.dart';
 ```
 
-All URIs are relative to *https://skakel.ssegning.com/dev*
+All URIs are relative to *https://skakel.apps.ssegning.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**addMemberToChat**](ChatApi.md#addmembertochat) | **POST** /chats/{id}/members | Add a member to a chat
 [**createChat**](ChatApi.md#createchat) | **POST** /chats | Create a new chat
 [**deleteChat**](ChatApi.md#deletechat) | **DELETE** /chats/{id} | Delete a chat by ID
 [**getAllChats**](ChatApi.md#getallchats) | **GET** /chats | Get all chats
 [**getChatById**](ChatApi.md#getchatbyid) | **GET** /chats/{id} | Get a chat by ID
-[**removeMemberFromChat**](ChatApi.md#removememberfromchat) | **DELETE** /chats/{id}/members/{userId} | Remove a member from a chat
 [**updateChat**](ChatApi.md#updatechat) | **PUT** /chats/{id} | Update an existing chat
 
 
-# **addMemberToChat**
-> Chat addMemberToChat(id, user)
-
-Add a member to a chat
-
-### Example
-```dart
-import 'package:skakel_api/api.dart';
-// TODO Configure HTTP basic authorization: oauth2
-//defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').username = 'YOUR_USERNAME'
-//defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
-
-final api = SkakelApi().getChatApi();
-final String id = id_example; // String | 
-final User user = ; // User | User object that needs to be added as a member
-
-try {
-    final response = api.addMemberToChat(id, user);
-    print(response);
-} catch on DioError (e) {
-    print('Exception when calling ChatApi->addMemberToChat: $e\n');
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **String**|  | 
- **user** | [**User**](User.md)| User object that needs to be added as a member | [optional] 
-
-### Return type
-
-[**Chat**](Chat.md)
-
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **createChat**
-> Chat createChat(chat)
+> Chat createChat(chatInfo)
 
 Create a new chat
 
@@ -77,10 +29,10 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getChatApi();
-final Chat chat = ; // Chat | Chat object that needs to be created
+final ChatInfo chatInfo = ; // ChatInfo | Chat object that needs to be created
 
 try {
-    final response = api.createChat(chat);
+    final response = api.createChat(chatInfo);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling ChatApi->createChat: $e\n');
@@ -91,7 +43,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **chat** | [**Chat**](Chat.md)| Chat object that needs to be created | [optional] 
+ **chatInfo** | [**ChatInfo**](ChatInfo.md)| Chat object that needs to be created | [optional] 
 
 ### Return type
 
@@ -235,53 +187,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **removeMemberFromChat**
-> removeMemberFromChat(id, userId)
-
-Remove a member from a chat
-
-### Example
-```dart
-import 'package:skakel_api/api.dart';
-// TODO Configure HTTP basic authorization: oauth2
-//defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').username = 'YOUR_USERNAME'
-//defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
-
-final api = SkakelApi().getChatApi();
-final String id = id_example; // String | 
-final String userId = userId_example; // String | 
-
-try {
-    api.removeMemberFromChat(id, userId);
-} catch on DioError (e) {
-    print('Exception when calling ChatApi->removeMemberFromChat: $e\n');
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **String**|  | 
- **userId** | **String**|  | 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **updateChat**
-> Chat updateChat(id, chat)
+> Chat updateChat(id, chatInfo)
 
 Update an existing chat
 
@@ -294,10 +201,10 @@ import 'package:skakel_api/api.dart';
 
 final api = SkakelApi().getChatApi();
 final String id = id_example; // String | 
-final Chat chat = ; // Chat | Chat object that needs to be updated
+final ChatInfo chatInfo = ; // ChatInfo | Chat object that needs to be updated
 
 try {
-    final response = api.updateChat(id, chat);
+    final response = api.updateChat(id, chatInfo);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling ChatApi->updateChat: $e\n');
@@ -309,7 +216,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**|  | 
- **chat** | [**Chat**](Chat.md)| Chat object that needs to be updated | [optional] 
+ **chatInfo** | [**ChatInfo**](ChatInfo.md)| Chat object that needs to be updated | [optional] 
 
 ### Return type
 

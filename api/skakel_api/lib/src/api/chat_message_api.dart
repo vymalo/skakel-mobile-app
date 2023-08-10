@@ -9,7 +9,7 @@ import 'package:dio/dio.dart';
 
 import 'package:built_collection/built_collection.dart';
 import 'package:skakel_api/src/model/chat_message.dart';
-import 'package:skakel_api/src/model/chat_reaction.dart';
+import 'package:skakel_api/src/model/chat_message_info.dart';
 
 class ChatMessageApi {
 
@@ -18,81 +18,6 @@ class ChatMessageApi {
   final Serializers _serializers;
 
   const ChatMessageApi(this._dio, this._serializers);
-
-  /// Add a reaction to a chat message
-  /// 
-  ///
-  /// Parameters:
-  /// * [id] 
-  /// * [chatReaction] - Reaction object that needs to be added to the chat message
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future]
-  /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> addReactionToChatMessage({ 
-    required String id,
-    ChatReaction? chatReaction,
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path = r'/chat-messages/{id}/reactions'.replaceAll('{' r'id' '}', id.toString());
-    final _options = Options(
-      method: r'POST',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[
-          {
-            'type': 'http',
-            'scheme': 'bearer',
-            'name': 'oauth2',
-          },
-        ],
-        ...?extra,
-      },
-      contentType: 'application/json',
-      validateStatus: validateStatus,
-    );
-
-    dynamic _bodyData;
-
-    try {
-      const _type = FullType(ChatReaction);
-      _bodyData = chatReaction == null ? null : _serializers.serialize(chatReaction, specifiedType: _type);
-
-    } catch(error, stackTrace) {
-      throw DioError(
-         requestOptions: _options.compose(
-          _dio.options,
-          _path,
-        ),
-        type: DioErrorType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    final _response = await _dio.request<Object>(
-      _path,
-      data: _bodyData,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    return _response;
-  }
 
   /// Delete a chat message by ID
   /// 
@@ -307,67 +232,11 @@ class ChatMessageApi {
     );
   }
 
-  /// Remove a reaction from a chat message
-  /// 
-  ///
-  /// Parameters:
-  /// * [id] 
-  /// * [reaction] 
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future]
-  /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> removeReactionFromChatMessage({ 
-    required String id,
-    required String reaction,
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path = r'/chat-messages/{id}/reactions/{reaction}'.replaceAll('{' r'id' '}', id.toString()).replaceAll('{' r'reaction' '}', reaction.toString());
-    final _options = Options(
-      method: r'DELETE',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[
-          {
-            'type': 'http',
-            'scheme': 'bearer',
-            'name': 'oauth2',
-          },
-        ],
-        ...?extra,
-      },
-      validateStatus: validateStatus,
-    );
-
-    final _response = await _dio.request<Object>(
-      _path,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    return _response;
-  }
-
   /// Send a message to a chat
   /// 
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [chatMessage] - ChatMessage object that needs to be sent
+  /// * [chatMessageInfo] - ChatMessage object that needs to be sent
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -378,8 +247,7 @@ class ChatMessageApi {
   /// Returns a [Future] containing a [Response] with a [ChatMessage] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<ChatMessage>> sendMessageToChat({ 
-    required String id,
-    ChatMessage? chatMessage,
+    required ChatMessageInfo chatMessageInfo,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -387,7 +255,7 @@ class ChatMessageApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/chats/{id}/messages'.replaceAll('{' r'id' '}', id.toString());
+    final _path = r'/chats-messages';
     final _options = Options(
       method: r'POST',
       headers: <String, dynamic>{
@@ -410,8 +278,8 @@ class ChatMessageApi {
     dynamic _bodyData;
 
     try {
-      const _type = FullType(ChatMessage);
-      _bodyData = chatMessage == null ? null : _serializers.serialize(chatMessage, specifiedType: _type);
+      const _type = FullType(ChatMessageInfo);
+      _bodyData = _serializers.serialize(chatMessageInfo, specifiedType: _type);
 
     } catch(error, stackTrace) {
       throw DioError(
@@ -470,7 +338,7 @@ class ChatMessageApi {
   ///
   /// Parameters:
   /// * [id] 
-  /// * [chatMessage] - ChatMessage object that needs to be updated
+  /// * [chatMessageInfo] - ChatMessage object that needs to be updated
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -482,7 +350,7 @@ class ChatMessageApi {
   /// Throws [DioError] if API call or serialization fails
   Future<Response<ChatMessage>> updateChatMessage({ 
     required String id,
-    ChatMessage? chatMessage,
+    ChatMessageInfo? chatMessageInfo,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -513,8 +381,8 @@ class ChatMessageApi {
     dynamic _bodyData;
 
     try {
-      const _type = FullType(ChatMessage);
-      _bodyData = chatMessage == null ? null : _serializers.serialize(chatMessage, specifiedType: _type);
+      const _type = FullType(ChatMessageInfo);
+      _bodyData = chatMessageInfo == null ? null : _serializers.serialize(chatMessageInfo, specifiedType: _type);
 
     } catch(error, stackTrace) {
       throw DioError(

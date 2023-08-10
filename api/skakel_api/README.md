@@ -50,23 +50,29 @@ Please follow the [installation procedure](#installation--usage) and then run th
 import 'package:skakel_api/skakel_api.dart';
 
 
-final api = SkakelApi().getAttachmentApi();
-final String id = id_example; // String | 
+final api = SkakelApi().getAssociationApi();
+final AssociationInfo associationInfo = ; // AssociationInfo | Association details for adding the association
 
 try {
-    api.deleteAttachment(id);
+    final response = await api.addAssociationById(associationInfo);
+    print(response);
 } catch on DioError (e) {
-    print("Exception when calling AttachmentApi->deleteAttachment: $e\n");
+    print("Exception when calling AssociationApi->addAssociationById: $e\n");
 }
 
 ```
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://skakel.ssegning.com/dev*
+All URIs are relative to *https://skakel.apps.ssegning.com/api*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+[*AssociationApi*](doc/AssociationApi.md) | [**addAssociationById**](doc/AssociationApi.md#addassociationbyid) | **POST** /associations | Add an association by ID
+[*AssociationApi*](doc/AssociationApi.md) | [**deleteAssociationById**](doc/AssociationApi.md#deleteassociationbyid) | **DELETE** /associations/{id} | Delete an Association by ID
+[*AssociationApi*](doc/AssociationApi.md) | [**getAssociationById**](doc/AssociationApi.md#getassociationbyid) | **GET** /associations/{id} | Get a association by ID
+[*AssociationApi*](doc/AssociationApi.md) | [**queryAssociations**](doc/AssociationApi.md#queryassociations) | **GET** /associations | Get all Associations
+[*AssociationApi*](doc/AssociationApi.md) | [**updateAssociationById**](doc/AssociationApi.md#updateassociationbyid) | **PUT** /associations/{id} | Update a association by ID
 [*AttachmentApi*](doc/AttachmentApi.md) | [**deleteAttachment**](doc/AttachmentApi.md#deleteattachment) | **DELETE** /attachments/{id} | Delete an attachment by ID
 [*AttachmentApi*](doc/AttachmentApi.md) | [**getAttachmentById**](doc/AttachmentApi.md#getattachmentbyid) | **GET** /attachments/{id} | Get an attachment by ID
 [*AttachmentApi*](doc/AttachmentApi.md) | [**getAttachmentsByQuery**](doc/AttachmentApi.md#getattachmentsbyquery) | **GET** /attachments | Get attachments by query parameters
@@ -77,20 +83,26 @@ Class | Method | HTTP request | Description
 [*CallApi*](doc/CallApi.md) | [**initiateCall**](doc/CallApi.md#initiatecall) | **POST** /calls | Initiate a new call
 [*CallApi*](doc/CallApi.md) | [**inviteParticipantToCall**](doc/CallApi.md#inviteparticipanttocall) | **POST** /calls/{id}/participants | Invite a participant to a call
 [*CallApi*](doc/CallApi.md) | [**removeParticipantFromCall**](doc/CallApi.md#removeparticipantfromcall) | **DELETE** /calls/{id}/participants/{userId} | Remove a participant from a call
-[*ChatApi*](doc/ChatApi.md) | [**addMemberToChat**](doc/ChatApi.md#addmembertochat) | **POST** /chats/{id}/members | Add a member to a chat
 [*ChatApi*](doc/ChatApi.md) | [**createChat**](doc/ChatApi.md#createchat) | **POST** /chats | Create a new chat
 [*ChatApi*](doc/ChatApi.md) | [**deleteChat**](doc/ChatApi.md#deletechat) | **DELETE** /chats/{id} | Delete a chat by ID
 [*ChatApi*](doc/ChatApi.md) | [**getAllChats**](doc/ChatApi.md#getallchats) | **GET** /chats | Get all chats
 [*ChatApi*](doc/ChatApi.md) | [**getChatById**](doc/ChatApi.md#getchatbyid) | **GET** /chats/{id} | Get a chat by ID
-[*ChatApi*](doc/ChatApi.md) | [**removeMemberFromChat**](doc/ChatApi.md#removememberfromchat) | **DELETE** /chats/{id}/members/{userId} | Remove a member from a chat
 [*ChatApi*](doc/ChatApi.md) | [**updateChat**](doc/ChatApi.md#updatechat) | **PUT** /chats/{id} | Update an existing chat
-[*ChatMessageApi*](doc/ChatMessageApi.md) | [**addReactionToChatMessage**](doc/ChatMessageApi.md#addreactiontochatmessage) | **POST** /chat-messages/{id}/reactions | Add a reaction to a chat message
+[*ChatMemberApi*](doc/ChatMemberApi.md) | [**addMemberToChat**](doc/ChatMemberApi.md#addmembertochat) | **POST** /chats-members | Add a member to a chat
+[*ChatMemberApi*](doc/ChatMemberApi.md) | [**getChatMemberById**](doc/ChatMemberApi.md#getchatmemberbyid) | **GET** /chats-members/{id} | Get a chat member by ID
+[*ChatMemberApi*](doc/ChatMemberApi.md) | [**getChatMembersByChatId**](doc/ChatMemberApi.md#getchatmembersbychatid) | **GET** /chats-members | Get chat members by chat ID
+[*ChatMemberApi*](doc/ChatMemberApi.md) | [**removeMemberFromChat**](doc/ChatMemberApi.md#removememberfromchat) | **DELETE** /chats-members/{id} | Remove a member from a chat
+[*ChatMemberApi*](doc/ChatMemberApi.md) | [**updateChatMember**](doc/ChatMemberApi.md#updatechatmember) | **PUT** /chats-members/{id} | Update an existing chat member
 [*ChatMessageApi*](doc/ChatMessageApi.md) | [**deleteChatMessage**](doc/ChatMessageApi.md#deletechatmessage) | **DELETE** /chat-messages/{id} | Delete a chat message by ID
 [*ChatMessageApi*](doc/ChatMessageApi.md) | [**getAllChatMessages**](doc/ChatMessageApi.md#getallchatmessages) | **GET** /chat-messages | Get all chat messages
 [*ChatMessageApi*](doc/ChatMessageApi.md) | [**getChatMessageById**](doc/ChatMessageApi.md#getchatmessagebyid) | **GET** /chat-messages/{id} | Get a chat message by ID
-[*ChatMessageApi*](doc/ChatMessageApi.md) | [**removeReactionFromChatMessage**](doc/ChatMessageApi.md#removereactionfromchatmessage) | **DELETE** /chat-messages/{id}/reactions/{reaction} | Remove a reaction from a chat message
-[*ChatMessageApi*](doc/ChatMessageApi.md) | [**sendMessageToChat**](doc/ChatMessageApi.md#sendmessagetochat) | **POST** /chats/{id}/messages | Send a message to a chat
+[*ChatMessageApi*](doc/ChatMessageApi.md) | [**sendMessageToChat**](doc/ChatMessageApi.md#sendmessagetochat) | **POST** /chats-messages | Send a message to a chat
 [*ChatMessageApi*](doc/ChatMessageApi.md) | [**updateChatMessage**](doc/ChatMessageApi.md#updatechatmessage) | **PUT** /chat-messages/{id} | Update an existing chat message
+[*ChatReactionApi*](doc/ChatReactionApi.md) | [**addReactionToChatMessage**](doc/ChatReactionApi.md#addreactiontochatmessage) | **POST** /chat-reactions | Add a reaction to a chat message
+[*ChatReactionApi*](doc/ChatReactionApi.md) | [**getReactionFromChatMessage**](doc/ChatReactionApi.md#getreactionfromchatmessage) | **GET** /chat-reactions/{id} | Remove a reaction from a chat message
+[*ChatReactionApi*](doc/ChatReactionApi.md) | [**getReactionsFromChatMessage**](doc/ChatReactionApi.md#getreactionsfromchatmessage) | **GET** /chat-reactions | Get reactions from a chat message
+[*ChatReactionApi*](doc/ChatReactionApi.md) | [**putReactionFromChatMessage**](doc/ChatReactionApi.md#putreactionfromchatmessage) | **PUT** /chat-reactions/{id} | Put a reaction from a chat message
+[*ChatReactionApi*](doc/ChatReactionApi.md) | [**removeReactionFromChatMessage**](doc/ChatReactionApi.md#removereactionfromchatmessage) | **DELETE** /chat-reactions/{id} | Remove a reaction from a chat message
 [*OrderApi*](doc/OrderApi.md) | [**cancelOrder**](doc/OrderApi.md#cancelorder) | **POST** /orders/{id}/cancel | Cancel an order by ID
 [*OrderApi*](doc/OrderApi.md) | [**getOrderById**](doc/OrderApi.md#getorderbyid) | **GET** /orders/{id} | Get an order by ID
 [*OrderApi*](doc/OrderApi.md) | [**getOrdersByQuery**](doc/OrderApi.md#getordersbyquery) | **GET** /orders | Get orders by query parameters
@@ -114,25 +126,41 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [Association](doc/Association.md)
+ - [AssociationInfo](doc/AssociationInfo.md)
+ - [AssociationMember](doc/AssociationMember.md)
+ - [AssociationRole](doc/AssociationRole.md)
  - [Attachment](doc/Attachment.md)
+ - [AttachmentInfo](doc/AttachmentInfo.md)
  - [AttachmentType](doc/AttachmentType.md)
+ - [Base](doc/Base.md)
  - [BlockedUser](doc/BlockedUser.md)
+ - [BlockedUserInfo](doc/BlockedUserInfo.md)
  - [Call](doc/Call.md)
+ - [CallInfo](doc/CallInfo.md)
  - [Chat](doc/Chat.md)
+ - [ChatInfo](doc/ChatInfo.md)
  - [ChatMember](doc/ChatMember.md)
+ - [ChatMemberInfo](doc/ChatMemberInfo.md)
  - [ChatMessage](doc/ChatMessage.md)
+ - [ChatMessageInfo](doc/ChatMessageInfo.md)
  - [ChatReaction](doc/ChatReaction.md)
+ - [ChatReactionInfo](doc/ChatReactionInfo.md)
  - [ChatType](doc/ChatType.md)
  - [Order](doc/Order.md)
  - [OrderInfo](doc/OrderInfo.md)
  - [OrderItem](doc/OrderItem.md)
- - [PaymentInfo](doc/PaymentInfo.md)
+ - [OrderItemInfo](doc/OrderItemInfo.md)
  - [PaymentTransaction](doc/PaymentTransaction.md)
+ - [PaymentTransactionInfo](doc/PaymentTransactionInfo.md)
  - [Product](doc/Product.md)
  - [ProductInfo](doc/ProductInfo.md)
+ - [ReactionType](doc/ReactionType.md)
  - [SyncStatus](doc/SyncStatus.md)
  - [User](doc/User.md)
+ - [UserInfo](doc/UserInfo.md)
  - [UserSettings](doc/UserSettings.md)
+ - [UserSettingsInfo](doc/UserSettingsInfo.md)
 
 
 ## Documentation For Authorization

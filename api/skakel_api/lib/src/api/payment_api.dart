@@ -7,8 +7,8 @@ import 'dart:async';
 import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
-import 'package:skakel_api/src/model/payment_info.dart';
 import 'package:skakel_api/src/model/payment_transaction.dart';
+import 'package:skakel_api/src/model/payment_transaction_info.dart';
 
 class PaymentApi {
 
@@ -265,7 +265,7 @@ class PaymentApi {
   /// 
   ///
   /// Parameters:
-  /// * [paymentInfo] - Payment information for the transaction
+  /// * [paymentTransactionInfo] - Payment information for the transaction
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -276,7 +276,7 @@ class PaymentApi {
   /// Returns a [Future] containing a [Response] with a [PaymentTransaction] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<PaymentTransaction>> initiatePaymentTransaction({ 
-    PaymentInfo? paymentInfo,
+    PaymentTransactionInfo? paymentTransactionInfo,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -307,8 +307,8 @@ class PaymentApi {
     dynamic _bodyData;
 
     try {
-      const _type = FullType(PaymentInfo);
-      _bodyData = paymentInfo == null ? null : _serializers.serialize(paymentInfo, specifiedType: _type);
+      const _type = FullType(PaymentTransactionInfo);
+      _bodyData = paymentTransactionInfo == null ? null : _serializers.serialize(paymentTransactionInfo, specifiedType: _type);
 
     } catch(error, stackTrace) {
       throw DioError(

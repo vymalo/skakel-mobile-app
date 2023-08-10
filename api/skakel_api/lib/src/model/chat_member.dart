@@ -4,6 +4,8 @@
 
 // ignore_for_file: unused_element
 import 'package:skakel_api/src/model/sync_status.dart';
+import 'package:skakel_api/src/model/base.dart';
+import 'package:skakel_api/src/model/chat_member_info.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -20,29 +22,7 @@ part 'chat_member.g.dart';
 /// * [userId] 
 /// * [chatId] 
 @BuiltValue()
-abstract class ChatMember implements Built<ChatMember, ChatMemberBuilder> {
-  @BuiltValueField(wireName: r'id')
-  String? get id;
-
-  @BuiltValueField(wireName: r'createdAt')
-  DateTime? get createdAt;
-
-  @BuiltValueField(wireName: r'updatedAt')
-  DateTime? get updatedAt;
-
-  @BuiltValueField(wireName: r'version')
-  int? get version;
-
-  @BuiltValueField(wireName: r'syncStatus')
-  SyncStatus? get syncStatus;
-  // enum syncStatusEnum {  Synced,  Updated,  Deleted,  };
-
-  @BuiltValueField(wireName: r'userId')
-  String get userId;
-
-  @BuiltValueField(wireName: r'chatId')
-  String get chatId;
-
+abstract class ChatMember implements Base, ChatMemberInfo, Built<ChatMember, ChatMemberBuilder> {
   ChatMember._();
 
   factory ChatMember([void updates(ChatMemberBuilder b)]) = _$ChatMember;
@@ -66,13 +46,6 @@ class _$ChatMemberSerializer implements PrimitiveSerializer<ChatMember> {
     ChatMember object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
-    if (object.id != null) {
-      yield r'id';
-      yield serializers.serialize(
-        object.id,
-        specifiedType: const FullType(String),
-      );
-    }
     if (object.createdAt != null) {
       yield r'createdAt';
       yield serializers.serialize(
@@ -80,13 +53,23 @@ class _$ChatMemberSerializer implements PrimitiveSerializer<ChatMember> {
         specifiedType: const FullType(DateTime),
       );
     }
-    if (object.updatedAt != null) {
-      yield r'updatedAt';
+    yield r'chatId';
+    yield serializers.serialize(
+      object.chatId,
+      specifiedType: const FullType(String),
+    );
+    if (object.id != null) {
+      yield r'id';
       yield serializers.serialize(
-        object.updatedAt,
-        specifiedType: const FullType(DateTime),
+        object.id,
+        specifiedType: const FullType(String),
       );
     }
+    yield r'userId';
+    yield serializers.serialize(
+      object.userId,
+      specifiedType: const FullType(String),
+    );
     if (object.version != null) {
       yield r'version';
       yield serializers.serialize(
@@ -101,16 +84,13 @@ class _$ChatMemberSerializer implements PrimitiveSerializer<ChatMember> {
         specifiedType: const FullType(SyncStatus),
       );
     }
-    yield r'userId';
-    yield serializers.serialize(
-      object.userId,
-      specifiedType: const FullType(String),
-    );
-    yield r'chatId';
-    yield serializers.serialize(
-      object.chatId,
-      specifiedType: const FullType(String),
-    );
+    if (object.updatedAt != null) {
+      yield r'updatedAt';
+      yield serializers.serialize(
+        object.updatedAt,
+        specifiedType: const FullType(DateTime),
+      );
+    }
   }
 
   @override
@@ -134,13 +114,6 @@ class _$ChatMemberSerializer implements PrimitiveSerializer<ChatMember> {
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
-        case r'id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.id = valueDes;
-          break;
         case r'createdAt':
           final valueDes = serializers.deserialize(
             value,
@@ -148,12 +121,26 @@ class _$ChatMemberSerializer implements PrimitiveSerializer<ChatMember> {
           ) as DateTime;
           result.createdAt = valueDes;
           break;
-        case r'updatedAt':
+        case r'chatId':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.updatedAt = valueDes;
+            specifiedType: const FullType(String),
+          ) as String;
+          result.chatId = valueDes;
+          break;
+        case r'id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.id = valueDes;
+          break;
+        case r'userId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.userId = valueDes;
           break;
         case r'version':
           final valueDes = serializers.deserialize(
@@ -169,19 +156,12 @@ class _$ChatMemberSerializer implements PrimitiveSerializer<ChatMember> {
           ) as SyncStatus;
           result.syncStatus = valueDes;
           break;
-        case r'userId':
+        case r'updatedAt':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.userId = valueDes;
-          break;
-        case r'chatId':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.chatId = valueDes;
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.updatedAt = valueDes;
           break;
         default:
           unhandled.add(key);

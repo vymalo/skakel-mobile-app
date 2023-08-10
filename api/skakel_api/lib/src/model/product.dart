@@ -5,6 +5,8 @@
 // ignore_for_file: unused_element
 import 'package:skakel_api/src/model/user.dart';
 import 'package:skakel_api/src/model/sync_status.dart';
+import 'package:skakel_api/src/model/base.dart';
+import 'package:skakel_api/src/model/product_info.dart';
 import 'package:built_value/json_object.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -26,41 +28,7 @@ part 'product.g.dart';
 /// * [content] 
 /// * [productType] 
 @BuiltValue()
-abstract class Product implements Built<Product, ProductBuilder> {
-  @BuiltValueField(wireName: r'id')
-  String? get id;
-
-  @BuiltValueField(wireName: r'createdAt')
-  DateTime? get createdAt;
-
-  @BuiltValueField(wireName: r'updatedAt')
-  DateTime? get updatedAt;
-
-  @BuiltValueField(wireName: r'version')
-  int? get version;
-
-  @BuiltValueField(wireName: r'syncStatus')
-  SyncStatus? get syncStatus;
-  // enum syncStatusEnum {  Synced,  Updated,  Deleted,  };
-
-  @BuiltValueField(wireName: r'name')
-  String get name;
-
-  @BuiltValueField(wireName: r'description')
-  String? get description;
-
-  @BuiltValueField(wireName: r'price')
-  int get price;
-
-  @BuiltValueField(wireName: r'seller')
-  User get seller;
-
-  @BuiltValueField(wireName: r'content')
-  JsonObject? get content;
-
-  @BuiltValueField(wireName: r'productType')
-  String? get productType;
-
+abstract class Product implements Base, ProductInfo, Built<Product, ProductBuilder> {
   Product._();
 
   factory Product([void updates(ProductBuilder b)]) = _$Product;
@@ -84,13 +52,11 @@ class _$ProductSerializer implements PrimitiveSerializer<Product> {
     Product object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
-    if (object.id != null) {
-      yield r'id';
-      yield serializers.serialize(
-        object.id,
-        specifiedType: const FullType(String),
-      );
-    }
+    yield r'seller';
+    yield serializers.serialize(
+      object.seller,
+      specifiedType: const FullType(User),
+    );
     if (object.createdAt != null) {
       yield r'createdAt';
       yield serializers.serialize(
@@ -98,27 +64,11 @@ class _$ProductSerializer implements PrimitiveSerializer<Product> {
         specifiedType: const FullType(DateTime),
       );
     }
-    if (object.updatedAt != null) {
-      yield r'updatedAt';
-      yield serializers.serialize(
-        object.updatedAt,
-        specifiedType: const FullType(DateTime),
-      );
-    }
-    if (object.version != null) {
-      yield r'version';
-      yield serializers.serialize(
-        object.version,
-        specifiedType: const FullType(int),
-      );
-    }
-    if (object.syncStatus != null) {
-      yield r'syncStatus';
-      yield serializers.serialize(
-        object.syncStatus,
-        specifiedType: const FullType(SyncStatus),
-      );
-    }
+    yield r'price';
+    yield serializers.serialize(
+      object.price,
+      specifiedType: const FullType(int),
+    );
     yield r'name';
     yield serializers.serialize(
       object.name,
@@ -131,16 +81,20 @@ class _$ProductSerializer implements PrimitiveSerializer<Product> {
         specifiedType: const FullType(String),
       );
     }
-    yield r'price';
-    yield serializers.serialize(
-      object.price,
-      specifiedType: const FullType(int),
-    );
-    yield r'seller';
-    yield serializers.serialize(
-      object.seller,
-      specifiedType: const FullType(User),
-    );
+    if (object.id != null) {
+      yield r'id';
+      yield serializers.serialize(
+        object.id,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.version != null) {
+      yield r'version';
+      yield serializers.serialize(
+        object.version,
+        specifiedType: const FullType(int),
+      );
+    }
     if (object.content != null) {
       yield r'content';
       yield serializers.serialize(
@@ -153,6 +107,20 @@ class _$ProductSerializer implements PrimitiveSerializer<Product> {
       yield serializers.serialize(
         object.productType,
         specifiedType: const FullType(String),
+      );
+    }
+    if (object.syncStatus != null) {
+      yield r'syncStatus';
+      yield serializers.serialize(
+        object.syncStatus,
+        specifiedType: const FullType(SyncStatus),
+      );
+    }
+    if (object.updatedAt != null) {
+      yield r'updatedAt';
+      yield serializers.serialize(
+        object.updatedAt,
+        specifiedType: const FullType(DateTime),
       );
     }
   }
@@ -178,12 +146,12 @@ class _$ProductSerializer implements PrimitiveSerializer<Product> {
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
-        case r'id':
+        case r'seller':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.id = valueDes;
+            specifiedType: const FullType(User),
+          ) as User;
+          result.seller.replace(valueDes);
           break;
         case r'createdAt':
           final valueDes = serializers.deserialize(
@@ -192,26 +160,12 @@ class _$ProductSerializer implements PrimitiveSerializer<Product> {
           ) as DateTime;
           result.createdAt = valueDes;
           break;
-        case r'updatedAt':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.updatedAt = valueDes;
-          break;
-        case r'version':
+        case r'price':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(int),
           ) as int;
-          result.version = valueDes;
-          break;
-        case r'syncStatus':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(SyncStatus),
-          ) as SyncStatus;
-          result.syncStatus = valueDes;
+          result.price = valueDes;
           break;
         case r'name':
           final valueDes = serializers.deserialize(
@@ -227,19 +181,19 @@ class _$ProductSerializer implements PrimitiveSerializer<Product> {
           ) as String;
           result.description = valueDes;
           break;
-        case r'price':
+        case r'id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.id = valueDes;
+          break;
+        case r'version':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(int),
           ) as int;
-          result.price = valueDes;
-          break;
-        case r'seller':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(User),
-          ) as User;
-          result.seller.replace(valueDes);
+          result.version = valueDes;
           break;
         case r'content':
           final valueDes = serializers.deserialize(
@@ -254,6 +208,20 @@ class _$ProductSerializer implements PrimitiveSerializer<Product> {
             specifiedType: const FullType(String),
           ) as String;
           result.productType = valueDes;
+          break;
+        case r'syncStatus':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(SyncStatus),
+          ) as SyncStatus;
+          result.syncStatus = valueDes;
+          break;
+        case r'updatedAt':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.updatedAt = valueDes;
           break;
         default:
           unhandled.add(key);

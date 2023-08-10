@@ -15,9 +15,16 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.11
 servers:
-  - url: https://skakel.ssegning.com/dev
-  - url: https://skakel.ssegning.com/staging
-  - url: https://skakel.ssegning.com/prod
+  - url: https://{env_name}.apps.ssegning.com/api
+    description: The API server
+    variables:
+      env_name:
+        enum:
+          - skakel
+          - skakel-dev
+          - skakel-staging
+        default: skakel
+        description: The environment name
 tags:
   - name: user
     description: Operations related to users
@@ -37,6 +44,10 @@ tags:
     description: Operations related to products
   - name: user-settings
     description: Operations related to user settings
+  - name: chat-reaction
+    description: Operations related to chat reactions
+  - name: association
+    description: Operations related to associations
 
 paths:
   /users:
@@ -68,7 +79,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UserInfo'
       responses:
         '201':
           description: User created successfully
@@ -119,7 +130,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UserInfo'
       responses:
         '200':
           description: User updated successfully
@@ -191,7 +202,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserSettings'
+              $ref: '#/components/schemas/UserSettingsInfo'
       responses:
         '200':
           description: User settings updated successfully
@@ -231,7 +242,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Chat'
+              $ref: '#/components/schemas/ChatInfo'
       responses:
         '201':
           description: Chat created successfully
@@ -282,7 +293,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Chat'
+              $ref: '#/components/schemas/ChatInfo'
       responses:
         '200':
           description: Chat updated successfully
@@ -312,8 +323,7 @@ paths:
         '404':
           description: Chat not found
 
-
-  /chats/{id}/messages:
+  /chats-messages:
     post:
       security:
         - oauth2: [ ]
@@ -321,18 +331,13 @@ paths:
         - chat-message
       summary: Send a message to a chat
       operationId: sendMessageToChat
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
       requestBody:
+        required: true
         description: ChatMessage object that needs to be sent
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ChatMessage'
+              $ref: '#/components/schemas/ChatMessageInfo'
       responses:
         '201':
           description: Message sent successfully
@@ -340,50 +345,114 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChatMessage'
-
-  /chats/{id}/members:
+  /chats-members:
     post:
       security:
         - oauth2: [ ]
       tags:
-        - chat
+        - chat-member
       summary: Add a member to a chat
       operationId: addMemberToChat
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
       requestBody:
         description: User object that needs to be added as a member
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/ChatMemberInfo'
       responses:
         '200':
           description: Member added successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Chat'
-
-  /chats/{id}/members/{userId}:
-    delete:
+                $ref: '#/components/schemas/ChatMember'
+        '404':
+          description: Chat or user not found
+    get:
       security:
         - oauth2: [ ]
       tags:
-        - chat
-      summary: Remove a member from a chat
-      operationId: removeMemberFromChat
+        - chat-member
+      summary: Get chat members by chat ID
+      operationId: getChatMembersByChatId
+      parameters:
+        - name: chatId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Member added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMember'
+        '404':
+          description: Chat or user not found
+  /chats-members/{id}:
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-member
+      summary: Get a chat member by ID
+      operationId: getChatMemberById
       parameters:
         - name: id
+          description: Chat member ID
           in: path
           required: true
           schema:
             type: string
-        - name: userId
+      responses:
+        '200':
+          description: Chat member retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMember'
+        '404':
+          description: Chat or member not found
+    put:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-member
+      summary: Update an existing chat member
+      operationId: updateChatMember
+      parameters:
+        - name: id
+          description: Chat member ID
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: ChatMember object that needs to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatMemberInfo'
+      responses:
+        '200':
+          description: Chat member retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMember'
+        '404':
+          description: Chat or member not found
+    delete:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-member
+      summary: Remove a member from a chat
+      operationId: removeMemberFromChat
+      parameters:
+        - name: id
+          description: Chat member ID
           in: path
           required: true
           schema:
@@ -453,7 +522,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ChatMessage'
+              $ref: '#/components/schemas/ChatMessageInfo'
       responses:
         '200':
           description: Chat message updated successfully
@@ -483,14 +552,83 @@ paths:
         '404':
           description: Chat message not found
 
-  /chat-messages/{id}/reactions:
+  /chat-reactions:
     post:
       security:
         - oauth2: [ ]
       tags:
-        - chat-message
+        - chat-reaction
       summary: Add a reaction to a chat message
       operationId: addReactionToChatMessage
+      requestBody:
+        description: Reaction object that needs to be added to the chat message
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatReaction'
+      responses:
+        '200':
+          description: Reaction added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatReaction'
+        '404':
+          description: Chat message not found
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-reaction
+      summary: Get reactions from a chat message
+      operationId: getReactionsFromChatMessage
+      parameters:
+        - name: chatId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Reaction added successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChatReaction'
+        '404':
+          description: Chat message not found
+  /chat-reactions/{id}:
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-reaction
+      summary: Remove a reaction from a chat message
+      operationId: getReactionFromChatMessage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Reaction removed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatReaction'
+        '404':
+          description: Chat message or reaction not found/calls
+    put:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-reaction
+      summary: Put a reaction from a chat message
+      operationId: putReactionFromChatMessage
       parameters:
         - name: id
           in: path
@@ -502,28 +640,27 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ChatReaction'
+              $ref: '#/components/schemas/ChatReactionInfo'
       responses:
-        '200':
-          description: Reaction added successfully
+        '204':
+          description: Reaction removed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChatReaction'
         '404':
-          description: Chat message not found
-
-  /chat-messages/{id}/reactions/{reaction}:
+          description: Chat message or reaction not found/calls
     delete:
       security:
         - oauth2: [ ]
       tags:
-        - chat-message
+        - chat-reaction
       summary: Remove a reaction from a chat message
       operationId: removeReactionFromChatMessage
       parameters:
         - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: reaction
           in: path
           required: true
           schema:
@@ -813,7 +950,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PaymentInfo'
+              $ref: '#/components/schemas/PaymentTransactionInfo'
       responses:
         '200':
           description: Payment transaction initiated successfully
@@ -1112,15 +1249,117 @@ paths:
           required: true
           schema:
             type: string
+  /associations:
+    post:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association
+      summary: Add an association by ID
+      operationId: addAssociationById
+      requestBody:
+        description: Association details for adding the association
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssociationInfo'
+      responses:
+        '200':
+          description: Association retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Association'
+        '404':
+          description: Association not found
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association
+      summary: Get all Associations
+      operationId: queryAssociations
+      responses:
+        '204':
+          description: Association deleted successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Association'
+  /associations/{id}:
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association
+      summary: Get a association by ID
+      operationId: getAssociationById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Association retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Association'
+        '404':
+          description: Association not found
+    put:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association
+      summary: Update a association by ID
+      operationId: updateAssociationById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Association details for adding the association
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssociationInfo'
+      responses:
+        '200':
+          description: Association updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Association'
+        '404':
+          description: Association not found
+    delete:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association
+      summary: Delete an Association by ID
+      operationId: deleteAssociationById
+      responses:
+        '204':
+          description: Association deleted successfully
+        '404':
+          description: Association not found
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
 components:
   schemas:
-    SyncStatus:
-      type: string
-      enum:
-        - Synced
-        - Updated
-        - Deleted
-    User:
+    Base:
       type: object
       properties:
         id:
@@ -1135,6 +1374,57 @@ components:
           type: integer
         syncStatus:
           $ref: "#/components/schemas/SyncStatus"
+    AssociationInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        members:
+          type: array
+          items:
+            $ref: "#/components/schemas/AssociationMember"
+        description:
+          type: string
+        name:
+          type: string
+        chatId:
+          type: string
+      required:
+        - name
+        - description
+        - chatId
+        - members
+    AssociationRole:
+      type: string
+      enum:
+        - Admin
+        - Member
+    AssociationMember:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        associationId:
+          type: string
+        role:
+          $ref: "#/components/schemas/AssociationRole"
+    Association:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/AssociationInfo"
+    SyncStatus:
+      type: string
+      enum:
+        - Synced
+        - Updated
+        - Deleted
+    UserInfo:
+      type: object
+      properties:
+        id:
+          type: string
         username:
           type: string
         phoneNumber:
@@ -1143,21 +1433,13 @@ components:
           type: string
       required:
         - username
-    Chat:
+    User:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/UserInfo"
+    ChatInfo:
       type: object
       properties:
-        id:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        version:
-          type: integer
-        syncStatus:
-          $ref: "#/components/schemas/SyncStatus"
         name:
           type: string
         members:
@@ -1170,21 +1452,15 @@ components:
         - name
         - members
         - chatType
-    ChatMember:
+    Chat:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/ChatInfo"
+    ChatMemberInfo:
       type: object
       properties:
         id:
           type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        version:
-          type: integer
-        syncStatus:
-          $ref: "#/components/schemas/SyncStatus"
         userId:
           type: string
         chatId:
@@ -1192,26 +1468,20 @@ components:
       required:
         - userId
         - chatId
+    ChatMember:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/ChatMemberInfo"
     ChatType:
       type: string
       enum:
         - Simple
         - Group
-    ChatMessage:
+    ChatMessageInfo:
       type: object
       properties:
         id:
           type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        version:
-          type: integer
-        syncStatus:
-          $ref: "#/components/schemas/SyncStatus"
         content:
           type: string
         authorId:
@@ -1222,25 +1492,53 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Attachment"
+        reactions:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChatReaction"
       required:
         - content
         - authorId
         - chatId
-    Call:
+    ChatMessage:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/ChatMessageInfo"
+    ReactionType:
+      type: string
+      enum:
+        - Emoji
+    ChatReactionInfo:
       type: object
       properties:
         id:
           type: string
-        createdAt:
+        userId:
           type: string
-          format: date-time
-        updatedAt:
+        messageId:
           type: string
-          format: date-time
-        version:
-          type: integer
-        syncStatus:
-          $ref: "#/components/schemas/SyncStatus"
+        reactionType:
+          $ref: "#/components/schemas/ReactionType"
+        content:
+          type: string
+      required:
+        - userId
+        - messageId
+        - reactionType
+    ChatReaction:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/ChatReactionInfo"
+      required:
+        - id
+        - userId
+        - messageId
+        - reactionType
+    CallInfo:
+      type: object
+      properties:
+        id:
+          type: string
         startTime:
           type: string
           format: date-time
@@ -1263,21 +1561,15 @@ components:
         - participants
         - callType
         - initiator
-    Attachment:
+    Call:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/CallInfo"
+    AttachmentInfo:
       type: object
       properties:
         id:
           type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        version:
-          type: integer
-        syncStatus:
-          $ref: "#/components/schemas/SyncStatus"
         attachmentType:
           $ref: "#/components/schemas/AttachmentType"
         url:
@@ -1288,28 +1580,28 @@ components:
         - type
         - url
         - message
+    Attachment:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/AttachmentInfo"
     AttachmentType:
       type: string
       enum:
-        - Image
-        - Video
-        - Audio
-        - Document
-    PaymentTransaction:
+        - image
+        - video
+        - audio
+        - file
+        - location
+        - contact
+        - sticker
+        - link
+        - poll
+        - other
+    PaymentTransactionInfo:
       type: object
       properties:
         id:
           type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        version:
-          type: integer
-        syncStatus:
-          $ref: "#/components/schemas/SyncStatus"
         amount:
           type: integer
           format: decimal
@@ -1346,21 +1638,15 @@ components:
         - type
         - reason
         - status
-    Order:
+    PaymentTransaction:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/PaymentTransactionInfo"
+    OrderInfo:
       type: object
       properties:
         id:
           type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        version:
-          type: integer
-        syncStatus:
-          $ref: "#/components/schemas/SyncStatus"
         items:
           type: array
           items:
@@ -1382,21 +1668,15 @@ components:
         - totalAmount
         - buyer
         - seller
-    Product:
+    Order:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/OrderInfo"
+    ProductInfo:
       type: object
       properties:
         id:
           type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        version:
-          type: integer
-        syncStatus:
-          $ref: "#/components/schemas/SyncStatus"
         name:
           type: string
         description:
@@ -1414,21 +1694,15 @@ components:
         - name
         - price
         - seller
-    UserSettings:
+    Product:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/ProductInfo"
+    UserSettingsInfo:
       type: object
       properties:
         id:
           type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        version:
-          type: integer
-        syncStatus:
-          $ref: "#/components/schemas/SyncStatus"
         user:
           $ref: "#/components/schemas/User"
         language:
@@ -1443,65 +1717,15 @@ components:
             $ref: "#/components/schemas/BlockedUser"
       required:
         - user
-    ProductInfo:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        price:
-          type: integer
-          format: decimal
-        seller:
-          $ref: "#/components/schemas/User"
-        content:
-          type: object
-        productType:
-          type: string
-      required:
-        - name
-        - price
-        - seller
-    OrderInfo:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: "#/components/schemas/OrderItem"
-        totalAmount:
-          type: integer
-          format: decimal
-        timestamp:
-          type: string
-          format: date-time
-        status:
-          type: string
-        buyer:
-          $ref: "#/components/schemas/User"
-        seller:
-          $ref: "#/components/schemas/User"
-      required:
-        - items
-        - totalAmount
-        - buyer
-        - seller
-    OrderItem:
+    UserSettings:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/UserSettingsInfo"
+    OrderItemInfo:
       type: object
       properties:
         id:
           type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        version:
-          type: integer
-        syncStatus:
-          $ref: "#/components/schemas/SyncStatus"
         productId:
           type: string
         orderId:
@@ -1514,21 +1738,15 @@ components:
         - productId
         - quantity
         - orderId
-    BlockedUser:
+    OrderItem:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/OrderItemInfo"
+    BlockedUserInfo:
       type: object
       properties:
         id:
           type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        version:
-          type: integer
-        syncStatus:
-          $ref: "#/components/schemas/SyncStatus"
         userSettingId:
           type: string
         blockedUserId:
@@ -1536,45 +1754,11 @@ components:
       required:
         - userSettingId
         - blockedUserId
-    PaymentInfo:
-      type: object
-      properties:
-        amount:
-          type: integer
-          format: decimal
-        currency:
-          type: string
-        timestamp:
-          type: string
-          format: date-time
-        sender:
-          $ref: "#/components/schemas/User"
-        recipient:
-          $ref: "#/components/schemas/User"
-        type:
-          type: string
-          enum:
-            - CreditCard
-            - PayPal
-            - ApplePay
-            - GooglePay
-            - BankTransfer
-        reason:
-          type: string
-      required:
-        - amount
-        - currency
-        - sender
-        - recipient
-        - type
-        - reason
-    ChatReaction:
-      type: object
-      properties:
-        reaction:
-          type: string
-      required:
-        - reaction
+    BlockedUser:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/BlockedUserInfo"
+
   securitySchemes:
     oauth2:
       type: http

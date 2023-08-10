@@ -4,6 +4,8 @@
 
 // ignore_for_file: unused_element
 import 'package:skakel_api/src/model/sync_status.dart';
+import 'package:skakel_api/src/model/user_info.dart';
+import 'package:skakel_api/src/model/base.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -21,32 +23,7 @@ part 'user.g.dart';
 /// * [phoneNumber] 
 /// * [profilePicture] 
 @BuiltValue()
-abstract class User implements Built<User, UserBuilder> {
-  @BuiltValueField(wireName: r'id')
-  String? get id;
-
-  @BuiltValueField(wireName: r'createdAt')
-  DateTime? get createdAt;
-
-  @BuiltValueField(wireName: r'updatedAt')
-  DateTime? get updatedAt;
-
-  @BuiltValueField(wireName: r'version')
-  int? get version;
-
-  @BuiltValueField(wireName: r'syncStatus')
-  SyncStatus? get syncStatus;
-  // enum syncStatusEnum {  Synced,  Updated,  Deleted,  };
-
-  @BuiltValueField(wireName: r'username')
-  String get username;
-
-  @BuiltValueField(wireName: r'phoneNumber')
-  String? get phoneNumber;
-
-  @BuiltValueField(wireName: r'profilePicture')
-  String? get profilePicture;
-
+abstract class User implements Base, UserInfo, Built<User, UserBuilder> {
   User._();
 
   factory User([void updates(UserBuilder b)]) = _$User;
@@ -70,10 +47,10 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
     User object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
-    if (object.id != null) {
-      yield r'id';
+    if (object.profilePicture != null) {
+      yield r'profilePicture';
       yield serializers.serialize(
-        object.id,
+        object.profilePicture,
         specifiedType: const FullType(String),
       );
     }
@@ -84,11 +61,18 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
         specifiedType: const FullType(DateTime),
       );
     }
-    if (object.updatedAt != null) {
-      yield r'updatedAt';
+    if (object.phoneNumber != null) {
+      yield r'phoneNumber';
       yield serializers.serialize(
-        object.updatedAt,
-        specifiedType: const FullType(DateTime),
+        object.phoneNumber,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.id != null) {
+      yield r'id';
+      yield serializers.serialize(
+        object.id,
+        specifiedType: const FullType(String),
       );
     }
     if (object.version != null) {
@@ -110,18 +94,11 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
       object.username,
       specifiedType: const FullType(String),
     );
-    if (object.phoneNumber != null) {
-      yield r'phoneNumber';
+    if (object.updatedAt != null) {
+      yield r'updatedAt';
       yield serializers.serialize(
-        object.phoneNumber,
-        specifiedType: const FullType(String),
-      );
-    }
-    if (object.profilePicture != null) {
-      yield r'profilePicture';
-      yield serializers.serialize(
-        object.profilePicture,
-        specifiedType: const FullType(String),
+        object.updatedAt,
+        specifiedType: const FullType(DateTime),
       );
     }
   }
@@ -147,12 +124,12 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
-        case r'id':
+        case r'profilePicture':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
-          result.id = valueDes;
+          result.profilePicture = valueDes;
           break;
         case r'createdAt':
           final valueDes = serializers.deserialize(
@@ -161,12 +138,19 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
           ) as DateTime;
           result.createdAt = valueDes;
           break;
-        case r'updatedAt':
+        case r'phoneNumber':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.updatedAt = valueDes;
+            specifiedType: const FullType(String),
+          ) as String;
+          result.phoneNumber = valueDes;
+          break;
+        case r'id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.id = valueDes;
           break;
         case r'version':
           final valueDes = serializers.deserialize(
@@ -189,19 +173,12 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
           ) as String;
           result.username = valueDes;
           break;
-        case r'phoneNumber':
+        case r'updatedAt':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.phoneNumber = valueDes;
-          break;
-        case r'profilePicture':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.profilePicture = valueDes;
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.updatedAt = valueDes;
           break;
         default:
           unhandled.add(key);

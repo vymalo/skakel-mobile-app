@@ -102,7 +102,7 @@ extension OrderToModel on ExtendedOrder {
 
 extension OrderToInfo on Order {
   api.OrderInfo toInfo() {
-    final apiOrder = api.OrderInfoBuilder()
+    final apiOrder = api.$OrderInfoBuilder()
       ..items = ListBuilder(items.toApi())
       ..totalAmount = totalAmount
       ..timestamp = timestamp

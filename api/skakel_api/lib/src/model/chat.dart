@@ -4,8 +4,10 @@
 
 // ignore_for_file: unused_element
 import 'package:skakel_api/src/model/chat_member.dart';
+import 'package:skakel_api/src/model/chat_info.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:skakel_api/src/model/sync_status.dart';
+import 'package:skakel_api/src/model/base.dart';
 import 'package:skakel_api/src/model/chat_type.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -24,33 +26,7 @@ part 'chat.g.dart';
 /// * [members] 
 /// * [chatType] 
 @BuiltValue()
-abstract class Chat implements Built<Chat, ChatBuilder> {
-  @BuiltValueField(wireName: r'id')
-  String? get id;
-
-  @BuiltValueField(wireName: r'createdAt')
-  DateTime? get createdAt;
-
-  @BuiltValueField(wireName: r'updatedAt')
-  DateTime? get updatedAt;
-
-  @BuiltValueField(wireName: r'version')
-  int? get version;
-
-  @BuiltValueField(wireName: r'syncStatus')
-  SyncStatus? get syncStatus;
-  // enum syncStatusEnum {  Synced,  Updated,  Deleted,  };
-
-  @BuiltValueField(wireName: r'name')
-  String get name;
-
-  @BuiltValueField(wireName: r'members')
-  BuiltList<ChatMember> get members;
-
-  @BuiltValueField(wireName: r'chatType')
-  ChatType get chatType;
-  // enum chatTypeEnum {  Simple,  Group,  };
-
+abstract class Chat implements Base, ChatInfo, Built<Chat, ChatBuilder> {
   Chat._();
 
   factory Chat([void updates(ChatBuilder b)]) = _$Chat;
@@ -74,13 +50,6 @@ class _$ChatSerializer implements PrimitiveSerializer<Chat> {
     Chat object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
-    if (object.id != null) {
-      yield r'id';
-      yield serializers.serialize(
-        object.id,
-        specifiedType: const FullType(String),
-      );
-    }
     if (object.createdAt != null) {
       yield r'createdAt';
       yield serializers.serialize(
@@ -88,11 +57,21 @@ class _$ChatSerializer implements PrimitiveSerializer<Chat> {
         specifiedType: const FullType(DateTime),
       );
     }
-    if (object.updatedAt != null) {
-      yield r'updatedAt';
+    yield r'members';
+    yield serializers.serialize(
+      object.members,
+      specifiedType: const FullType(BuiltList, [FullType(ChatMember)]),
+    );
+    yield r'name';
+    yield serializers.serialize(
+      object.name,
+      specifiedType: const FullType(String),
+    );
+    if (object.id != null) {
+      yield r'id';
       yield serializers.serialize(
-        object.updatedAt,
-        specifiedType: const FullType(DateTime),
+        object.id,
+        specifiedType: const FullType(String),
       );
     }
     if (object.version != null) {
@@ -109,21 +88,18 @@ class _$ChatSerializer implements PrimitiveSerializer<Chat> {
         specifiedType: const FullType(SyncStatus),
       );
     }
-    yield r'name';
-    yield serializers.serialize(
-      object.name,
-      specifiedType: const FullType(String),
-    );
-    yield r'members';
-    yield serializers.serialize(
-      object.members,
-      specifiedType: const FullType(BuiltList, [FullType(ChatMember)]),
-    );
     yield r'chatType';
     yield serializers.serialize(
       object.chatType,
       specifiedType: const FullType(ChatType),
     );
+    if (object.updatedAt != null) {
+      yield r'updatedAt';
+      yield serializers.serialize(
+        object.updatedAt,
+        specifiedType: const FullType(DateTime),
+      );
+    }
   }
 
   @override
@@ -147,13 +123,6 @@ class _$ChatSerializer implements PrimitiveSerializer<Chat> {
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
-        case r'id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.id = valueDes;
-          break;
         case r'createdAt':
           final valueDes = serializers.deserialize(
             value,
@@ -161,12 +130,26 @@ class _$ChatSerializer implements PrimitiveSerializer<Chat> {
           ) as DateTime;
           result.createdAt = valueDes;
           break;
-        case r'updatedAt':
+        case r'members':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.updatedAt = valueDes;
+            specifiedType: const FullType(BuiltList, [FullType(ChatMember)]),
+          ) as BuiltList<ChatMember>;
+          result.members.replace(valueDes);
+          break;
+        case r'name':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.name = valueDes;
+          break;
+        case r'id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.id = valueDes;
           break;
         case r'version':
           final valueDes = serializers.deserialize(
@@ -182,26 +165,19 @@ class _$ChatSerializer implements PrimitiveSerializer<Chat> {
           ) as SyncStatus;
           result.syncStatus = valueDes;
           break;
-        case r'name':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.name = valueDes;
-          break;
-        case r'members':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(BuiltList, [FullType(ChatMember)]),
-          ) as BuiltList<ChatMember>;
-          result.members.replace(valueDes);
-          break;
         case r'chatType':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(ChatType),
           ) as ChatType;
           result.chatType = valueDes;
+          break;
+        case r'updatedAt':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.updatedAt = valueDes;
           break;
         default:
           unhandled.add(key);

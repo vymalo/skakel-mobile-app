@@ -5,7 +5,7 @@
 import 'package:skakel_api/api.dart';
 ```
 
-All URIs are relative to *https://skakel.ssegning.com/dev*
+All URIs are relative to *https://skakel.apps.ssegning.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -58,7 +58,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updateUserSettings**
-> UserSettings updateUserSettings(id, userSettings)
+> UserSettings updateUserSettings(id, userSettingsInfo)
 
 Update user settings
 
@@ -71,10 +71,10 @@ import 'package:skakel_api/api.dart';
 
 final api = SkakelApi().getUserSettingsApi();
 final String id = id_example; // String | 
-final UserSettings userSettings = ; // UserSettings | User settings object that needs to be updated
+final UserSettingsInfo userSettingsInfo = ; // UserSettingsInfo | User settings object that needs to be updated
 
 try {
-    final response = api.updateUserSettings(id, userSettings);
+    final response = api.updateUserSettings(id, userSettingsInfo);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling UserSettingsApi->updateUserSettings: $e\n');
@@ -86,7 +86,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**|  | 
- **userSettings** | [**UserSettings**](UserSettings.md)| User settings object that needs to be updated | [optional] 
+ **userSettingsInfo** | [**UserSettingsInfo**](UserSettingsInfo.md)| User settings object that needs to be updated | [optional] 
 
 ### Return type
 

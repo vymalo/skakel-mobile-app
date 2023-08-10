@@ -8,6 +8,7 @@ import 'package:skakel_api/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**id** | **String** |  | [optional] 
 **items** | [**BuiltList&lt;OrderItem&gt;**](OrderItem.md) |  | 
 **totalAmount** | **int** |  | 
 **timestamp** | [**DateTime**](DateTime.md) |  | [optional] 

@@ -44,8 +44,7 @@ class ChatMessageRemoteDataSource extends BaseRepo<ChatMessage> {
   Future<ChatMessage> save(ChatMessage entity) async {
     try {
       final response = await _chatApi.sendMessageToChat(
-        id: entity.chatId,
-        chatMessage: entity.toApi(),
+        chatMessageInfo: entity.toApi(),
       );
       final data = response.data;
       if (data == null) {

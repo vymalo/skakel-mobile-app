@@ -39,7 +39,7 @@ class UserRemoteDataSource extends BaseRepo<User> {
   @override
   Future<User> save(User entity) async {
     try {
-      final response = await _api.createUser(user: entity.toApi());
+      final response = await _api.createUser(userInfo: entity.toApi());
       final data = response.data;
       if (data == null) {
         throw Exception('ChatRemoteDataSource.save: data is null');

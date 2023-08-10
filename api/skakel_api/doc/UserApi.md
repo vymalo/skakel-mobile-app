@@ -5,7 +5,7 @@
 import 'package:skakel_api/api.dart';
 ```
 
-All URIs are relative to *https://skakel.ssegning.com/dev*
+All URIs are relative to *https://skakel.apps.ssegning.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -17,7 +17,7 @@ Method | HTTP request | Description
 
 
 # **createUser**
-> User createUser(user)
+> User createUser(userInfo)
 
 Create a new user
 
@@ -29,10 +29,10 @@ import 'package:skakel_api/api.dart';
 //defaultApiClient.getAuthentication<HttpBasicAuth>('oauth2').password = 'YOUR_PASSWORD';
 
 final api = SkakelApi().getUserApi();
-final User user = ; // User | User object that needs to be added
+final UserInfo userInfo = ; // UserInfo | User object that needs to be added
 
 try {
-    final response = api.createUser(user);
+    final response = api.createUser(userInfo);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling UserApi->createUser: $e\n');
@@ -43,7 +43,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | [**User**](User.md)| User object that needs to be added | [optional] 
+ **userInfo** | [**UserInfo**](UserInfo.md)| User object that needs to be added | [optional] 
 
 ### Return type
 
@@ -188,7 +188,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updateUser**
-> User updateUser(id, user)
+> User updateUser(id, userInfo)
 
 Update an existing user
 
@@ -201,10 +201,10 @@ import 'package:skakel_api/api.dart';
 
 final api = SkakelApi().getUserApi();
 final String id = id_example; // String | 
-final User user = ; // User | User object that needs to be updated
+final UserInfo userInfo = ; // UserInfo | User object that needs to be updated
 
 try {
-    final response = api.updateUser(id, user);
+    final response = api.updateUser(id, userInfo);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling UserApi->updateUser: $e\n');
@@ -216,7 +216,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**|  | 
- **user** | [**User**](User.md)| User object that needs to be updated | [optional] 
+ **userInfo** | [**UserInfo**](UserInfo.md)| User object that needs to be updated | [optional] 
 
 ### Return type
 

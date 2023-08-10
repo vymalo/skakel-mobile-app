@@ -6,6 +6,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:skakel_api/src/model/user.dart';
 import 'package:skakel_api/src/model/sync_status.dart';
+import 'package:skakel_api/src/model/payment_transaction_info.dart';
+import 'package:skakel_api/src/model/base.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -28,49 +30,7 @@ part 'payment_transaction.g.dart';
 /// * [reason] 
 /// * [status] 
 @BuiltValue()
-abstract class PaymentTransaction implements Built<PaymentTransaction, PaymentTransactionBuilder> {
-  @BuiltValueField(wireName: r'id')
-  String? get id;
-
-  @BuiltValueField(wireName: r'createdAt')
-  DateTime? get createdAt;
-
-  @BuiltValueField(wireName: r'updatedAt')
-  DateTime? get updatedAt;
-
-  @BuiltValueField(wireName: r'version')
-  int? get version;
-
-  @BuiltValueField(wireName: r'syncStatus')
-  SyncStatus? get syncStatus;
-  // enum syncStatusEnum {  Synced,  Updated,  Deleted,  };
-
-  @BuiltValueField(wireName: r'amount')
-  int get amount;
-
-  @BuiltValueField(wireName: r'currency')
-  String get currency;
-
-  @BuiltValueField(wireName: r'timestamp')
-  DateTime? get timestamp;
-
-  @BuiltValueField(wireName: r'sender')
-  User get sender;
-
-  @BuiltValueField(wireName: r'recipient')
-  User get recipient;
-
-  @BuiltValueField(wireName: r'type')
-  PaymentTransactionTypeEnum get type;
-  // enum typeEnum {  CreditCard,  PayPal,  ApplePay,  GooglePay,  BankTransfer,  };
-
-  @BuiltValueField(wireName: r'reason')
-  String get reason;
-
-  @BuiltValueField(wireName: r'status')
-  PaymentTransactionStatusEnum get status;
-  // enum statusEnum {  Pending,  Completed,  Failed,  };
-
+abstract class PaymentTransaction implements Base, PaymentTransactionInfo, Built<PaymentTransaction, PaymentTransactionBuilder> {
   PaymentTransaction._();
 
   factory PaymentTransaction([void updates(PaymentTransactionBuilder b)]) = _$PaymentTransaction;
@@ -94,27 +54,21 @@ class _$PaymentTransactionSerializer implements PrimitiveSerializer<PaymentTrans
     PaymentTransaction object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
-    if (object.id != null) {
-      yield r'id';
-      yield serializers.serialize(
-        object.id,
-        specifiedType: const FullType(String),
-      );
-    }
-    if (object.createdAt != null) {
-      yield r'createdAt';
-      yield serializers.serialize(
-        object.createdAt,
-        specifiedType: const FullType(DateTime),
-      );
-    }
-    if (object.updatedAt != null) {
-      yield r'updatedAt';
-      yield serializers.serialize(
-        object.updatedAt,
-        specifiedType: const FullType(DateTime),
-      );
-    }
+    yield r'reason';
+    yield serializers.serialize(
+      object.reason,
+      specifiedType: const FullType(String),
+    );
+    yield r'amount';
+    yield serializers.serialize(
+      object.amount,
+      specifiedType: const FullType(int),
+    );
+    yield r'type';
+    yield serializers.serialize(
+      object.type,
+      specifiedType: const FullType(PaymentTransactionInfoTypeEnum),
+    );
     if (object.version != null) {
       yield r'version';
       yield serializers.serialize(
@@ -122,27 +76,10 @@ class _$PaymentTransactionSerializer implements PrimitiveSerializer<PaymentTrans
         specifiedType: const FullType(int),
       );
     }
-    if (object.syncStatus != null) {
-      yield r'syncStatus';
+    if (object.createdAt != null) {
+      yield r'createdAt';
       yield serializers.serialize(
-        object.syncStatus,
-        specifiedType: const FullType(SyncStatus),
-      );
-    }
-    yield r'amount';
-    yield serializers.serialize(
-      object.amount,
-      specifiedType: const FullType(int),
-    );
-    yield r'currency';
-    yield serializers.serialize(
-      object.currency,
-      specifiedType: const FullType(String),
-    );
-    if (object.timestamp != null) {
-      yield r'timestamp';
-      yield serializers.serialize(
-        object.timestamp,
+        object.createdAt,
         specifiedType: const FullType(DateTime),
       );
     }
@@ -156,21 +93,44 @@ class _$PaymentTransactionSerializer implements PrimitiveSerializer<PaymentTrans
       object.recipient,
       specifiedType: const FullType(User),
     );
-    yield r'type';
+    yield r'currency';
     yield serializers.serialize(
-      object.type,
-      specifiedType: const FullType(PaymentTransactionTypeEnum),
-    );
-    yield r'reason';
-    yield serializers.serialize(
-      object.reason,
+      object.currency,
       specifiedType: const FullType(String),
     );
+    if (object.id != null) {
+      yield r'id';
+      yield serializers.serialize(
+        object.id,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.syncStatus != null) {
+      yield r'syncStatus';
+      yield serializers.serialize(
+        object.syncStatus,
+        specifiedType: const FullType(SyncStatus),
+      );
+    }
+    if (object.timestamp != null) {
+      yield r'timestamp';
+      yield serializers.serialize(
+        object.timestamp,
+        specifiedType: const FullType(DateTime),
+      );
+    }
     yield r'status';
     yield serializers.serialize(
       object.status,
-      specifiedType: const FullType(PaymentTransactionStatusEnum),
+      specifiedType: const FullType(PaymentTransactionInfoStatusEnum),
     );
+    if (object.updatedAt != null) {
+      yield r'updatedAt';
+      yield serializers.serialize(
+        object.updatedAt,
+        specifiedType: const FullType(DateTime),
+      );
+    }
   }
 
   @override
@@ -194,40 +154,12 @@ class _$PaymentTransactionSerializer implements PrimitiveSerializer<PaymentTrans
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
-        case r'id':
+        case r'reason':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
-          result.id = valueDes;
-          break;
-        case r'createdAt':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.createdAt = valueDes;
-          break;
-        case r'updatedAt':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.updatedAt = valueDes;
-          break;
-        case r'version':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          ) as int;
-          result.version = valueDes;
-          break;
-        case r'syncStatus':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(SyncStatus),
-          ) as SyncStatus;
-          result.syncStatus = valueDes;
+          result.reason = valueDes;
           break;
         case r'amount':
           final valueDes = serializers.deserialize(
@@ -236,19 +168,26 @@ class _$PaymentTransactionSerializer implements PrimitiveSerializer<PaymentTrans
           ) as int;
           result.amount = valueDes;
           break;
-        case r'currency':
+        case r'type':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.currency = valueDes;
+            specifiedType: const FullType(PaymentTransactionInfoTypeEnum),
+          ) as PaymentTransactionInfoTypeEnum;
+          result.type = valueDes;
           break;
-        case r'timestamp':
+        case r'version':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          ) as int;
+          result.version = valueDes;
+          break;
+        case r'createdAt':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(DateTime),
           ) as DateTime;
-          result.timestamp = valueDes;
+          result.createdAt = valueDes;
           break;
         case r'sender':
           final valueDes = serializers.deserialize(
@@ -264,26 +203,47 @@ class _$PaymentTransactionSerializer implements PrimitiveSerializer<PaymentTrans
           ) as User;
           result.recipient.replace(valueDes);
           break;
-        case r'type':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(PaymentTransactionTypeEnum),
-          ) as PaymentTransactionTypeEnum;
-          result.type = valueDes;
-          break;
-        case r'reason':
+        case r'currency':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
-          result.reason = valueDes;
+          result.currency = valueDes;
+          break;
+        case r'id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.id = valueDes;
+          break;
+        case r'syncStatus':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(SyncStatus),
+          ) as SyncStatus;
+          result.syncStatus = valueDes;
+          break;
+        case r'timestamp':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.timestamp = valueDes;
           break;
         case r'status':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(PaymentTransactionStatusEnum),
-          ) as PaymentTransactionStatusEnum;
+            specifiedType: const FullType(PaymentTransactionInfoStatusEnum),
+          ) as PaymentTransactionInfoStatusEnum;
           result.status = valueDes;
+          break;
+        case r'updatedAt':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.updatedAt = valueDes;
           break;
         default:
           unhandled.add(key);

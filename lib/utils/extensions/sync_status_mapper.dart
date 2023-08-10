@@ -1,5 +1,5 @@
-import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_api/skakel_api.dart' as api;
+import 'package:skakel_mobile/db/base/sync_status.dart';
 
 /// This extension is used to convert a SyncStatus to an api SyncStatus.
 extension SyncStatusToApi on SyncStatus {

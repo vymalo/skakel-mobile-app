@@ -4,6 +4,8 @@
 
 // ignore_for_file: unused_element
 import 'package:skakel_api/src/model/sync_status.dart';
+import 'package:skakel_api/src/model/base.dart';
+import 'package:skakel_api/src/model/blocked_user_info.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -20,29 +22,7 @@ part 'blocked_user.g.dart';
 /// * [userSettingId] 
 /// * [blockedUserId] 
 @BuiltValue()
-abstract class BlockedUser implements Built<BlockedUser, BlockedUserBuilder> {
-  @BuiltValueField(wireName: r'id')
-  String? get id;
-
-  @BuiltValueField(wireName: r'createdAt')
-  DateTime? get createdAt;
-
-  @BuiltValueField(wireName: r'updatedAt')
-  DateTime? get updatedAt;
-
-  @BuiltValueField(wireName: r'version')
-  int? get version;
-
-  @BuiltValueField(wireName: r'syncStatus')
-  SyncStatus? get syncStatus;
-  // enum syncStatusEnum {  Synced,  Updated,  Deleted,  };
-
-  @BuiltValueField(wireName: r'userSettingId')
-  String get userSettingId;
-
-  @BuiltValueField(wireName: r'blockedUserId')
-  String get blockedUserId;
-
+abstract class BlockedUser implements Base, BlockedUserInfo, Built<BlockedUser, BlockedUserBuilder> {
   BlockedUser._();
 
   factory BlockedUser([void updates(BlockedUserBuilder b)]) = _$BlockedUser;
@@ -66,13 +46,6 @@ class _$BlockedUserSerializer implements PrimitiveSerializer<BlockedUser> {
     BlockedUser object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
-    if (object.id != null) {
-      yield r'id';
-      yield serializers.serialize(
-        object.id,
-        specifiedType: const FullType(String),
-      );
-    }
     if (object.createdAt != null) {
       yield r'createdAt';
       yield serializers.serialize(
@@ -80,11 +53,21 @@ class _$BlockedUserSerializer implements PrimitiveSerializer<BlockedUser> {
         specifiedType: const FullType(DateTime),
       );
     }
-    if (object.updatedAt != null) {
-      yield r'updatedAt';
+    yield r'userSettingId';
+    yield serializers.serialize(
+      object.userSettingId,
+      specifiedType: const FullType(String),
+    );
+    yield r'blockedUserId';
+    yield serializers.serialize(
+      object.blockedUserId,
+      specifiedType: const FullType(String),
+    );
+    if (object.id != null) {
+      yield r'id';
       yield serializers.serialize(
-        object.updatedAt,
-        specifiedType: const FullType(DateTime),
+        object.id,
+        specifiedType: const FullType(String),
       );
     }
     if (object.version != null) {
@@ -101,16 +84,13 @@ class _$BlockedUserSerializer implements PrimitiveSerializer<BlockedUser> {
         specifiedType: const FullType(SyncStatus),
       );
     }
-    yield r'userSettingId';
-    yield serializers.serialize(
-      object.userSettingId,
-      specifiedType: const FullType(String),
-    );
-    yield r'blockedUserId';
-    yield serializers.serialize(
-      object.blockedUserId,
-      specifiedType: const FullType(String),
-    );
+    if (object.updatedAt != null) {
+      yield r'updatedAt';
+      yield serializers.serialize(
+        object.updatedAt,
+        specifiedType: const FullType(DateTime),
+      );
+    }
   }
 
   @override
@@ -134,13 +114,6 @@ class _$BlockedUserSerializer implements PrimitiveSerializer<BlockedUser> {
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
-        case r'id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.id = valueDes;
-          break;
         case r'createdAt':
           final valueDes = serializers.deserialize(
             value,
@@ -148,12 +121,26 @@ class _$BlockedUserSerializer implements PrimitiveSerializer<BlockedUser> {
           ) as DateTime;
           result.createdAt = valueDes;
           break;
-        case r'updatedAt':
+        case r'userSettingId':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.updatedAt = valueDes;
+            specifiedType: const FullType(String),
+          ) as String;
+          result.userSettingId = valueDes;
+          break;
+        case r'blockedUserId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.blockedUserId = valueDes;
+          break;
+        case r'id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.id = valueDes;
           break;
         case r'version':
           final valueDes = serializers.deserialize(
@@ -169,19 +156,12 @@ class _$BlockedUserSerializer implements PrimitiveSerializer<BlockedUser> {
           ) as SyncStatus;
           result.syncStatus = valueDes;
           break;
-        case r'userSettingId':
+        case r'updatedAt':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.userSettingId = valueDes;
-          break;
-        case r'blockedUserId':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.blockedUserId = valueDes;
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.updatedAt = valueDes;
           break;
         default:
           unhandled.add(key);

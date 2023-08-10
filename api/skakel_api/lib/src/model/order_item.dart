@@ -4,6 +4,8 @@
 
 // ignore_for_file: unused_element
 import 'package:skakel_api/src/model/sync_status.dart';
+import 'package:skakel_api/src/model/order_item_info.dart';
+import 'package:skakel_api/src/model/base.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -22,35 +24,7 @@ part 'order_item.g.dart';
 /// * [quantity] 
 /// * [notes] 
 @BuiltValue()
-abstract class OrderItem implements Built<OrderItem, OrderItemBuilder> {
-  @BuiltValueField(wireName: r'id')
-  String? get id;
-
-  @BuiltValueField(wireName: r'createdAt')
-  DateTime? get createdAt;
-
-  @BuiltValueField(wireName: r'updatedAt')
-  DateTime? get updatedAt;
-
-  @BuiltValueField(wireName: r'version')
-  int? get version;
-
-  @BuiltValueField(wireName: r'syncStatus')
-  SyncStatus? get syncStatus;
-  // enum syncStatusEnum {  Synced,  Updated,  Deleted,  };
-
-  @BuiltValueField(wireName: r'productId')
-  String get productId;
-
-  @BuiltValueField(wireName: r'orderId')
-  String get orderId;
-
-  @BuiltValueField(wireName: r'quantity')
-  int get quantity;
-
-  @BuiltValueField(wireName: r'notes')
-  String? get notes;
-
+abstract class OrderItem implements Base, OrderItemInfo, Built<OrderItem, OrderItemBuilder> {
   OrderItem._();
 
   factory OrderItem([void updates(OrderItemBuilder b)]) = _$OrderItem;
@@ -74,13 +48,6 @@ class _$OrderItemSerializer implements PrimitiveSerializer<OrderItem> {
     OrderItem object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
-    if (object.id != null) {
-      yield r'id';
-      yield serializers.serialize(
-        object.id,
-        specifiedType: const FullType(String),
-      );
-    }
     if (object.createdAt != null) {
       yield r'createdAt';
       yield serializers.serialize(
@@ -88,11 +55,33 @@ class _$OrderItemSerializer implements PrimitiveSerializer<OrderItem> {
         specifiedType: const FullType(DateTime),
       );
     }
-    if (object.updatedAt != null) {
-      yield r'updatedAt';
+    yield r'quantity';
+    yield serializers.serialize(
+      object.quantity,
+      specifiedType: const FullType(int),
+    );
+    if (object.notes != null) {
+      yield r'notes';
       yield serializers.serialize(
-        object.updatedAt,
-        specifiedType: const FullType(DateTime),
+        object.notes,
+        specifiedType: const FullType(String),
+      );
+    }
+    yield r'productId';
+    yield serializers.serialize(
+      object.productId,
+      specifiedType: const FullType(String),
+    );
+    yield r'orderId';
+    yield serializers.serialize(
+      object.orderId,
+      specifiedType: const FullType(String),
+    );
+    if (object.id != null) {
+      yield r'id';
+      yield serializers.serialize(
+        object.id,
+        specifiedType: const FullType(String),
       );
     }
     if (object.version != null) {
@@ -109,26 +98,11 @@ class _$OrderItemSerializer implements PrimitiveSerializer<OrderItem> {
         specifiedType: const FullType(SyncStatus),
       );
     }
-    yield r'productId';
-    yield serializers.serialize(
-      object.productId,
-      specifiedType: const FullType(String),
-    );
-    yield r'orderId';
-    yield serializers.serialize(
-      object.orderId,
-      specifiedType: const FullType(String),
-    );
-    yield r'quantity';
-    yield serializers.serialize(
-      object.quantity,
-      specifiedType: const FullType(int),
-    );
-    if (object.notes != null) {
-      yield r'notes';
+    if (object.updatedAt != null) {
+      yield r'updatedAt';
       yield serializers.serialize(
-        object.notes,
-        specifiedType: const FullType(String),
+        object.updatedAt,
+        specifiedType: const FullType(DateTime),
       );
     }
   }
@@ -154,13 +128,6 @@ class _$OrderItemSerializer implements PrimitiveSerializer<OrderItem> {
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
-        case r'id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.id = valueDes;
-          break;
         case r'createdAt':
           final valueDes = serializers.deserialize(
             value,
@@ -168,26 +135,19 @@ class _$OrderItemSerializer implements PrimitiveSerializer<OrderItem> {
           ) as DateTime;
           result.createdAt = valueDes;
           break;
-        case r'updatedAt':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.updatedAt = valueDes;
-          break;
-        case r'version':
+        case r'quantity':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(int),
           ) as int;
-          result.version = valueDes;
+          result.quantity = valueDes;
           break;
-        case r'syncStatus':
+        case r'notes':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(SyncStatus),
-          ) as SyncStatus;
-          result.syncStatus = valueDes;
+            specifiedType: const FullType(String),
+          ) as String;
+          result.notes = valueDes;
           break;
         case r'productId':
           final valueDes = serializers.deserialize(
@@ -203,19 +163,33 @@ class _$OrderItemSerializer implements PrimitiveSerializer<OrderItem> {
           ) as String;
           result.orderId = valueDes;
           break;
-        case r'quantity':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          ) as int;
-          result.quantity = valueDes;
-          break;
-        case r'notes':
+        case r'id':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
-          result.notes = valueDes;
+          result.id = valueDes;
+          break;
+        case r'version':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          ) as int;
+          result.version = valueDes;
+          break;
+        case r'syncStatus':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(SyncStatus),
+          ) as SyncStatus;
+          result.syncStatus = valueDes;
+          break;
+        case r'updatedAt':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.updatedAt = valueDes;
           break;
         default:
           unhandled.add(key);

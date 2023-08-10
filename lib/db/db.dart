@@ -1,17 +1,24 @@
 import 'package:drift/drift.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:skakel_mobile/db/entities/association_entity.dart';
+import 'package:skakel_mobile/db/entities/association_member_entity.dart';
+import 'package:skakel_mobile/db/entities/attachment_entity.dart';
 import 'package:skakel_mobile/db/entities/blocked_user_entity.dart';
 import 'package:skakel_mobile/db/entities/chat_entity.dart';
 import 'package:skakel_mobile/db/entities/chat_member_entity.dart';
 import 'package:skakel_mobile/db/entities/chat_message_entity.dart';
+import 'package:skakel_mobile/db/entities/chat_reaction_entity.dart';
 import 'package:skakel_mobile/db/entities/order_entity.dart';
 import 'package:skakel_mobile/db/entities/order_item_entity.dart';
 import 'package:skakel_mobile/db/entities/product_entity.dart';
 import 'package:skakel_mobile/db/entities/user_entity.dart';
 import 'package:skakel_mobile/db/entities/user_settings_entity.dart';
 import 'package:skakel_mobile/db/sqlite_connection/shared_connection.dart';
+import 'package:skakel_mobile/models/association_role.dart';
+import 'package:skakel_mobile/models/attachment_type.dart';
 import 'package:skakel_mobile/models/chat_type.dart';
+import 'package:skakel_mobile/models/reaction_type.dart';
 import 'package:skakel_mobile/utils/id.dart';
 import 'package:tuple/tuple.dart';
 
@@ -21,6 +28,8 @@ part 'db.g.dart';
 
 typedef ExtendedChat = Tuple2<chats, List<chat_members>>;
 typedef ExtendedOrder = Tuple2<orders, List<order_items>>;
+typedef ExtendedChatMessage
+    = Tuple3<chat_messages, List<attachments>, List<chat_reactions>>;
 
 /// The app database
 @DriftDatabase(tables: [
@@ -33,6 +42,10 @@ typedef ExtendedOrder = Tuple2<orders, List<order_items>>;
   OrderItemEntity,
   ProductEntity,
   UserSettingsEntity,
+  AttachmentEntity,
+  ChatReactionEntity,
+  AssociationEntity,
+  AssociationMemberEntity,
 ])
 class AppDatabase extends _$AppDatabase {
 // we tell the database where to store the data with this constructor
@@ -85,12 +98,12 @@ class AppDatabase extends _$AppDatabase {
         mode: InsertMode.insertOrReplace,
       );
 
-      await batch((batch) {
-        batch.deleteWhere(
+      await batch((b) {
+        b.deleteWhere(
           chatMemberEntity,
           (tbl) => tbl.chatId.equals(chat.id.value),
         );
-        batch.insertAllOnConflictUpdate(chatMemberEntity, members);
+        b.insertAllOnConflictUpdate(chatMemberEntity, members);
       });
 
       return watchChat(insertedChat.id).first;
@@ -138,7 +151,7 @@ class AppDatabase extends _$AppDatabase {
     final query = select(chatEntity).watch();
 
     return query.switchMap((cs) {
-      final chatStreams = cs.map((chat) => watchChat(chat.id)).toList();
+      final chatStreams = cs.map((chat) => watchChat(chat.id));
       return Rx.combineLatestList(chatStreams);
     });
   }
@@ -202,29 +215,85 @@ class AppDatabase extends _$AppDatabase {
     await delete(productEntity).delete(companion);
   }
 
-  Future<void> deleteChatMessage(ChatMessageEntityCompanion companion) {
-    return delete(chatMessageEntity).delete(companion);
+  Future<void> deleteChatMessage(
+    ChatMessageEntityCompanion companion,
+    Iterable<AttachmentEntityCompanion> attachmentsCompanion,
+    Iterable<ChatReactionEntityCompanion> reactionsCompanion,
+  ) async {
+    return transaction(() async {
+      await batch((b) {
+        b.deleteWhere(
+          chatReactionEntity,
+          (tbl) => tbl.messageId.equals(companion.id.value),
+        );
+        b.deleteWhere(
+          chatReactionEntity,
+          (tbl) => tbl.messageId.equals(companion.id.value),
+        );
+      });
+
+      delete(chatMessageEntity).delete(companion);
+    });
   }
 
-  Stream<chat_messages> watchChatMessage(String id) {
-    final query = select(chatMessageEntity)..where((tbl) => tbl.id.equals(id));
-    final uStream = query.watchSingle();
-    return uStream;
+  Stream<ExtendedChatMessage> watchChatMessage(String id) {
+    final messageQuery = select(chatMessageEntity)
+      ..where((tbl) => tbl.id.equals(id));
+    final messageStream = messageQuery.watchSingle();
+
+    final attachmentsQuery = select(attachmentEntity)
+      ..where((tbl) => tbl.messageId.equals(id));
+    final attachmentsStream = attachmentsQuery.watch();
+
+    final reactionsQuery = select(chatReactionEntity)
+      ..where((tbl) => tbl.messageId.equals(id));
+    final reactionsStream = reactionsQuery.watch();
+
+    return Rx.combineLatest3(
+      messageStream,
+      attachmentsStream,
+      reactionsStream,
+      (msg, att, react) => ExtendedChatMessage(
+        msg,
+        att,
+        react,
+      ),
+    );
   }
 
-  Future<chat_messages> insertChatMessage(
-      ChatMessageEntityCompanion companion) {
-    return into(chatMessageEntity).insertReturning(companion);
+  Future<ExtendedChatMessage> insertChatMessage(
+    ChatMessageEntityCompanion companion,
+    Iterable<AttachmentEntityCompanion> attachmentsCompanion,
+    Iterable<ChatReactionEntityCompanion> reactionsCompanion,
+  ) {
+    return transaction(() async {
+      final chatMessage = await into(chatMessageEntity).insertReturning(
+        companion,
+      );
+
+      await batch((b) {
+        b.insertAll(attachmentEntity, attachmentsCompanion);
+        b.insertAll(chatReactionEntity, reactionsCompanion);
+      });
+
+      return watchChatMessage(chatMessage.id).first;
+    });
   }
 
-  Stream<List<chat_messages>> watchAllChatMessages() {
+  Stream<List<ExtendedChatMessage>> watchAllChatMessages() {
     final query = select(chatMessageEntity).watch();
-    return query;
+    return query.switchMap((cs) {
+      final chatStreams = cs.map((chat) => watchChatMessage(chat.id));
+      return Rx.combineLatestList(chatStreams);
+    });
   }
 
-  Future<chat_messages?> getChatMessage(String id) {
+  Future<ExtendedChatMessage?> getChatMessage(String id) {
     final query = select(chatMessageEntity)..where((tbl) => tbl.id.equals(id));
-    return query.getSingleOrNull();
+    return query.getSingleOrNull().then((msg) async {
+      if (msg == null) return null;
+      return watchChatMessage(msg.id).first;
+    });
   }
 
   Future<void> deleteOrder(OrderEntityCompanion companion) {
@@ -252,12 +321,12 @@ class AppDatabase extends _$AppDatabase {
       final copiedItems =
           items.map((item) => item.copyWith(orderId: Value(order.id))).toList();
 
-      await batch((batch) {
-        batch.deleteWhere(
+      await batch((b) {
+        b.deleteWhere(
           orderItemEntity,
           (tbl) => tbl.orderId.equals(order.id),
         );
-        batch.insertAll(orderItemEntity, copiedItems);
+        b.insertAll(orderItemEntity, copiedItems);
       });
       return watchOrder(order.id).first;
     });
@@ -266,7 +335,7 @@ class AppDatabase extends _$AppDatabase {
   Stream<List<ExtendedOrder>> watchAllOrders({Map<String, dynamic>? query}) {
     final query = select(orderEntity).watch();
     return query.switchMap((cs) {
-      final orderStreams = cs.map((order) => watchOrder(order.id)).toList();
+      final orderStreams = cs.map((order) => watchOrder(order.id));
       return Rx.combineLatestList(orderStreams);
     });
   }

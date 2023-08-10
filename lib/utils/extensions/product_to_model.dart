@@ -1,4 +1,3 @@
-import 'package:skakel_api/skakel_api.dart' show ProductInfoBuilder, ProductInfo;
 import 'package:skakel_api/skakel_api.dart' as api;
 import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/models/product.dart';
@@ -6,15 +5,14 @@ import 'package:skakel_mobile/utils/extensions/json_mapper.dart';
 import 'package:skakel_mobile/utils/extensions/sync_status_mapper.dart';
 
 extension ProductToInfo on Product {
-  ProductInfo toInfo() {
-    final builder = ProductInfoBuilder()
+  api.ProductInfo toInfo() {
+    final builder = api.$ProductInfoBuilder()
       ..name = name
       ..description = description
       ..price = price
       ..seller.id = sellerId
       ..content = content?.toJsonObject()
-      ..productType = productType
-    ;
+      ..productType = productType;
 
     return builder.build();
   }
@@ -61,7 +59,6 @@ extension ProductListToModel on List<products> {
     return map((e) => e.toModel()).toList();
   }
 }
-
 
 extension FutureProductListToModel on Future<List<products>> {
   Future<List<Product>> toModel() async {

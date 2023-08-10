@@ -1,0 +1,1 @@
+enum AssociationRole { admin, member }

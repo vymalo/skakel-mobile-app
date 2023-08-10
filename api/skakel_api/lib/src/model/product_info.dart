@@ -13,14 +13,18 @@ part 'product_info.g.dart';
 /// ProductInfo
 ///
 /// Properties:
+/// * [id] 
 /// * [name] 
 /// * [description] 
 /// * [price] 
 /// * [seller] 
 /// * [content] 
 /// * [productType] 
-@BuiltValue()
-abstract class ProductInfo implements Built<ProductInfo, ProductInfoBuilder> {
+@BuiltValue(instantiable: false)
+abstract class ProductInfo  {
+  @BuiltValueField(wireName: r'id')
+  String? get id;
+
   @BuiltValueField(wireName: r'name')
   String get name;
 
@@ -39,20 +43,13 @@ abstract class ProductInfo implements Built<ProductInfo, ProductInfoBuilder> {
   @BuiltValueField(wireName: r'productType')
   String? get productType;
 
-  ProductInfo._();
-
-  factory ProductInfo([void updates(ProductInfoBuilder b)]) = _$ProductInfo;
-
-  @BuiltValueHook(initializeBuilder: true)
-  static void _defaults(ProductInfoBuilder b) => b;
-
   @BuiltValueSerializer(custom: true)
   static Serializer<ProductInfo> get serializer => _$ProductInfoSerializer();
 }
 
 class _$ProductInfoSerializer implements PrimitiveSerializer<ProductInfo> {
   @override
-  final Iterable<Type> types = const [ProductInfo, _$ProductInfo];
+  final Iterable<Type> types = const [ProductInfo];
 
   @override
   final String wireName = r'ProductInfo';
@@ -62,6 +59,13 @@ class _$ProductInfoSerializer implements PrimitiveSerializer<ProductInfo> {
     ProductInfo object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
+    if (object.id != null) {
+      yield r'id';
+      yield serializers.serialize(
+        object.id,
+        specifiedType: const FullType(String),
+      );
+    }
     yield r'name';
     yield serializers.serialize(
       object.name,
@@ -109,6 +113,46 @@ class _$ProductInfoSerializer implements PrimitiveSerializer<ProductInfo> {
     return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
   }
 
+  @override
+  ProductInfo deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    return serializers.deserialize(serialized, specifiedType: FullType($ProductInfo)) as $ProductInfo;
+  }
+}
+
+/// a concrete implementation of [ProductInfo], since [ProductInfo] is not instantiable
+@BuiltValue(instantiable: true)
+abstract class $ProductInfo implements ProductInfo, Built<$ProductInfo, $ProductInfoBuilder> {
+  $ProductInfo._();
+
+  factory $ProductInfo([void Function($ProductInfoBuilder)? updates]) = _$$ProductInfo;
+
+  @BuiltValueHook(initializeBuilder: true)
+  static void _defaults($ProductInfoBuilder b) => b;
+
+  @BuiltValueSerializer(custom: true)
+  static Serializer<$ProductInfo> get serializer => _$$ProductInfoSerializer();
+}
+
+class _$$ProductInfoSerializer implements PrimitiveSerializer<$ProductInfo> {
+  @override
+  final Iterable<Type> types = const [$ProductInfo, _$$ProductInfo];
+
+  @override
+  final String wireName = r'$ProductInfo';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    $ProductInfo object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    return serializers.serialize(object, specifiedType: FullType(ProductInfo))!;
+  }
+
   void _deserializeProperties(
     Serializers serializers,
     Object serialized, {
@@ -121,6 +165,13 @@ class _$ProductInfoSerializer implements PrimitiveSerializer<ProductInfo> {
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
+        case r'id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.id = valueDes;
+          break;
         case r'name':
           final valueDes = serializers.deserialize(
             value,
@@ -172,12 +223,12 @@ class _$ProductInfoSerializer implements PrimitiveSerializer<ProductInfo> {
   }
 
   @override
-  ProductInfo deserialize(
+  $ProductInfo deserialize(
     Serializers serializers,
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = ProductInfoBuilder();
+    final result = $ProductInfoBuilder();
     final serializedList = (serialized as Iterable<Object?>).toList();
     final unhandled = <Object?>[];
     _deserializeProperties(

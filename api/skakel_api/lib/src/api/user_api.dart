@@ -9,6 +9,7 @@ import 'package:dio/dio.dart';
 
 import 'package:built_collection/built_collection.dart';
 import 'package:skakel_api/src/model/user.dart';
+import 'package:skakel_api/src/model/user_info.dart';
 
 class UserApi {
 
@@ -22,7 +23,7 @@ class UserApi {
   /// 
   ///
   /// Parameters:
-  /// * [user] - User object that needs to be added
+  /// * [userInfo] - User object that needs to be added
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -33,7 +34,7 @@ class UserApi {
   /// Returns a [Future] containing a [Response] with a [User] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<User>> createUser({ 
-    User? user,
+    UserInfo? userInfo,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -64,8 +65,8 @@ class UserApi {
     dynamic _bodyData;
 
     try {
-      const _type = FullType(User);
-      _bodyData = user == null ? null : _serializers.serialize(user, specifiedType: _type);
+      const _type = FullType(UserInfo);
+      _bodyData = userInfo == null ? null : _serializers.serialize(userInfo, specifiedType: _type);
 
     } catch(error, stackTrace) {
       throw DioError(
@@ -337,7 +338,7 @@ class UserApi {
   ///
   /// Parameters:
   /// * [id] 
-  /// * [user] - User object that needs to be updated
+  /// * [userInfo] - User object that needs to be updated
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -349,7 +350,7 @@ class UserApi {
   /// Throws [DioError] if API call or serialization fails
   Future<Response<User>> updateUser({ 
     required String id,
-    User? user,
+    UserInfo? userInfo,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -380,8 +381,8 @@ class UserApi {
     dynamic _bodyData;
 
     try {
-      const _type = FullType(User);
-      _bodyData = user == null ? null : _serializers.serialize(user, specifiedType: _type);
+      const _type = FullType(UserInfo);
+      _bodyData = userInfo == null ? null : _serializers.serialize(userInfo, specifiedType: _type);
 
     } catch(error, stackTrace) {
       throw DioError(

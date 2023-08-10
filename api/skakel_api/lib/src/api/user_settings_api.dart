@@ -8,6 +8,7 @@ import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
 import 'package:skakel_api/src/model/user_settings.dart';
+import 'package:skakel_api/src/model/user_settings_info.dart';
 
 class UserSettingsApi {
 
@@ -103,7 +104,7 @@ class UserSettingsApi {
   ///
   /// Parameters:
   /// * [id] 
-  /// * [userSettings] - User settings object that needs to be updated
+  /// * [userSettingsInfo] - User settings object that needs to be updated
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -115,7 +116,7 @@ class UserSettingsApi {
   /// Throws [DioError] if API call or serialization fails
   Future<Response<UserSettings>> updateUserSettings({ 
     required String id,
-    UserSettings? userSettings,
+    UserSettingsInfo? userSettingsInfo,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -146,8 +147,8 @@ class UserSettingsApi {
     dynamic _bodyData;
 
     try {
-      const _type = FullType(UserSettings);
-      _bodyData = userSettings == null ? null : _serializers.serialize(userSettings, specifiedType: _type);
+      const _type = FullType(UserSettingsInfo);
+      _bodyData = userSettingsInfo == null ? null : _serializers.serialize(userSettingsInfo, specifiedType: _type);
 
     } catch(error, stackTrace) {
       throw DioError(

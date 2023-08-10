@@ -8,13 +8,8 @@ import 'package:skakel_mobile/utils/extensions/sync_status_mapper.dart';
 
 /// This extension is used to convert a list of models to a list of api objects.
 extension ModelToApiChat on Chat {
-  api.Chat toApi() {
-    final apiChat = api.ChatBuilder()
-      ..id = id
-      ..version = version
-      ..createdAt = createdAt
-      ..updatedAt = updatedAt
-      ..syncStatus = syncStatus.toApi()
+  api.ChatInfo toApi() {
+    final apiChat = api.$ChatInfoBuilder()
       ..name = name
       ..members = ListBuilder(members.toApi());
 
