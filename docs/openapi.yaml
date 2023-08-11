@@ -1256,7 +1256,7 @@ paths:
       tags:
         - association
       summary: Add an association by ID
-      operationId: addAssociationById
+      operationId: addAssociation
       requestBody:
         description: Association details for adding the association
         content:
@@ -1399,7 +1399,7 @@ components:
       enum:
         - Admin
         - Member
-    AssociationMember:
+    AssociationMemberInfo:
       type: object
       properties:
         id:
@@ -1410,6 +1410,10 @@ components:
           type: string
         role:
           $ref: "#/components/schemas/AssociationRole"
+    AssociationMember:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/AssociationMemberInfo"
     Association:
       allOf:
         - $ref: "#/components/schemas/Base"

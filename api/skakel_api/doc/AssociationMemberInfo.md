@@ -1,4 +1,4 @@
-# skakel_api.model.AssociationMember
+# skakel_api.model.AssociationMemberInfo
 
 ## Load the model package
 ```dart
@@ -9,10 +9,6 @@ import 'package:skakel_api/api.dart';
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | [optional] 
-**createdAt** | [**DateTime**](DateTime.md) |  | [optional] 
-**updatedAt** | [**DateTime**](DateTime.md) |  | [optional] 
-**version** | **int** |  | [optional] 
-**syncStatus** | [**SyncStatus**](SyncStatus.md) |  | [optional] 
 **userId** | **String** |  | [optional] 
 **associationId** | **String** |  | [optional] 
 **role** | [**AssociationRole**](AssociationRole.md) |  | [optional] 

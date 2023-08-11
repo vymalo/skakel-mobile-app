@@ -3,6 +3,9 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:skakel_api/src/model/association_member_info.dart';
+import 'package:skakel_api/src/model/sync_status.dart';
+import 'package:skakel_api/src/model/base.dart';
 import 'package:skakel_api/src/model/association_role.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -13,24 +16,15 @@ part 'association_member.g.dart';
 ///
 /// Properties:
 /// * [id] 
+/// * [createdAt] 
+/// * [updatedAt] 
+/// * [version] 
+/// * [syncStatus] 
 /// * [userId] 
 /// * [associationId] 
 /// * [role] 
 @BuiltValue()
-abstract class AssociationMember implements Built<AssociationMember, AssociationMemberBuilder> {
-  @BuiltValueField(wireName: r'id')
-  String? get id;
-
-  @BuiltValueField(wireName: r'userId')
-  String? get userId;
-
-  @BuiltValueField(wireName: r'associationId')
-  String? get associationId;
-
-  @BuiltValueField(wireName: r'role')
-  AssociationRole? get role;
-  // enum roleEnum {  Admin,  Member,  };
-
+abstract class AssociationMember implements AssociationMemberInfo, Base, Built<AssociationMember, AssociationMemberBuilder> {
   AssociationMember._();
 
   factory AssociationMember([void updates(AssociationMemberBuilder b)]) = _$AssociationMember;
@@ -54,6 +48,20 @@ class _$AssociationMemberSerializer implements PrimitiveSerializer<AssociationMe
     AssociationMember object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
+    if (object.createdAt != null) {
+      yield r'createdAt';
+      yield serializers.serialize(
+        object.createdAt,
+        specifiedType: const FullType(DateTime),
+      );
+    }
+    if (object.role != null) {
+      yield r'role';
+      yield serializers.serialize(
+        object.role,
+        specifiedType: const FullType(AssociationRole),
+      );
+    }
     if (object.id != null) {
       yield r'id';
       yield serializers.serialize(
@@ -68,6 +76,20 @@ class _$AssociationMemberSerializer implements PrimitiveSerializer<AssociationMe
         specifiedType: const FullType(String),
       );
     }
+    if (object.version != null) {
+      yield r'version';
+      yield serializers.serialize(
+        object.version,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.syncStatus != null) {
+      yield r'syncStatus';
+      yield serializers.serialize(
+        object.syncStatus,
+        specifiedType: const FullType(SyncStatus),
+      );
+    }
     if (object.associationId != null) {
       yield r'associationId';
       yield serializers.serialize(
@@ -75,11 +97,11 @@ class _$AssociationMemberSerializer implements PrimitiveSerializer<AssociationMe
         specifiedType: const FullType(String),
       );
     }
-    if (object.role != null) {
-      yield r'role';
+    if (object.updatedAt != null) {
+      yield r'updatedAt';
       yield serializers.serialize(
-        object.role,
-        specifiedType: const FullType(AssociationRole),
+        object.updatedAt,
+        specifiedType: const FullType(DateTime),
       );
     }
   }
@@ -105,6 +127,20 @@ class _$AssociationMemberSerializer implements PrimitiveSerializer<AssociationMe
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
+        case r'createdAt':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.createdAt = valueDes;
+          break;
+        case r'role':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(AssociationRole),
+          ) as AssociationRole;
+          result.role = valueDes;
+          break;
         case r'id':
           final valueDes = serializers.deserialize(
             value,
@@ -119,6 +155,20 @@ class _$AssociationMemberSerializer implements PrimitiveSerializer<AssociationMe
           ) as String;
           result.userId = valueDes;
           break;
+        case r'version':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          ) as int;
+          result.version = valueDes;
+          break;
+        case r'syncStatus':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(SyncStatus),
+          ) as SyncStatus;
+          result.syncStatus = valueDes;
+          break;
         case r'associationId':
           final valueDes = serializers.deserialize(
             value,
@@ -126,12 +176,12 @@ class _$AssociationMemberSerializer implements PrimitiveSerializer<AssociationMe
           ) as String;
           result.associationId = valueDes;
           break;
-        case r'role':
+        case r'updatedAt':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(AssociationRole),
-          ) as AssociationRole;
-          result.role = valueDes;
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.updatedAt = valueDes;
           break;
         default:
           unhandled.add(key);

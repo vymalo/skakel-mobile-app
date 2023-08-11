@@ -25,6 +25,7 @@ export 'package:skakel_api/src/api/user_settings_api.dart';
 export 'package:skakel_api/src/model/association.dart';
 export 'package:skakel_api/src/model/association_info.dart';
 export 'package:skakel_api/src/model/association_member.dart';
+export 'package:skakel_api/src/model/association_member_info.dart';
 export 'package:skakel_api/src/model/association_role.dart';
 export 'package:skakel_api/src/model/attachment.dart';
 export 'package:skakel_api/src/model/attachment_info.dart';
