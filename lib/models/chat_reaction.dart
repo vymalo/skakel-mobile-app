@@ -11,7 +11,7 @@ part 'chat_reaction.g.dart';
 @JsonSerializable()
 class ChatReaction
     with ModelToCompanion<ChatReactionEntityCompanion>
-    implements BaseModel {
+    implements SyncableModel {
   @override
   String id;
 

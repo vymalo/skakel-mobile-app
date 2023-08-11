@@ -10,7 +10,7 @@ part 'user_settings.g.dart';
 @JsonSerializable()
 class UserSettings
     with ModelToCompanion<UserSettingsEntityCompanion>
-    implements BaseModel {
+    implements SyncableModel {
   @override
   String id;
 

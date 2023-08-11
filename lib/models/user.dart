@@ -8,7 +8,7 @@ import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 part 'user.g.dart';
 
 @JsonSerializable()
-class User with ModelToCompanion<UserEntityCompanion> implements BaseModel {
+class User with ModelToCompanion<UserEntityCompanion> implements SyncableModel {
 
   @override
   String id;

@@ -54,10 +54,10 @@ final api = SkakelApi().getAssociationApi();
 final AssociationInfo associationInfo = ; // AssociationInfo | Association details for adding the association
 
 try {
-    final response = await api.addAssociationById(associationInfo);
+    final response = await api.addAssociation(associationInfo);
     print(response);
 } catch on DioError (e) {
-    print("Exception when calling AssociationApi->addAssociationById: $e\n");
+    print("Exception when calling AssociationApi->addAssociation: $e\n");
 }
 
 ```
@@ -68,7 +68,7 @@ All URIs are relative to *https://skakel.apps.ssegning.com/api*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-[*AssociationApi*](doc/AssociationApi.md) | [**addAssociationById**](doc/AssociationApi.md#addassociationbyid) | **POST** /associations | Add an association by ID
+[*AssociationApi*](doc/AssociationApi.md) | [**addAssociation**](doc/AssociationApi.md#addassociation) | **POST** /associations | Add an association by ID
 [*AssociationApi*](doc/AssociationApi.md) | [**deleteAssociationById**](doc/AssociationApi.md#deleteassociationbyid) | **DELETE** /associations/{id} | Delete an Association by ID
 [*AssociationApi*](doc/AssociationApi.md) | [**getAssociationById**](doc/AssociationApi.md#getassociationbyid) | **GET** /associations/{id} | Get a association by ID
 [*AssociationApi*](doc/AssociationApi.md) | [**queryAssociations**](doc/AssociationApi.md#queryassociations) | **GET** /associations | Get all Associations
@@ -129,6 +129,7 @@ Class | Method | HTTP request | Description
  - [Association](doc/Association.md)
  - [AssociationInfo](doc/AssociationInfo.md)
  - [AssociationMember](doc/AssociationMember.md)
+ - [AssociationMemberInfo](doc/AssociationMemberInfo.md)
  - [AssociationRole](doc/AssociationRole.md)
  - [Attachment](doc/Attachment.md)
  - [AttachmentInfo](doc/AttachmentInfo.md)

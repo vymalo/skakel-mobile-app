@@ -9,7 +9,7 @@ import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 part 'order.g.dart';
 
 @JsonSerializable()
-class Order with ModelToCompanion<OrderEntityCompanion> implements BaseModel {
+class Order with ModelToCompanion<OrderEntityCompanion> implements SyncableModel {
   @override
   String id;
 

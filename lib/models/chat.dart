@@ -10,7 +10,7 @@ import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 part 'chat.g.dart';
 
 @JsonSerializable()
-class Chat with ModelToCompanion<ChatEntityCompanion> implements BaseModel {
+class Chat with ModelToCompanion<ChatEntityCompanion> implements SyncableModel {
   @override
   String id;
 

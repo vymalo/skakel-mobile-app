@@ -1,9 +1,9 @@
 abstract class BaseRepo<E> {
   /// Saves the entity to the database
-  Future<E> save(E entity);
+  Future<E> save(E model);
 
   /// Deletes the entity from the database
-  Future<void> delete(E entity);
+  Future<void> delete(E model);
 
   /// Gets the entity by id
   Stream<E> getById(String id);

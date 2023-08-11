@@ -10,7 +10,7 @@ part 'product.g.dart';
 @JsonSerializable()
 class Product
     with ModelToCompanion<ProductEntityCompanion>
-    implements BaseModel {
+    implements SyncableModel {
   @override
   String id;
 

@@ -11,7 +11,7 @@ part 'attachment.g.dart';
 @JsonSerializable()
 class Attachment
     with ModelToCompanion<AttachmentEntityCompanion>
-    implements BaseModel {
+    implements SyncableModel {
   @override
   String id;
 

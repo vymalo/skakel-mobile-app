@@ -6,8 +6,8 @@ import 'package:logging/logging.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:skakel_mobile/services/mqtt/impl/client/mqtt_shared_client.dart';
+import 'package:skakel_mobile/services/mqtt/impl/mqtt_service_delegate.dart';
 import 'package:skakel_mobile/services/mqtt/mqtt_service.dart';
-import 'package:skakel_mobile/utils/env.dart';
 import 'package:skakel_mobile/utils/logging.dart';
 
 final log = Logger('MqttServiceImpl');
@@ -50,10 +50,7 @@ class MqttServiceImpl implements MqttService {
       _client.autoReconnect = true;
 
       log.d('Actual connection...');
-      await _client.connect(
-        Env.brokerUsername,
-        Env.brokerPassword,
-      );
+      await _client.connect();
 
       _connectedController.add(true);
     } catch (e) {
@@ -128,5 +125,6 @@ class MqttServiceImpl implements MqttService {
 
 final mqttServiceProvider = Provider<MqttService>((ref) {
   log.d('Initializing MqttService...');
-  return MqttServiceImpl();
+  final impl = MqttServiceImpl();
+  return MqttServiceDelegate(impl);
 });

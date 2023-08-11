@@ -27,6 +27,7 @@ import 'base/sync_status.dart';
 part 'db.g.dart';
 
 typedef ExtendedChat = Tuple2<chats, List<chat_members>>;
+typedef ExtendedAssociation = Tuple2<associations, List<association_members>>;
 typedef ExtendedOrder = Tuple2<orders, List<order_items>>;
 typedef ExtendedChatMessage
     = Tuple3<chat_messages, List<attachments>, List<chat_reactions>>;
@@ -356,6 +357,80 @@ class AppDatabase extends _$AppDatabase {
       ..where((tbl) => tbl.orderId.equals(orderId));
     final itemsStream = itemsQuery.watch();
     return itemsStream;
+  }
+
+  Future<ExtendedAssociation> insertAssociation(
+      AssociationEntityCompanion companion,
+      List<AssociationMemberEntityCompanion> companionList) {
+    return transaction(() async {
+      final associationInserted =
+          await into(associationEntity).insertReturning(companion);
+      await batch((b) {
+        b.insertAll(
+          associationMemberEntity,
+          companionList.map(
+            (e) => e.copyWith(associationId: Value(associationInserted.id)),
+          ),
+        );
+      });
+
+      return watchAssociation(associationInserted.id).first;
+    });
+  }
+
+  Stream<ExtendedAssociation> watchAssociation(String id) {
+    final query = select(associationEntity)..where((tbl) => tbl.id.equals(id));
+    final uStream = query.watchSingle();
+    final associationMembersStream = _getAssociationMembers(id);
+    return Rx.combineLatest2(
+      uStream,
+      associationMembersStream,
+      (association, members) => ExtendedAssociation(association, members),
+    );
+  }
+
+  Stream<List<ExtendedAssociation>> watchAllAssociations() {
+    final query = select(associationEntity).watch();
+    return query.switchMap((cs) {
+      final associationStreams =
+          cs.map((association) => watchAssociation(association.id));
+      return Rx.combineLatestList(associationStreams);
+    });
+  }
+
+  Future<ExtendedAssociation?> getAssociation(String id) {
+    final query = select(associationEntity)..where((tbl) => tbl.id.equals(id));
+    return query.getSingleOrNull().then((value) {
+      if (value == null) {
+        return null;
+      }
+
+      return watchAssociation(value.id).first;
+    });
+  }
+
+  Stream<List<association_members>> _getAssociationMembers(
+      String associationId) {
+    final membersQuery = select(associationMemberEntity)
+      ..where((tbl) => tbl.associationId.equals(associationId));
+    final membersStream = membersQuery.watch();
+    return membersStream;
+  }
+
+  Future<void> deleteAssociation(
+    AssociationEntityCompanion companion,
+    List<AssociationMemberEntityCompanion> companionList,
+  ) {
+    return transaction(() async {
+      await batch((b) {
+        b.deleteWhere(
+          associationMemberEntity,
+          (tbl) => tbl.associationId.equals(companion.id.value),
+        );
+      });
+
+      await delete(associationEntity).delete(companion);
+    });
   }
 }
 

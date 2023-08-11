@@ -10,7 +10,7 @@ part 'blocked_user.g.dart';
 @JsonSerializable()
 class BlockedUser
     with ModelToCompanion<BlockedUserEntityCompanion>
-    implements BaseModel {
+    implements SyncableModel {
   @override
   String id;
 

@@ -2,7 +2,7 @@ import 'package:skakel_mobile/db/base/base_repo.dart';
 import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/models/chat_message.dart';
 import 'package:skakel_mobile/utils/extensions/chat_message_to_model.dart';
-import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
+import 'package:skakel_mobile/utils/extensions/model_to_companion_mapper.dart';
 
 class ChatMessageLocalDataSource extends BaseRepo<ChatMessage> {
   final AppDatabase _db;

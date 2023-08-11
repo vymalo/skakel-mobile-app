@@ -50,11 +50,18 @@ abstract class AbstractAppRepo<T extends BaseModel>
 
   @override
   Future<T> save(T model, {bool skipNetwork = false}) async {
+    if (model is! SyncableModel) {
+      return _localRepo.save(model);
+    }
+
     if (model.syncStatus == SyncStatus.deleted) {
       model.syncStatus = SyncStatus.updated;
     }
 
     var saved = await _localRepo.save(model);
+    if (saved is! SyncableModel) {
+      return saved;
+    }
 
     if (_connectionStatus.online && !skipNetwork) {
       try {
@@ -65,10 +72,6 @@ abstract class AbstractAppRepo<T extends BaseModel>
         saved = await _localRepo.save(remoteSaved);
       } catch (e, s) {
         log.e('Cannot sync $T', e, s);
-
-        // Revert the sync status to created, so you can try syncing later.
-        saved.syncStatus = SyncStatus.updated;
-        saved = await _localRepo.save(saved);
       }
     }
 
@@ -77,6 +80,10 @@ abstract class AbstractAppRepo<T extends BaseModel>
 
   @override
   Future<void> delete(T entity) async {
+    if (entity is! SyncableModel) {
+      return _localRepo.delete(entity);
+    }
+
     // Set the entity's sync status to deleted and save it locally
     entity.syncStatus = SyncStatus.deleted;
     await _localRepo.save(entity);
@@ -156,11 +163,14 @@ abstract class AbstractAppRepo<T extends BaseModel>
   /// Syncs from local to remote
   Future<void> _syncFromLocalToRemote() async {
     // Fetch all local items
-    var localItems = await _localRepo.streamAll().first;
-    var itemsToSync =
-        localItems.where((item) => item.syncStatus != SyncStatus.synced);
+    final localItems = await _localRepo
+        .streamAll()
+        .map((event) => event
+            .whereType<SyncableModel>()
+            .where((item) => item.syncStatus != SyncStatus.synced))
+        .first;
 
-    for (var localItem in itemsToSync) {
+    for (final localItem in localItems) {
       var remoteItem = await _remoteRepo.fetchById(localItem.id);
 
       if (remoteItem == null ||
@@ -168,8 +178,11 @@ abstract class AbstractAppRepo<T extends BaseModel>
           (localItem.updatedAt == remoteItem.updatedAt &&
               localItem.version > remoteItem.version)) {
         try {
-          var savedItem = await _remoteRepo.save(localItem);
+          var savedItem = await _remoteRepo.save(localItem as T);
 
+          if (savedItem is! SyncableModel) {
+            continue;
+          }
           // Update sync status locally if remote saving is successful
           savedItem.syncStatus = SyncStatus.synced;
           await _localRepo.save(savedItem);

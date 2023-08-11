@@ -10,7 +10,7 @@ part 'chat_member.g.dart';
 @JsonSerializable()
 class ChatMember
     with ModelToCompanion<ChatMemberEntityCompanion>
-    implements BaseModel {
+    implements SyncableModel {
   @override
   String id;
 

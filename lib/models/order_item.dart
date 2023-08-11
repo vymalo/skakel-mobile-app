@@ -10,7 +10,7 @@ part 'order_item.g.dart';
 @JsonSerializable()
 class OrderItem
     with ModelToCompanion<OrderItemEntityCompanion>
-    implements BaseModel {
+    implements SyncableModel {
   @override
   String id;
 

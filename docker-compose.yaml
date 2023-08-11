@@ -1,0 +1,37 @@
+# Copyright VMware, Inc.
+# SPDX-License-Identifier: APACHE-2.0
+
+version: '2'
+
+services:
+  rabbitmq:
+    image: docker.io/bitnami/rabbitmq:3.12
+    ports:
+      - '4369:4369' # epmd
+      - '5551:5551' # clustering port
+      - '5552:5552' # clustering port
+      - '5672:5672' # AMQP
+      - '25672:25672' # Erlang distribution
+      - '15672:15672' # HTTP management
+      - '1883:1883' # MQTT
+      - '8883:8883' # MQTT/SSL
+      - '15675:15675' # MQTT/WebSockets
+      - '15692:15692' # MQTT/WebSockets/SSL
+      - '15670:15670' # STOMP
+      - '15674:15674' # STOMP/SSL
+      - '15673:15673' # STOMP/WebSockets
+      - '15671:15671' # STOMP/WebSockets/SSL
+      - '61613:61613' # AMQP/WebSockets
+      - '61614:61614' # AMQP/WebSockets/SSL
+      - '18883:18883' # MQTT/Secure WebSockets
+      - '15693:15693' # MQTT/Secure WebSockets/SSL
+    environment:
+      - RABBITMQ_SECURE_PASSWORD=yes
+      - RABBITMQ_LOGS=-
+      - RABBITMQ_PLUGINS=rabbitmq_management,rabbitmq_mqtt,rabbitmq_stomp,rabbitmq_web_stomp,rabbitmq_web_mqtt
+      #- RABBITMQ_COMMUNITY_PLUGINS=rabbitmq_auth_backend_http,rabbitmq_auth_backend_cache,rabbitmq_auth_backend_ldap,rabbitmq_auth_mechanism_ssl,rabbitmq_consistent_hash_exchange,rabbitmq_delayed_message_exchange,rabbitmq_event_exchange,rabbitmq_federation,rabbitmq_federation_management,rabbitmq_jms_topic_exchange,rabbitmq_management_agent,rabbitmq_peer_discovery_aws,rabbitmq_peer_discovery_common,rabbitmq_peer_discovery_consul,rabbitmq_peer_discovery_etcd,rabbitmq_peer_discovery_k8s,rabbitmq_random_exchange,rabbitmq_recent_history_exchange,rabbitmq_sharding,rabbitmq_shovel,rabbitmq_shovel_management,rabbitmq_stomp,rabbitmq_top,rabbitmq_tracing,rabbitmq_trust_store,rabbitmq_web_mqtt,rabbitmq_web_stomp
+    volumes:
+      - 'rabbitmq_data:/bitnami/rabbitmq/mnesia'
+volumes:
+  rabbitmq_data:
+    driver: local

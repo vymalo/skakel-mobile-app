@@ -1,4 +1,5 @@
 import 'package:dio_smart_retry/dio_smart_retry.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:sentry_dio/sentry_dio.dart';
@@ -19,12 +20,12 @@ final dioProvider = Provider((ref) {
   dio.interceptors.add(RetryInterceptor(
     dio: dio,
     logPrint: log.d,
-    retries: 3, // retry count (optional)
+    retries: kDebugMode ? 1 : 3, // retry count (optional)
     retryDelays: const [
       // set delays between retries (optional)
       Duration(seconds: 1), // wait 1 sec before first retry
-      Duration(seconds: 2), // wait 2 sec before second retry
-      Duration(seconds: 3), // wait 3 sec before third retry
+      if (kDebugMode) Duration(seconds: 2), // wait 2 sec before second retry
+      if (kDebugMode) Duration(seconds: 3), // wait 3 sec before third retry
     ],
   ));
 
