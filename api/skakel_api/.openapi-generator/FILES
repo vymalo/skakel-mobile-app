@@ -5,6 +5,7 @@ doc/Association.md
 doc/AssociationApi.md
 doc/AssociationInfo.md
 doc/AssociationMember.md
+doc/AssociationMemberInfo.md
 doc/AssociationRole.md
 doc/Attachment.md
 doc/AttachmentApi.md
@@ -72,6 +73,7 @@ lib/src/date_serializer.dart
 lib/src/model/association.dart
 lib/src/model/association_info.dart
 lib/src/model/association_member.dart
+lib/src/model/association_member_info.dart
 lib/src/model/association_role.dart
 lib/src/model/attachment.dart
 lib/src/model/attachment_info.dart
@@ -107,5 +109,4 @@ lib/src/model/user_settings.dart
 lib/src/model/user_settings_info.dart
 lib/src/serializers.dart
 pubspec.yaml
-test/association_member_test.dart
-test/association_role_test.dart
+test/association_member_info_test.dart

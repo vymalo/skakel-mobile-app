@@ -9,15 +9,15 @@ All URIs are relative to *https://skakel.apps.ssegning.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**addAssociationById**](AssociationApi.md#addassociationbyid) | **POST** /associations | Add an association by ID
+[**addAssociation**](AssociationApi.md#addassociation) | **POST** /associations | Add an association by ID
 [**deleteAssociationById**](AssociationApi.md#deleteassociationbyid) | **DELETE** /associations/{id} | Delete an Association by ID
 [**getAssociationById**](AssociationApi.md#getassociationbyid) | **GET** /associations/{id} | Get a association by ID
 [**queryAssociations**](AssociationApi.md#queryassociations) | **GET** /associations | Get all Associations
 [**updateAssociationById**](AssociationApi.md#updateassociationbyid) | **PUT** /associations/{id} | Update a association by ID
 
 
-# **addAssociationById**
-> Association addAssociationById(associationInfo)
+# **addAssociation**
+> Association addAssociation(associationInfo)
 
 Add an association by ID
 
@@ -32,10 +32,10 @@ final api = SkakelApi().getAssociationApi();
 final AssociationInfo associationInfo = ; // AssociationInfo | Association details for adding the association
 
 try {
-    final response = api.addAssociationById(associationInfo);
+    final response = api.addAssociation(associationInfo);
     print(response);
 } catch on DioError (e) {
-    print('Exception when calling AssociationApi->addAssociationById: $e\n');
+    print('Exception when calling AssociationApi->addAssociation: $e\n');
 }
 ```
 

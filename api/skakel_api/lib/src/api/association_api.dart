@@ -33,7 +33,7 @@ class AssociationApi {
   ///
   /// Returns a [Future] containing a [Response] with a [Association] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Association>> addAssociationById({ 
+  Future<Response<Association>> addAssociation({ 
     AssociationInfo? associationInfo,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,

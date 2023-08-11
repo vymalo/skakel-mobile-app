@@ -17,6 +17,7 @@ import 'package:skakel_api/src/model/date.dart';
 import 'package:skakel_api/src/model/association.dart';
 import 'package:skakel_api/src/model/association_info.dart';
 import 'package:skakel_api/src/model/association_member.dart';
+import 'package:skakel_api/src/model/association_member_info.dart';
 import 'package:skakel_api/src/model/association_role.dart';
 import 'package:skakel_api/src/model/attachment.dart';
 import 'package:skakel_api/src/model/attachment_info.dart';
@@ -56,6 +57,7 @@ part 'serializers.g.dart';
   Association,
   AssociationInfo,$AssociationInfo,
   AssociationMember,
+  AssociationMemberInfo,$AssociationMemberInfo,
   AssociationRole,
   Attachment,
   AttachmentInfo,$AttachmentInfo,
@@ -127,6 +129,7 @@ Serializers serializers = (_$serializers.toBuilder()
         () => ListBuilder<ChatMessage>(),
       )
       ..add(AssociationInfo.serializer)
+      ..add(AssociationMemberInfo.serializer)
       ..add(AttachmentInfo.serializer)
       ..add(Base.serializer)
       ..add(BlockedUserInfo.serializer)

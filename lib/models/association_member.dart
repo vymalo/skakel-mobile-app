@@ -11,7 +11,7 @@ part 'association_member.g.dart';
 @JsonSerializable()
 class AssociationMember
     with ModelToCompanion<AssociationMemberEntityCompanion>
-    implements BaseModel {
+    implements SyncableModel {
   @override
   String id;
 
