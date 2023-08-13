@@ -2,6 +2,7 @@ import 'package:skakel_api/skakel_api.dart' as api;
 import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/models/association.dart';
 import 'package:skakel_mobile/utils/extensions/association_member_mapper.dart';
+import 'package:skakel_mobile/utils/extensions/association_chat_mapper.dart';
 import 'package:skakel_mobile/utils/extensions/sync_status_mapper.dart';
 
 extension ModelToApi on Association {
@@ -13,9 +14,9 @@ extension ModelToApi on Association {
     builder.updatedAt = updatedAt;
     builder.syncStatus = syncStatus.toApi();
     builder.members.addAll(members.toApi());
+    builder.chats.addAll(this.chats.toApi());
     builder.description = description;
     builder.name = name;
-    builder.chatId = chatId;
 
     return builder.build();
   }
@@ -30,9 +31,9 @@ extension ApiAssociationToModel on api.Association {
       updatedAt: updatedAt!,
       syncStatus: syncStatus!.toModel(),
       members: members.toModel(),
+      chats: this.chats?.toModel() ?? [],
       description: description,
       name: name,
-      chatId: chatId,
     );
   }
 }
@@ -52,9 +53,9 @@ extension ExtendedAssociationToModel on ExtendedAssociation {
       updatedAt: item1.updatedAt,
       syncStatus: item1.syncStatus,
       members: item2.toModel(),
+      chats: item3.toModel(),
       description: item1.description,
       name: item1.name,
-      chatId: item1.chatId,
     );
   }
 }

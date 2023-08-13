@@ -3,7 +3,7 @@ import 'package:drift/wasm.dart';
 import 'package:logging/logging.dart';
 import 'package:skakel_mobile/utils/logging.dart';
 
-final log = Logger('DatabaseConnection');
+final log = Logger('DatabaseWebConnection');
 
 /// Obtains a database connection for running drift on the web.
 DatabaseConnection connect() {

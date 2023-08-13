@@ -3,52 +3,42 @@
 //
 
 // ignore_for_file: unused_element
-import 'package:skakel_api/src/model/association_member.dart';
-import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
-part 'association_info.g.dart';
+part 'association_chat_info.g.dart';
 
-/// AssociationInfo
+/// AssociationChatInfo
 ///
 /// Properties:
 /// * [id] 
-/// * [description] 
-/// * [name] 
+/// * [associationId] 
 /// * [chatId] 
-/// * [members] 
 @BuiltValue(instantiable: false)
-abstract class AssociationInfo  {
+abstract class AssociationChatInfo  {
   @BuiltValueField(wireName: r'id')
   String? get id;
 
-  @BuiltValueField(wireName: r'description')
-  String get description;
-
-  @BuiltValueField(wireName: r'name')
-  String get name;
+  @BuiltValueField(wireName: r'associationId')
+  String get associationId;
 
   @BuiltValueField(wireName: r'chatId')
   String get chatId;
 
-  @BuiltValueField(wireName: r'members')
-  BuiltList<AssociationMember> get members;
-
   @BuiltValueSerializer(custom: true)
-  static Serializer<AssociationInfo> get serializer => _$AssociationInfoSerializer();
+  static Serializer<AssociationChatInfo> get serializer => _$AssociationChatInfoSerializer();
 }
 
-class _$AssociationInfoSerializer implements PrimitiveSerializer<AssociationInfo> {
+class _$AssociationChatInfoSerializer implements PrimitiveSerializer<AssociationChatInfo> {
   @override
-  final Iterable<Type> types = const [AssociationInfo];
+  final Iterable<Type> types = const [AssociationChatInfo];
 
   @override
-  final String wireName = r'AssociationInfo';
+  final String wireName = r'AssociationChatInfo';
 
   Iterable<Object?> _serializeProperties(
     Serializers serializers,
-    AssociationInfo object, {
+    AssociationChatInfo object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
     if (object.id != null) {
@@ -58,14 +48,9 @@ class _$AssociationInfoSerializer implements PrimitiveSerializer<AssociationInfo
         specifiedType: const FullType(String),
       );
     }
-    yield r'description';
+    yield r'associationId';
     yield serializers.serialize(
-      object.description,
-      specifiedType: const FullType(String),
-    );
-    yield r'name';
-    yield serializers.serialize(
-      object.name,
+      object.associationId,
       specifiedType: const FullType(String),
     );
     yield r'chatId';
@@ -73,60 +58,55 @@ class _$AssociationInfoSerializer implements PrimitiveSerializer<AssociationInfo
       object.chatId,
       specifiedType: const FullType(String),
     );
-    yield r'members';
-    yield serializers.serialize(
-      object.members,
-      specifiedType: const FullType(BuiltList, [FullType(AssociationMember)]),
-    );
   }
 
   @override
   Object serialize(
     Serializers serializers,
-    AssociationInfo object, {
+    AssociationChatInfo object, {
     FullType specifiedType = FullType.unspecified,
   }) {
     return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
   }
 
   @override
-  AssociationInfo deserialize(
+  AssociationChatInfo deserialize(
     Serializers serializers,
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return serializers.deserialize(serialized, specifiedType: FullType($AssociationInfo)) as $AssociationInfo;
+    return serializers.deserialize(serialized, specifiedType: FullType($AssociationChatInfo)) as $AssociationChatInfo;
   }
 }
 
-/// a concrete implementation of [AssociationInfo], since [AssociationInfo] is not instantiable
+/// a concrete implementation of [AssociationChatInfo], since [AssociationChatInfo] is not instantiable
 @BuiltValue(instantiable: true)
-abstract class $AssociationInfo implements AssociationInfo, Built<$AssociationInfo, $AssociationInfoBuilder> {
-  $AssociationInfo._();
+abstract class $AssociationChatInfo implements AssociationChatInfo, Built<$AssociationChatInfo, $AssociationChatInfoBuilder> {
+  $AssociationChatInfo._();
 
-  factory $AssociationInfo([void Function($AssociationInfoBuilder)? updates]) = _$$AssociationInfo;
+  factory $AssociationChatInfo([void Function($AssociationChatInfoBuilder)? updates]) = _$$AssociationChatInfo;
 
   @BuiltValueHook(initializeBuilder: true)
-  static void _defaults($AssociationInfoBuilder b) => b;
+  static void _defaults($AssociationChatInfoBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<$AssociationInfo> get serializer => _$$AssociationInfoSerializer();
+  static Serializer<$AssociationChatInfo> get serializer => _$$AssociationChatInfoSerializer();
 }
 
-class _$$AssociationInfoSerializer implements PrimitiveSerializer<$AssociationInfo> {
+class _$$AssociationChatInfoSerializer implements PrimitiveSerializer<$AssociationChatInfo> {
   @override
-  final Iterable<Type> types = const [$AssociationInfo, _$$AssociationInfo];
+  final Iterable<Type> types = const [$AssociationChatInfo, _$$AssociationChatInfo];
 
   @override
-  final String wireName = r'$AssociationInfo';
+  final String wireName = r'$AssociationChatInfo';
 
   @override
   Object serialize(
     Serializers serializers,
-    $AssociationInfo object, {
+    $AssociationChatInfo object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return serializers.serialize(object, specifiedType: FullType(AssociationInfo))!;
+    return serializers.serialize(object, specifiedType: FullType(AssociationChatInfo))!;
   }
 
   void _deserializeProperties(
@@ -134,7 +114,7 @@ class _$$AssociationInfoSerializer implements PrimitiveSerializer<$AssociationIn
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
     required List<Object?> serializedList,
-    required AssociationInfoBuilder result,
+    required AssociationChatInfoBuilder result,
     required List<Object?> unhandled,
   }) {
     for (var i = 0; i < serializedList.length; i += 2) {
@@ -148,19 +128,12 @@ class _$$AssociationInfoSerializer implements PrimitiveSerializer<$AssociationIn
           ) as String;
           result.id = valueDes;
           break;
-        case r'description':
+        case r'associationId':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
-          result.description = valueDes;
-          break;
-        case r'name':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.name = valueDes;
+          result.associationId = valueDes;
           break;
         case r'chatId':
           final valueDes = serializers.deserialize(
@@ -168,13 +141,6 @@ class _$$AssociationInfoSerializer implements PrimitiveSerializer<$AssociationIn
             specifiedType: const FullType(String),
           ) as String;
           result.chatId = valueDes;
-          break;
-        case r'members':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(BuiltList, [FullType(AssociationMember)]),
-          ) as BuiltList<AssociationMember>;
-          result.members.replace(valueDes);
           break;
         default:
           unhandled.add(key);
@@ -185,12 +151,12 @@ class _$$AssociationInfoSerializer implements PrimitiveSerializer<$AssociationIn
   }
 
   @override
-  $AssociationInfo deserialize(
+  $AssociationChatInfo deserialize(
     Serializers serializers,
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = $AssociationInfoBuilder();
+    final result = $AssociationChatInfoBuilder();
     final serializedList = (serialized as Iterable<Object?>).toList();
     final unhandled = <Object?>[];
     _deserializeProperties(

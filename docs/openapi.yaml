@@ -1379,16 +1379,16 @@ components:
       properties:
         id:
           type: string
-        members:
-          type: array
-          items:
-            $ref: "#/components/schemas/AssociationMember"
         description:
           type: string
         name:
           type: string
         chatId:
           type: string
+        members:
+          type: array
+          items:
+            $ref: "#/components/schemas/AssociationMember"
       required:
         - name
         - description
@@ -1399,6 +1399,22 @@ components:
       enum:
         - Admin
         - Member
+    AssociationChatInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        associationId:
+          type: string
+        chatId:
+          type: string
+      required:
+        - associationId
+        - chatId
+    AssociationChat:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/AssociationChatInfo"
     AssociationMemberInfo:
       type: object
       properties:
@@ -1418,6 +1434,12 @@ components:
       allOf:
         - $ref: "#/components/schemas/Base"
         - $ref: "#/components/schemas/AssociationInfo"
+        - type: object
+          properties:
+            chats:
+              type: array
+              items:
+                $ref: "#/components/schemas/AssociationChat"
     SyncStatus:
       type: string
       enum:

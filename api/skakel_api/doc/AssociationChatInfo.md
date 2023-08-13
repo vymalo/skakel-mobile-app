@@ -1,4 +1,4 @@
-# skakel_api.model.AssociationInfo
+# skakel_api.model.AssociationChatInfo
 
 ## Load the model package
 ```dart
@@ -9,10 +9,8 @@ import 'package:skakel_api/api.dart';
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | [optional] 
-**description** | **String** |  | 
-**name** | **String** |  | 
+**associationId** | **String** |  | 
 **chatId** | **String** |  | 
-**members** | [**BuiltList&lt;AssociationMember&gt;**](AssociationMember.md) |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

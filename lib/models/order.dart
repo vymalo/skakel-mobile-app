@@ -1,4 +1,4 @@
-import 'package:drift/drift.dart';
+import 'package:drift/drift.dart' show Value;
 import 'package:json_annotation/json_annotation.dart';
 import 'package:skakel_mobile/db/base/base_model.dart';
 import 'package:skakel_mobile/db/base/sync_status.dart';

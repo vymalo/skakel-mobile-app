@@ -3,19 +3,15 @@
 //
 
 // ignore_for_file: unused_element
-import 'package:skakel_api/src/model/association_member.dart';
-import 'package:skakel_api/src/model/association_all_of.dart';
-import 'package:built_collection/built_collection.dart';
 import 'package:skakel_api/src/model/sync_status.dart';
-import 'package:skakel_api/src/model/association_chat.dart';
-import 'package:skakel_api/src/model/association_info.dart';
 import 'package:skakel_api/src/model/base.dart';
+import 'package:skakel_api/src/model/association_chat_info.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
-part 'association.g.dart';
+part 'association_chat.g.dart';
 
-/// Association
+/// AssociationChat
 ///
 /// Properties:
 /// * [id] 
@@ -23,34 +19,31 @@ part 'association.g.dart';
 /// * [updatedAt] 
 /// * [version] 
 /// * [syncStatus] 
-/// * [description] 
-/// * [name] 
+/// * [associationId] 
 /// * [chatId] 
-/// * [members] 
-/// * [chats] 
 @BuiltValue()
-abstract class Association implements AssociationAllOf, AssociationInfo, Base, Built<Association, AssociationBuilder> {
-  Association._();
+abstract class AssociationChat implements AssociationChatInfo, Base, Built<AssociationChat, AssociationChatBuilder> {
+  AssociationChat._();
 
-  factory Association([void updates(AssociationBuilder b)]) = _$Association;
+  factory AssociationChat([void updates(AssociationChatBuilder b)]) = _$AssociationChat;
 
   @BuiltValueHook(initializeBuilder: true)
-  static void _defaults(AssociationBuilder b) => b;
+  static void _defaults(AssociationChatBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<Association> get serializer => _$AssociationSerializer();
+  static Serializer<AssociationChat> get serializer => _$AssociationChatSerializer();
 }
 
-class _$AssociationSerializer implements PrimitiveSerializer<Association> {
+class _$AssociationChatSerializer implements PrimitiveSerializer<AssociationChat> {
   @override
-  final Iterable<Type> types = const [Association, _$Association];
+  final Iterable<Type> types = const [AssociationChat, _$AssociationChat];
 
   @override
-  final String wireName = r'Association';
+  final String wireName = r'AssociationChat';
 
   Iterable<Object?> _serializeProperties(
     Serializers serializers,
-    Association object, {
+    AssociationChat object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
     if (object.createdAt != null) {
@@ -63,28 +56,6 @@ class _$AssociationSerializer implements PrimitiveSerializer<Association> {
     yield r'chatId';
     yield serializers.serialize(
       object.chatId,
-      specifiedType: const FullType(String),
-    );
-    yield r'members';
-    yield serializers.serialize(
-      object.members,
-      specifiedType: const FullType(BuiltList, [FullType(AssociationMember)]),
-    );
-    yield r'name';
-    yield serializers.serialize(
-      object.name,
-      specifiedType: const FullType(String),
-    );
-    if (object.chats != null) {
-      yield r'chats';
-      yield serializers.serialize(
-        object.chats,
-        specifiedType: const FullType(BuiltList, [FullType(AssociationChat)]),
-      );
-    }
-    yield r'description';
-    yield serializers.serialize(
-      object.description,
       specifiedType: const FullType(String),
     );
     if (object.id != null) {
@@ -108,6 +79,11 @@ class _$AssociationSerializer implements PrimitiveSerializer<Association> {
         specifiedType: const FullType(SyncStatus),
       );
     }
+    yield r'associationId';
+    yield serializers.serialize(
+      object.associationId,
+      specifiedType: const FullType(String),
+    );
     if (object.updatedAt != null) {
       yield r'updatedAt';
       yield serializers.serialize(
@@ -120,7 +96,7 @@ class _$AssociationSerializer implements PrimitiveSerializer<Association> {
   @override
   Object serialize(
     Serializers serializers,
-    Association object, {
+    AssociationChat object, {
     FullType specifiedType = FullType.unspecified,
   }) {
     return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
@@ -131,7 +107,7 @@ class _$AssociationSerializer implements PrimitiveSerializer<Association> {
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
     required List<Object?> serializedList,
-    required AssociationBuilder result,
+    required AssociationChatBuilder result,
     required List<Object?> unhandled,
   }) {
     for (var i = 0; i < serializedList.length; i += 2) {
@@ -151,34 +127,6 @@ class _$AssociationSerializer implements PrimitiveSerializer<Association> {
             specifiedType: const FullType(String),
           ) as String;
           result.chatId = valueDes;
-          break;
-        case r'members':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(BuiltList, [FullType(AssociationMember)]),
-          ) as BuiltList<AssociationMember>;
-          result.members.replace(valueDes);
-          break;
-        case r'name':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.name = valueDes;
-          break;
-        case r'chats':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(BuiltList, [FullType(AssociationChat)]),
-          ) as BuiltList<AssociationChat>;
-          result.chats.replace(valueDes);
-          break;
-        case r'description':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.description = valueDes;
           break;
         case r'id':
           final valueDes = serializers.deserialize(
@@ -201,6 +149,13 @@ class _$AssociationSerializer implements PrimitiveSerializer<Association> {
           ) as SyncStatus;
           result.syncStatus = valueDes;
           break;
+        case r'associationId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.associationId = valueDes;
+          break;
         case r'updatedAt':
           final valueDes = serializers.deserialize(
             value,
@@ -217,12 +172,12 @@ class _$AssociationSerializer implements PrimitiveSerializer<Association> {
   }
 
   @override
-  Association deserialize(
+  AssociationChat deserialize(
     Serializers serializers,
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = AssociationBuilder();
+    final result = AssociationChatBuilder();
     final serializedList = (serialized as Iterable<Object?>).toList();
     final unhandled = <Object?>[];
     _deserializeProperties(

@@ -1,0 +1,21 @@
+{
+  "realm": "rabbitmq",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "rabbitmq-client",
+      "rootUrl": "http://rabbitmq:15672",
+      "adminUrl": "http://rabbitmq:15672",
+      "redirectUris": [
+        "http://rabbitmq:15672/*"
+      ],
+      "webOrigins": [
+        "+"
+      ],
+      "bearerOnly": false,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "attributes": {}
+    }
+  ]
+}

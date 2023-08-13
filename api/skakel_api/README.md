@@ -127,6 +127,9 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [Association](doc/Association.md)
+ - [AssociationAllOf](doc/AssociationAllOf.md)
+ - [AssociationChat](doc/AssociationChat.md)
+ - [AssociationChatInfo](doc/AssociationChatInfo.md)
  - [AssociationInfo](doc/AssociationInfo.md)
  - [AssociationMember](doc/AssociationMember.md)
  - [AssociationMemberInfo](doc/AssociationMemberInfo.md)

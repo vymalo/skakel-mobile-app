@@ -79,6 +79,8 @@ dependencies:
   oauth2_client: ^3.2.1
   uuid: ^3.0.7
   built_value: ^8.6.1
+  meta: ^1.9.1
+  freezed_annotation: ^2.4.1
 
 dev_dependencies:
   flutter_test:
@@ -97,6 +99,7 @@ dev_dependencies:
   json_serializable: ^6.7.1
   openapi_generator: 4.10.0
   envied_generator: ^0.3.0+3
+  freezed: ^2.4.1
 
 dependency_overrides:
   http: ^0.13.4

@@ -1,6 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logging/logging.dart';
-import 'package:skakel_mobile/services/connection_status.dart';
 import 'package:skakel_mobile/services/mqtt/impl/chat_mqtt_message_handler.dart';
 import 'package:skakel_mobile/services/mqtt/impl/logging_mqtt_message_handler.dart';
 import 'package:skakel_mobile/services/mqtt/impl/mqtt_service_impl.dart';
@@ -14,24 +13,14 @@ final log = Logger('MqttManager');
 class MqttManager {
   final MqttService _mqttService;
   final List<MqttMessageHandler> _messageHandlers;
-  final ConnectionStatus _connectivity;
 
-  MqttManager(this._connectivity, this._mqttService, this._messageHandlers) {
+  MqttManager(this._mqttService, this._messageHandlers) {
     _mqttService.registerMessageListener(_handleMessageReceived);
     _mqttService.onConnected.listen(_handleConnected);
     log.d('MqttManager initialized!');
   }
 
-  void init() async {
-    _connectivity.stream.listen((online) async {
-      if (online) {
-        // Sync all repositories when connection is re-established
-        await _mqttService.connect();
-      }
-    });
-
-    await connect();
-  }
+  void init() async {}
 
   // Initializes the subscriptions for custom topics from message handlers
   void _initHandlersSubscriptions() {
@@ -80,6 +69,5 @@ final mqttManagerProvider = Provider<MqttManager>((ref) {
     // TypingMessageHandler(),
     // SignalingMessageHandler(),
   ];
-  final connectivity = ref.watch(connectivityProvider);
-  return MqttManager(connectivity, mqttService, messageHandlers);
+  return MqttManager(mqttService, messageHandlers);
 });

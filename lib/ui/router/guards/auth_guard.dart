@@ -8,7 +8,7 @@ class AuthGuard extends AutoRouteGuard {
 
   AuthGuard(this.authService) {
     authService.addListener((state) {
-      _isAuthenticated = state.item1;
+      _isAuthenticated = state.isLoggedIn;
     });
   }
 

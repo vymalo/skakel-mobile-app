@@ -1,20 +1,22 @@
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logging/logging.dart';
+import 'package:oauth2_client/access_token_response.dart';
 import 'package:oauth2_client/oauth2_client.dart';
 import 'package:oauth2_client/oauth2_helper.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:skakel_mobile/services/auth/auth.dart';
+import 'package:skakel_mobile/services/auth/auth_refresh.dart';
 import 'package:skakel_mobile/utils/env.dart';
 import 'package:skakel_mobile/utils/extensions/current_user_with_token.dart';
 import 'package:skakel_mobile/utils/logging.dart';
-import 'package:tuple/tuple.dart';
 
 final log = Logger('AuthServiceImpl');
 
 final redirectUri = (kIsWeb ? Uri.base : Uri.parse('skakel://oauth2redirect'));
 
-class AuthServiceImpl extends StateNotifier<AuthState> implements AuthService {
+class AuthServiceImpl extends AbstractAuthAutoRefreshService
+    implements AuthService {
   final _helper = OAuth2Helper(
     OAuth2Client(
       redirectUri: redirectUri.toString(),
@@ -27,11 +29,11 @@ class AuthServiceImpl extends StateNotifier<AuthState> implements AuthService {
     scopes: Env.oauthScopes.split(','),
   );
 
-  AuthServiceImpl() : super(const Tuple2(false, null));
+  AuthServiceImpl() : super(const AuthState.out());
 
   /// Initialize the AuthService.
   @override
-  void init() async {
+  Future<void> simpleInit() async {
     log.d('Initializing AuthServiceImpl...');
     final username = (await _helper.getTokenFromStorage())?.username;
 
@@ -49,9 +51,10 @@ class AuthServiceImpl extends StateNotifier<AuthState> implements AuthService {
   /// Refresh if the token is expired.
   /// Return null if the token is not available.
   @override
-  Future<String?> getToken({
+  Future<AccessTokenResponse?> getToken({
     bool refresh = false,
-    int secondsToExpiration = 60,
+    int secondsToExpiration =
+        AbstractAuthAutoRefreshService.secondsToExpirationDefault,
   }) async {
     var currentToken = await _helper.getTokenFromStorage();
     if (currentToken == null) {
@@ -69,7 +72,7 @@ class AuthServiceImpl extends StateNotifier<AuthState> implements AuthService {
       await _update();
     }
 
-    return currentToken.accessToken;
+    return currentToken;
   }
 
   /// Login the user.
@@ -93,8 +96,6 @@ class AuthServiceImpl extends StateNotifier<AuthState> implements AuthService {
 
   Future<void> _update() async {
     final currentToken = await _helper.getTokenFromStorage();
-    final username = currentToken?.username;
-
     Sentry.configureScope(
       (scope) => currentToken != null
           ? scope.setUser(
@@ -106,7 +107,9 @@ class AuthServiceImpl extends StateNotifier<AuthState> implements AuthService {
           : scope.setUser(null),
     );
 
-    state = Tuple2(currentToken != null, username);
+    state = currentToken == null
+        ? const AuthState.out()
+        : AuthState.token(token: currentToken);
   }
 }
 

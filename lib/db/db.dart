@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:skakel_mobile/db/entities/association_chat_entity.dart';
 import 'package:skakel_mobile/db/entities/association_entity.dart';
 import 'package:skakel_mobile/db/entities/association_member_entity.dart';
 import 'package:skakel_mobile/db/entities/attachment_entity.dart';
@@ -27,7 +28,8 @@ import 'base/sync_status.dart';
 part 'db.g.dart';
 
 typedef ExtendedChat = Tuple2<chats, List<chat_members>>;
-typedef ExtendedAssociation = Tuple2<associations, List<association_members>>;
+typedef ExtendedAssociation
+    = Tuple3<associations, List<association_members>, List<association_chats>>;
 typedef ExtendedOrder = Tuple2<orders, List<order_items>>;
 typedef ExtendedChatMessage
     = Tuple3<chat_messages, List<attachments>, List<chat_reactions>>;
@@ -47,6 +49,7 @@ typedef ExtendedChatMessage
   ChatReactionEntity,
   AssociationEntity,
   AssociationMemberEntity,
+  AssociationChatEntity,
 ])
 class AppDatabase extends _$AppDatabase {
 // we tell the database where to store the data with this constructor
@@ -382,10 +385,16 @@ class AppDatabase extends _$AppDatabase {
     final query = select(associationEntity)..where((tbl) => tbl.id.equals(id));
     final uStream = query.watchSingle();
     final associationMembersStream = _getAssociationMembers(id);
-    return Rx.combineLatest2(
+    final associationChatsStream = _getAssociationChats(id);
+    return Rx.combineLatest3(
       uStream,
       associationMembersStream,
-      (association, members) => ExtendedAssociation(association, members),
+      associationChatsStream,
+      (association, members, uChats) => ExtendedAssociation(
+        association,
+        members,
+        uChats,
+      ),
     );
   }
 
@@ -415,6 +424,13 @@ class AppDatabase extends _$AppDatabase {
       ..where((tbl) => tbl.associationId.equals(associationId));
     final membersStream = membersQuery.watch();
     return membersStream;
+  }
+
+  Stream<List<association_chats>> _getAssociationChats(String associationId) {
+    final chatsQuery = select(associationChatEntity)
+      ..where((tbl) => tbl.associationId.equals(associationId));
+    final chatsStream = chatsQuery.watch();
+    return chatsStream;
   }
 
   Future<void> deleteAssociation(

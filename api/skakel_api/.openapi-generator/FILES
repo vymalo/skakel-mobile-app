@@ -2,7 +2,10 @@
 README.md
 analysis_options.yaml
 doc/Association.md
+doc/AssociationAllOf.md
 doc/AssociationApi.md
+doc/AssociationChat.md
+doc/AssociationChatInfo.md
 doc/AssociationInfo.md
 doc/AssociationMember.md
 doc/AssociationMemberInfo.md
@@ -71,6 +74,9 @@ lib/src/auth/bearer_auth.dart
 lib/src/auth/oauth.dart
 lib/src/date_serializer.dart
 lib/src/model/association.dart
+lib/src/model/association_all_of.dart
+lib/src/model/association_chat.dart
+lib/src/model/association_chat_info.dart
 lib/src/model/association_info.dart
 lib/src/model/association_member.dart
 lib/src/model/association_member_info.dart
@@ -109,4 +115,3 @@ lib/src/model/user_settings.dart
 lib/src/model/user_settings_info.dart
 lib/src/serializers.dart
 pubspec.yaml
-test/association_member_info_test.dart

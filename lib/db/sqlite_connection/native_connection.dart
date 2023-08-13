@@ -9,7 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:drift_dev/api/migrations.dart';
 import 'package:skakel_mobile/utils/logging.dart';
 
-final log = Logger('DatabaseConnection');
+final log = Logger('DatabaseNativeConnection');
 
 Future<File> get databaseFile async {
   // We use `path_provider` to find a suitable path to store our data in.

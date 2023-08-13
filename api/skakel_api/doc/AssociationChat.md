@@ -1,4 +1,4 @@
-# skakel_api.model.Association
+# skakel_api.model.AssociationChat
 
 ## Load the model package
 ```dart
@@ -13,11 +13,8 @@ Name | Type | Description | Notes
 **updatedAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **version** | **int** |  | [optional] 
 **syncStatus** | [**SyncStatus**](SyncStatus.md) |  | [optional] 
-**description** | **String** |  | 
-**name** | **String** |  | 
+**associationId** | **String** |  | 
 **chatId** | **String** |  | 
-**members** | [**BuiltList&lt;AssociationMember&gt;**](AssociationMember.md) |  | 
-**chats** | [**BuiltList&lt;AssociationChat&gt;**](AssociationChat.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

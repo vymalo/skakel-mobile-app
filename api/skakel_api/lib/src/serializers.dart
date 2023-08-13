@@ -15,6 +15,9 @@ import 'package:skakel_api/src/date_serializer.dart';
 import 'package:skakel_api/src/model/date.dart';
 
 import 'package:skakel_api/src/model/association.dart';
+import 'package:skakel_api/src/model/association_all_of.dart';
+import 'package:skakel_api/src/model/association_chat.dart';
+import 'package:skakel_api/src/model/association_chat_info.dart';
 import 'package:skakel_api/src/model/association_info.dart';
 import 'package:skakel_api/src/model/association_member.dart';
 import 'package:skakel_api/src/model/association_member_info.dart';
@@ -55,6 +58,9 @@ part 'serializers.g.dart';
 
 @SerializersFor([
   Association,
+  AssociationAllOf,$AssociationAllOf,
+  AssociationChat,
+  AssociationChatInfo,$AssociationChatInfo,
   AssociationInfo,$AssociationInfo,
   AssociationMember,
   AssociationMemberInfo,$AssociationMemberInfo,
@@ -128,6 +134,8 @@ Serializers serializers = (_$serializers.toBuilder()
         const FullType(BuiltList, [FullType(ChatMessage)]),
         () => ListBuilder<ChatMessage>(),
       )
+      ..add(AssociationAllOf.serializer)
+      ..add(AssociationChatInfo.serializer)
       ..add(AssociationInfo.serializer)
       ..add(AssociationMemberInfo.serializer)
       ..add(AttachmentInfo.serializer)

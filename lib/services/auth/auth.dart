@@ -1,7 +1,24 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tuple/tuple.dart';
+import 'package:oauth2_client/access_token_response.dart';
 
-typedef AuthState = Tuple2<bool, String?>;
+part 'auth.freezed.dart';
+
+@freezed
+class AuthState with _$AuthState {
+  const AuthState._();
+
+  const factory AuthState.token({
+    required AccessTokenResponse token,
+  }) = _AuthStateWithToken;
+
+  const factory AuthState.out() = _AuthStateWithtoutToken;
+
+  bool get isLoggedIn => when(
+        token: (_) => true,
+        out: () => false,
+      );
+}
 
 /// Auth service abstract class
 abstract class AuthService implements StateNotifier<AuthState> {
@@ -9,7 +26,7 @@ abstract class AuthService implements StateNotifier<AuthState> {
   void init();
 
   /// Returns the current token
-  Future<String?> getToken({
+  Future<AccessTokenResponse?> getToken({
     bool refresh = false,
     int secondsToExpiration = 60,
   });

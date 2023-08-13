@@ -1,48 +1,39 @@
-import 'package:drift/drift.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:drift/drift.dart' show Value;
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:skakel_mobile/db/base/base_model.dart';
 import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_mobile/db/db.dart';
+import 'package:skakel_mobile/models/association_chat.dart';
 import 'package:skakel_mobile/models/association_member.dart';
+import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
+
+part 'association.freezed.dart';
 
 part 'association.g.dart';
 
-@JsonSerializable()
+@appFreezed
 class Association
-    with ModelToCompanion<AssociationEntityCompanion>
-    implements SyncableModel {
-  @override
-  String id;
+    with _$Association, ModelToCompanion<AssociationEntityCompanion>
+    implements BaseModel {
 
-  @override
-  DateTime createdAt;
+  const Association._();
 
-  @override
-  DateTime updatedAt;
+  @Implements<SyncableModel>()
+  factory Association({
+    required final String id,
+    required final int version,
+    required final DateTime createdAt,
+    required final DateTime updatedAt,
+    required SyncStatus syncStatus,
+    required final List<AssociationMember> members,
+    required final List<AssociationChat> chats,
+    required final String description,
+    required final String name,
+  }) = _Association;
 
-  @override
-  int version;
-
-  @override
-  SyncStatus syncStatus;
-
-  List<AssociationMember> members;
-  String description;
-  String name;
-  String chatId;
-
-  Association({
-    required this.id,
-    required this.version,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.syncStatus,
-    required this.members,
-    required this.description,
-    required this.name,
-    required this.chatId,
-  });
+  factory Association.fromJson(Map<String, dynamic> json) =>
+      _$AssociationFromJson(json);
 
   @override
   AssociationEntityCompanion toCompanion() {
@@ -54,14 +45,6 @@ class Association
       syncStatus: Value(syncStatus),
       description: Value(description),
       name: Value(name),
-      chatId: Value(chatId),
     );
   }
-
-  // Add this factory method to create an instance from JSON data
-  factory Association.fromJson(Map<String, dynamic> json) =>
-      _$AssociationFromJson(json);
-
-  // Add this method to convert the instance to JSON data
-  Map<String, dynamic> toJson() => _$AssociationToJson(this);
 }

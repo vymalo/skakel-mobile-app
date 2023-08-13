@@ -9,7 +9,7 @@ class AuthScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final authState = ref.watch(authServiceProvider).item1;
+    final authState = ref.watch(authServiceProvider).isLoggedIn;
     final authService = ref.watch(authServiceProvider.notifier);
 
     return Scaffold(
