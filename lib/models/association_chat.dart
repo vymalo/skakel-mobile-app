@@ -1,6 +1,5 @@
 import 'package:drift/drift.dart' show Value;
-import 'package:json_annotation/json_annotation.dart';
-import 'package:meta/meta.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:skakel_mobile/db/base/base_model.dart';
 import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_mobile/db/db.dart';
@@ -17,7 +16,8 @@ class AssociationChat
     implements BaseModel {
   const AssociationChat._();
 
-  factory AssociationChat({
+  @Implements<SyncableModel>()
+  const factory AssociationChat({
     required final String id,
     required final int version,
     required final DateTime createdAt,

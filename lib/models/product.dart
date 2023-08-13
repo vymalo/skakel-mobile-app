@@ -1,51 +1,35 @@
 import 'package:drift/drift.dart' show Value;
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:skakel_mobile/db/base/base_model.dart';
 import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_mobile/db/db.dart';
+import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
 part 'product.g.dart';
+part 'product.freezed.dart';
 
-@JsonSerializable()
+@appFreezed
 class Product
-    with ModelToCompanion<ProductEntityCompanion>
-    implements SyncableModel {
-  @override
-  String id;
+    with _$Product, ModelToCompanion<ProductEntityCompanion>
+    implements BaseModel {
 
-  @override
-  DateTime createdAt;
+  const Product._();
 
-  @override
-  DateTime updatedAt;
-
-  @override
-  int version;
-
-  @override
-  SyncStatus syncStatus;
-
-  String name;
-  String? description;
-  int price;
-  String sellerId;
-  String? content;
-  String? productType;
-
-  Product({
-    required this.id,
-    required this.version,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.syncStatus,
-    required this.name,
-    this.description,
-    required this.price,
-    required this.sellerId,
-    this.content,
-    this.productType,
-  });
+  @Implements<SyncableModel>()
+  const factory Product({
+    required String id,
+    required int version,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    required SyncStatus syncStatus,
+    required String name,
+    required String? description,
+    required int price,
+    required String sellerId,
+    required String? content,
+    required String? productType,
+  }) = _Product;
 
   @override
   ProductEntityCompanion toCompanion() {
@@ -67,7 +51,4 @@ class Product
   // Add this factory method to create an instance from JSON data
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);
-
-  // Add this method to convert the instance to JSON data
-  Map<String, dynamic> toJson() => _$ProductToJson(this);
 }

@@ -1,47 +1,32 @@
 import 'package:drift/drift.dart' show Value;
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:skakel_mobile/db/base/base_model.dart';
 import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_mobile/db/db.dart';
+import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
 part 'order_item.g.dart';
+part 'order_item.freezed.dart';
 
-@JsonSerializable()
+@appFreezed
 class OrderItem
-    with ModelToCompanion<OrderItemEntityCompanion>
-    implements SyncableModel {
-  @override
-  String id;
+    with _$OrderItem, ModelToCompanion<OrderItemEntityCompanion>
+    implements BaseModel {
+  const OrderItem._();
 
-  @override
-  DateTime createdAt;
-
-  @override
-  DateTime updatedAt;
-
-  @override
-  int version;
-
-  @override
-  SyncStatus syncStatus;
-
-  String orderId;
-  String productId;
-  int quantity;
-  String? notes;
-
-  OrderItem({
-    required this.id,
-    required this.version,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.syncStatus,
-    required this.orderId,
-    required this.productId,
-    required this.quantity,
-    this.notes,
-  });
+  @Implements<SyncableModel>()
+  const factory OrderItem({
+    required String id,
+    required int version,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    required SyncStatus syncStatus,
+    required String orderId,
+    required String productId,
+    required int quantity,
+    required String? notes,
+  }) = _OrderItem;
 
   @override
   OrderItemEntityCompanion toCompanion() {
@@ -61,7 +46,4 @@ class OrderItem
   // Add this factory method to create an instance from JSON data
   factory OrderItem.fromJson(Map<String, dynamic> json) =>
       _$OrderItemFromJson(json);
-
-  // Add this method to convert the instance to JSON data
-  Map<String, dynamic> toJson() => _$OrderItemToJson(this);
 }

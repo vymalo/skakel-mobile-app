@@ -55,7 +55,7 @@ abstract class AbstractAppRepo<T extends BaseModel>
     }
 
     if (model.syncStatus == SyncStatus.deleted) {
-      model.syncStatus = SyncStatus.updated;
+      model = model.copyWith(syncStatus: SyncStatus.updated) as T;
     }
 
     var saved = await _localRepo.save(model);
@@ -65,7 +65,7 @@ abstract class AbstractAppRepo<T extends BaseModel>
 
     if (_connectionStatus.online && !skipNetwork) {
       try {
-        saved.syncStatus = SyncStatus.synced;
+        saved = saved.copyWith(syncStatus: SyncStatus.updated) as T;
         final remoteSaved = await _remoteRepo.save(saved);
 
         // Only mark it as synced if remote saving also succeeds.
@@ -85,7 +85,7 @@ abstract class AbstractAppRepo<T extends BaseModel>
     }
 
     // Set the entity's sync status to deleted and save it locally
-    entity.syncStatus = SyncStatus.deleted;
+    entity = entity.copyWith(syncStatus: SyncStatus.deleted) as T;
     await _localRepo.save(entity);
 
     // If the device is online, attempt to delete the entity remotely
@@ -184,7 +184,7 @@ abstract class AbstractAppRepo<T extends BaseModel>
             continue;
           }
           // Update sync status locally if remote saving is successful
-          savedItem.syncStatus = SyncStatus.synced;
+          savedItem = savedItem.copyWith(syncStatus: SyncStatus.synced) as T;
           await _localRepo.save(savedItem);
         } catch (e, s) {
           log.e('Error saving to remote repo', e, s);

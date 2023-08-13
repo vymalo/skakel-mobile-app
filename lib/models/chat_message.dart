@@ -1,55 +1,35 @@
 import 'package:drift/drift.dart' show Value;
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:skakel_mobile/db/base/base_model.dart';
 import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/models/attachment.dart';
 import 'package:skakel_mobile/models/chat_reaction.dart';
+import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
 part 'chat_message.g.dart';
+part 'chat_message.freezed.dart';
 
-@JsonSerializable()
+@appFreezed
 class ChatMessage
-    with ModelToCompanion<ChatMessageEntityCompanion>
-    implements SyncableModel {
-  @override
-  String id;
+    with _$ChatMessage, ModelToCompanion<ChatMessageEntityCompanion>
+    implements BaseModel {
+  const ChatMessage._();
 
-  @override
-  DateTime createdAt;
-
-  @override
-  DateTime updatedAt;
-
-  @override
-  int version;
-
-  @override
-  SyncStatus syncStatus;
-
-  String content;
-
-  String chatId;
-
-  String authorId;
-
-  List<Attachment> attachments;
-
-  List<ChatReaction> reactions;
-
-  ChatMessage({
-    required this.id,
-    required this.version,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.syncStatus,
-    required this.content,
-    required this.chatId,
-    required this.authorId,
-    required this.attachments,
-    required this.reactions,
-  });
+  @Implements<SyncableModel>()
+  const factory ChatMessage({
+    required String id,
+    required int version,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    required SyncStatus syncStatus,
+    required String content,
+    required String chatId,
+    required String authorId,
+    required List<Attachment> attachments,
+    required List<ChatReaction> reactions,
+  }) = _ChatMessage;
 
   @override
   ChatMessageEntityCompanion toCompanion() {
@@ -68,7 +48,4 @@ class ChatMessage
   // Add this factory method to create an instance from JSON data
   factory ChatMessage.fromJson(Map<String, dynamic> json) =>
       _$ChatMessageFromJson(json);
-
-  // Add this method to convert the instance to JSON data
-  Map<String, dynamic> toJson() => _$ChatMessageToJson(this);
 }

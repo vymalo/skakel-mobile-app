@@ -1,43 +1,30 @@
 import 'package:drift/drift.dart' show Value;
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:skakel_mobile/db/base/base_model.dart';
 import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_mobile/db/db.dart';
+import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
 part 'blocked_user.g.dart';
+part 'blocked_user.freezed.dart';
 
-@JsonSerializable()
+@appFreezed
 class BlockedUser
-    with ModelToCompanion<BlockedUserEntityCompanion>
-    implements SyncableModel {
-  @override
-  String id;
+    with _$BlockedUser, ModelToCompanion<BlockedUserEntityCompanion>
+    implements BaseModel {
+  const BlockedUser._();
 
-  @override
-  DateTime createdAt;
-
-  @override
-  DateTime updatedAt;
-
-  @override
-  int version;
-
-  @override
-  SyncStatus syncStatus;
-
-  String blockedUserId;
-  String userSettingId;
-
-  BlockedUser({
-    required this.id,
-    required this.version,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.syncStatus,
-    required this.blockedUserId,
-    required this.userSettingId,
-  });
+  @Implements<SyncableModel>()
+  const factory BlockedUser({
+    required String id,
+    required int version,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    required SyncStatus syncStatus,
+    required String blockedUserId,
+    required String userSettingId,
+  }) = _BlockedUser;
 
   @override
   BlockedUserEntityCompanion toCompanion() {
@@ -55,7 +42,4 @@ class BlockedUser
   // Add this factory method to create an instance from JSON data
   factory BlockedUser.fromJson(Map<String, dynamic> json) =>
       _$BlockedUserFromJson(json);
-
-  // Add this method to convert the instance to JSON data
-  Map<String, dynamic> toJson() => _$BlockedUserToJson(this);
 }

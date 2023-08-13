@@ -1,50 +1,37 @@
 import 'package:drift/drift.dart' show Value;
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:skakel_mobile/db/base/base_model.dart';
 import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/models/order_item.dart';
+import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
+
+part 'order.freezed.dart';
 
 part 'order.g.dart';
 
-@JsonSerializable()
-class Order with ModelToCompanion<OrderEntityCompanion> implements SyncableModel {
-  @override
-  String id;
+@appFreezed
+class Order
+    with _$Order, ModelToCompanion<OrderEntityCompanion>
+    implements BaseModel {
 
-  @override
-  DateTime createdAt;
+  const Order._();
 
-  @override
-  DateTime updatedAt;
-
-  @override
-  int version;
-
-  @override
-  SyncStatus syncStatus;
-
-  List<OrderItem> items;
-  int totalAmount;
-  DateTime? timestamp;
-  String? status;
-  String buyerId;
-  String sellerId;
-
-  Order({
-    required this.id,
-    required this.version,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.syncStatus,
-    required this.items,
-    required this.totalAmount,
-    this.timestamp,
-    this.status,
-    required this.buyerId,
-    required this.sellerId,
-  });
+  @Implements<SyncableModel>()
+  const factory Order({
+    required String id,
+    required int version,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    required SyncStatus syncStatus,
+    required List<OrderItem> items,
+    required int totalAmount,
+    required DateTime? timestamp,
+    required String? status,
+    required String buyerId,
+    required String sellerId,
+  }) = _Order;
 
   @override
   OrderEntityCompanion toCompanion() {
@@ -64,7 +51,4 @@ class Order with ModelToCompanion<OrderEntityCompanion> implements SyncableModel
 
   // Add this factory method to create an instance from JSON data
   factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
-
-  // Add this method to convert the instance to JSON data
-  Map<String, dynamic> toJson() => _$OrderToJson(this);
 }

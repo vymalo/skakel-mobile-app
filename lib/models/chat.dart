@@ -1,47 +1,34 @@
 import 'package:drift/drift.dart' show Value;
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:skakel_mobile/db/base/base_model.dart';
 import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/models/chat_member.dart';
 import 'package:skakel_mobile/models/chat_type.dart';
+import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
 part 'chat.g.dart';
+part 'chat.freezed.dart';
 
-@JsonSerializable()
-class Chat with ModelToCompanion<ChatEntityCompanion> implements SyncableModel {
-  @override
-  String id;
+@appFreezed
+class Chat
+    with _$Chat, ModelToCompanion<ChatEntityCompanion>
+    implements BaseModel {
 
-  @override
-  DateTime createdAt;
+  const Chat._();
 
-  @override
-  DateTime updatedAt;
-
-  @override
-  int version;
-
-  @override
-  SyncStatus syncStatus;
-
-  String? name;
-
-  List<ChatMember> members;
-
-  ChatType chatType;
-
-  Chat({
-    required this.id,
-    required this.version,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.syncStatus,
-    required this.members,
-    required this.chatType,
-    this.name,
-  });
+  @Implements<SyncableModel>()
+  const factory Chat({
+    required String id,
+    required int version,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    required SyncStatus syncStatus,
+    required String? name,
+    required List<ChatMember> members,
+    required ChatType chatType,
+  }) = _Chat;
 
   @override
   ChatEntityCompanion toCompanion() {
@@ -58,7 +45,4 @@ class Chat with ModelToCompanion<ChatEntityCompanion> implements SyncableModel {
 
   // Add this factory method to create an instance from JSON data
   factory Chat.fromJson(Map<String, dynamic> json) => _$ChatFromJson(json);
-
-  // Add this method to convert the instance to JSON data
-  Map<String, dynamic> toJson() => _$ChatToJson(this);
 }

@@ -1,46 +1,32 @@
 import 'package:drift/drift.dart' show Value;
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:skakel_mobile/db/base/base_model.dart';
 import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/models/association_role.dart';
+import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
 part 'association_member.g.dart';
+part 'association_member.freezed.dart';
 
-@JsonSerializable()
+@appFreezed
 class AssociationMember
-    with ModelToCompanion<AssociationMemberEntityCompanion>
-    implements SyncableModel {
-  @override
-  String id;
+    with _$AssociationMember, ModelToCompanion<AssociationMemberEntityCompanion>
+    implements BaseModel {
+  const AssociationMember._();
 
-  @override
-  DateTime createdAt;
-
-  @override
-  DateTime updatedAt;
-
-  @override
-  int version;
-
-  @override
-  SyncStatus syncStatus;
-
-  String userId;
-  String associationId;
-  AssociationRole role;
-
-  AssociationMember({
-    required this.id,
-    required this.version,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.syncStatus,
-    required this.userId,
-    required this.associationId,
-    required this.role,
-  });
+  @Implements<SyncableModel>()
+  const factory AssociationMember({
+    required String id,
+    required int version,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    required SyncStatus syncStatus,
+    required String userId,
+    required String associationId,
+    required AssociationRole role,
+  }) = _AssociationMember;
 
   @override
   AssociationMemberEntityCompanion toCompanion() {
@@ -59,7 +45,4 @@ class AssociationMember
   // Add this factory method to create an instance from JSON data
   factory AssociationMember.fromJson(Map<String, dynamic> json) =>
       _$AssociationMemberFromJson(json);
-
-  // Add this method to convert the instance to JSON data
-  Map<String, dynamic> toJson() => _$AssociationMemberToJson(this);
 }

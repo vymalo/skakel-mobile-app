@@ -1,51 +1,34 @@
 import 'package:drift/drift.dart' show Value;
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:skakel_mobile/db/base/base_model.dart';
 import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/models/reaction_type.dart';
+import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
+
+part 'chat_reaction.freezed.dart';
 
 part 'chat_reaction.g.dart';
 
-@JsonSerializable()
+@appFreezed
 class ChatReaction
-    with ModelToCompanion<ChatReactionEntityCompanion>
-    implements SyncableModel {
-  @override
-  String id;
+    with _$ChatReaction, ModelToCompanion<ChatReactionEntityCompanion>
+    implements BaseModel {
+  const ChatReaction._();
 
-  @override
-  DateTime createdAt;
-
-  @override
-  DateTime updatedAt;
-
-  @override
-  int version;
-
-  @override
-  SyncStatus syncStatus;
-
-  String userId;
-
-  String messageId;
-
-  ReactionType reactionType;
-
-  String? content;
-
-  ChatReaction({
-    required this.id,
-    required this.version,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.syncStatus,
-    required this.userId,
-    required this.messageId,
-    required this.reactionType,
-    this.content,
-  });
+  @Implements<SyncableModel>()
+  const factory ChatReaction({
+    required String id,
+    required int version,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    required SyncStatus syncStatus,
+    required String userId,
+    required final String messageId,
+    required final ReactionType reactionType,
+    required final String? content,
+  }) = _ChatReaction;
 
   @override
   ChatReactionEntityCompanion toCompanion() {
@@ -65,7 +48,4 @@ class ChatReaction
   // Add this factory method to create an instance from JSON data
   factory ChatReaction.fromJson(Map<String, dynamic> json) =>
       _$ChatReactionFromJson(json);
-
-  // Add this method to convert the instance to JSON data
-  Map<String, dynamic> toJson() => _$ChatReactionToJson(this);
 }

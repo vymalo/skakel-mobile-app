@@ -1,44 +1,33 @@
 import 'package:drift/drift.dart' show Value;
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:skakel_mobile/db/base/base_model.dart';
 import 'package:skakel_mobile/db/base/sync_status.dart';
 import 'package:skakel_mobile/db/db.dart';
+import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
+
+part 'user.freezed.dart';
 
 part 'user.g.dart';
 
-@JsonSerializable()
-class User with ModelToCompanion<UserEntityCompanion> implements SyncableModel {
+@appFreezed
+class User
+    with _$User, ModelToCompanion<UserEntityCompanion>
+    implements BaseModel {
 
-  @override
-  String id;
+  const User._();
 
-  @override
-  DateTime createdAt;
-
-  @override
-  DateTime updatedAt;
-
-  @override
-  int version;
-
-  @override
-  SyncStatus syncStatus;
-
-  String username;
-  String? phoneNumber;
-  String? profilePicture;
-
-  User({
-    required this.id,
-    required this.version,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.syncStatus,
-    required this.username,
-    this.phoneNumber,
-    this.profilePicture,
-  });
+  @Implements<SyncableModel>()
+  const factory User({
+    required String id,
+    required int version,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    required SyncStatus syncStatus,
+    required String username,
+    required String? phoneNumber,
+    required String? profilePicture,
+  }) = _User;
 
   @override
   UserEntityCompanion toCompanion() {
@@ -54,10 +43,6 @@ class User with ModelToCompanion<UserEntityCompanion> implements SyncableModel {
     );
   }
 
-
   // Add this factory method to create an instance from JSON data
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-
-  // Add this method to convert the instance to JSON data
-  Map<String, dynamic> toJson() => _$UserToJson(this);
 }

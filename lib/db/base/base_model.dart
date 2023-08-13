@@ -13,5 +13,5 @@ abstract class BaseModel {
 abstract class SyncableModel extends BaseModel {
   SyncStatus get syncStatus;
 
-  set syncStatus(SyncStatus newValue);
+  SyncableModel copyWith({SyncStatus? syncStatus});
 }

@@ -20,16 +20,16 @@ class Association
   const Association._();
 
   @Implements<SyncableModel>()
-  factory Association({
-    required final String id,
-    required final int version,
-    required final DateTime createdAt,
-    required final DateTime updatedAt,
+  const factory Association({
+    required String id,
+    required int version,
+    required DateTime createdAt,
+    required DateTime updatedAt,
     required SyncStatus syncStatus,
-    required final List<AssociationMember> members,
-    required final List<AssociationChat> chats,
-    required final String description,
-    required final String name,
+    required List<AssociationMember> members,
+    required List<AssociationChat> chats,
+    required String description,
+    required String name,
   }) = _Association;
 
   factory Association.fromJson(Map<String, dynamic> json) =>
