@@ -22,7 +22,7 @@ class ChatRepo extends AbstractAppRepo<Chat> {
           ChatRemoteDataSource(skakelApi.getChatApi()),
           connectionStatus,
         ) {
-    log.d('ChatRepo initialized!');
+    log.i('ChatRepo initialized!');
   }
 }
 

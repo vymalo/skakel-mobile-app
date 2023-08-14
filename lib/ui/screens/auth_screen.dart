@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:skakel_mobile/db/repositories/association_repo.dart';
 import 'package:skakel_mobile/services/auth/auth_impl.dart';
 
 @RoutePage()

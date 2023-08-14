@@ -13,5 +13,5 @@ abstract class BaseModel {
 abstract class SyncableModel extends BaseModel {
   SyncStatus get syncStatus;
 
-  SyncableModel copyWith({SyncStatus? syncStatus});
+  dynamic get copyWith;
 }

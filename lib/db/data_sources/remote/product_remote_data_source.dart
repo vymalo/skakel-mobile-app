@@ -69,7 +69,8 @@ class ProductRemoteDataSource extends BaseRepo<Product> {
 
       yield data.toModel();
     } catch (e, s) {
-      log.e('Error streaming all chats:', e, s);
+      log.e('Error streaming all products:', e, s);
+      yield [];
     }
   }
 

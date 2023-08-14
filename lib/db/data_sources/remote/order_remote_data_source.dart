@@ -69,7 +69,8 @@ class OrderRemoteDataSource extends BaseRepo<Order> {
 
       yield data.toModel();
     } catch (e, s) {
-      log.e('Error streaming all chats:', e, s);
+      log.e('Error streaming all orders:', e, s);
+      yield [];
     }
   }
 

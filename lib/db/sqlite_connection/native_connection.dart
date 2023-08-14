@@ -35,7 +35,7 @@ Future<void> validateDatabaseSchema(GeneratedDatabase database) async {
   log.d('Database schema validated successfully.');
 }
 
-DatabaseConnection connect() {
+DatabaseConnection connect(String databaseName) {
   log.d('Connecting to database...');
   return DatabaseConnection.delayed(Future(() async {
     // First, we need to find out where the file is located. We use the

@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:skakel_mobile/db/entities/association_chat_entity.dart';
 import 'package:skakel_mobile/db/entities/association_entity.dart';
@@ -21,6 +22,7 @@ import 'package:skakel_mobile/models/attachment_type.dart';
 import 'package:skakel_mobile/models/chat_type.dart';
 import 'package:skakel_mobile/models/reaction_type.dart';
 import 'package:skakel_mobile/utils/id.dart';
+import 'package:skakel_mobile/utils/logging.dart';
 import 'package:tuple/tuple.dart';
 
 import 'base/sync_status.dart';
@@ -33,6 +35,8 @@ typedef ExtendedAssociation
 typedef ExtendedOrder = Tuple2<orders, List<order_items>>;
 typedef ExtendedChatMessage
     = Tuple3<chat_messages, List<attachments>, List<chat_reactions>>;
+
+final log = Logger('AppDatabase');
 
 /// The app database
 @DriftDatabase(tables: [
@@ -53,7 +57,9 @@ typedef ExtendedChatMessage
 ])
 class AppDatabase extends _$AppDatabase {
 // we tell the database where to store the data with this constructor
-  AppDatabase() : super(connect());
+  AppDatabase() : super(connect('skakel_db')) {
+    log.i('AppDatabase initialized!');
+  }
 
   // you should bump this number whenever you change or add a table definition.
   // Migrations are covered later in the documentation.
@@ -64,10 +70,23 @@ class AppDatabase extends _$AppDatabase {
   MigrationStrategy get migration {
     return MigrationStrategy(
       beforeOpen: (details) async {
+        log.d('Opening database at version ${details.versionBefore}');
         await customStatement('PRAGMA foreign_keys = ON');
         validateDatabaseSchema(this);
       },
+      onCreate: (m) async {
+        log.d('Creating all tables');
+        await m.createAll();
+        log.d('Finished creating all tables');
+      },
       onUpgrade: (m, from, to) async {
+        log.d('Upgrading database from $from to $to');
+        if (to < from) {
+          log.d("Can't downgrade database");
+          throw Exception("Can't downgrade database");
+        }
+
+        log.d('Creating all tables');
         if (from == 1 && to == 2) {
           await clear();
           await m.createTable(chatEntity);
@@ -75,6 +94,17 @@ class AppDatabase extends _$AppDatabase {
           await m.createTable(chatMessageEntity);
           await m.createTable(chatMemberEntity);
         }
+
+        log.d('Running migrations');
+        await transaction(
+          () async {
+            // Create all missing elements
+            // This is always true for all versions
+            await m.createAll();
+          },
+        );
+
+        log.d('Finished upgrading database');
       },
     );
   }
@@ -118,7 +148,8 @@ class AppDatabase extends _$AppDatabase {
   Stream<ExtendedChat> watchChat(String id) {
     final query = select(chatEntity)..where((tbl) => tbl.id.equals(id));
 
-    final chatStream = query.watchSingle();
+    final chatStream =
+        query.watchSingle().switchIfEmpty(Stream.fromFuture(query.getSingle()));
     final usersListStream = _getChatMembers(id);
 
     return Rx.combineLatest2(
@@ -147,16 +178,19 @@ class AppDatabase extends _$AppDatabase {
     final membersQuery = select(chatMemberEntity)
       ..where((tbl) => tbl.chatId.equals(chatId));
     final membersStream = membersQuery.watch();
-    return membersStream;
+    return membersStream.switchIfEmpty(Stream.fromFuture(membersQuery.get()));
   }
 
   /// Watch all the chats
   Stream<List<ExtendedChat>> watchAllChats() {
-    final query = select(chatEntity).watch();
+    final query = select(chatEntity);
 
-    return query.switchMap((cs) {
+    return query
+        .watch()
+        .switchIfEmpty(Stream.fromFuture(query.get()))
+        .switchMap((cs) {
       final chatStreams = cs.map((chat) => watchChat(chat.id));
-      return Rx.combineLatestList(chatStreams);
+      return Rx.combineLatestList(chatStreams).startWith([]);
     });
   }
 
@@ -182,12 +216,12 @@ class AppDatabase extends _$AppDatabase {
   Stream<users> watchUser(String id) {
     final query = select(userEntity)..where((tbl) => tbl.id.equals(id));
     final uStream = query.watchSingle();
-    return uStream;
+    return uStream.switchIfEmpty(Stream.fromFuture(query.getSingle()));
   }
 
   Stream<List<users>> watchAllUsers({Map<String, dynamic>? query}) {
-    final query = select(userEntity).watch();
-    return query;
+    final query = select(userEntity);
+    return query.watch().switchIfEmpty(Stream.fromFuture(query.get()));
   }
 
   Future<users?> getUser(String id) {
@@ -196,8 +230,8 @@ class AppDatabase extends _$AppDatabase {
   }
 
   Stream<List<products>> watchAllProducts({Map<String, dynamic>? query}) {
-    final query = select(productEntity).watch();
-    return query;
+    final query = select(productEntity);
+    return query.watch().switchIfEmpty(Stream.fromFuture(query.get()));
   }
 
   Future<products?> getProduct(String id) {
@@ -212,7 +246,7 @@ class AppDatabase extends _$AppDatabase {
   Stream<products> watchProduct(String id) {
     final query = select(productEntity)..where((tbl) => tbl.id.equals(id));
     final uStream = query.watchSingle();
-    return uStream;
+    return uStream.switchIfEmpty(Stream.fromFuture(query.getSingle()));
   }
 
   Future<void> deleteProduct(ProductEntityCompanion companion) async {
@@ -243,15 +277,21 @@ class AppDatabase extends _$AppDatabase {
   Stream<ExtendedChatMessage> watchChatMessage(String id) {
     final messageQuery = select(chatMessageEntity)
       ..where((tbl) => tbl.id.equals(id));
-    final messageStream = messageQuery.watchSingle();
+    final messageStream = messageQuery
+        .watchSingle()
+        .switchIfEmpty(Stream.fromFuture(messageQuery.getSingle()));
 
     final attachmentsQuery = select(attachmentEntity)
       ..where((tbl) => tbl.messageId.equals(id));
-    final attachmentsStream = attachmentsQuery.watch();
+    final attachmentsStream = attachmentsQuery
+        .watch()
+        .switchIfEmpty(Stream.fromFuture(attachmentsQuery.get()));
 
     final reactionsQuery = select(chatReactionEntity)
       ..where((tbl) => tbl.messageId.equals(id));
-    final reactionsStream = reactionsQuery.watch();
+    final reactionsStream = reactionsQuery
+        .watch()
+        .switchIfEmpty(Stream.fromFuture(reactionsQuery.get()));
 
     return Rx.combineLatest3(
       messageStream,
@@ -285,10 +325,13 @@ class AppDatabase extends _$AppDatabase {
   }
 
   Stream<List<ExtendedChatMessage>> watchAllChatMessages() {
-    final query = select(chatMessageEntity).watch();
-    return query.switchMap((cs) {
+    final query = select(chatMessageEntity);
+    return query
+        .watch()
+        .switchIfEmpty(Stream.fromFuture(query.get()))
+        .switchMap((cs) {
       final chatStreams = cs.map((chat) => watchChatMessage(chat.id));
-      return Rx.combineLatestList(chatStreams);
+      return Rx.combineLatestList(chatStreams).startWith([]);
     });
   }
 
@@ -307,7 +350,8 @@ class AppDatabase extends _$AppDatabase {
   /// Watch the order
   Stream<ExtendedOrder> watchOrder(String id) {
     final query = select(orderEntity)..where((tbl) => tbl.id.equals(id));
-    final uStream = query.watchSingle();
+    final uStream =
+        query.watchSingle().switchIfEmpty(Stream.fromFuture(query.getSingle()));
     final orderItemsStream = _getOrderItems(id);
     return Rx.combineLatest2(
       uStream,
@@ -337,10 +381,13 @@ class AppDatabase extends _$AppDatabase {
   }
 
   Stream<List<ExtendedOrder>> watchAllOrders({Map<String, dynamic>? query}) {
-    final query = select(orderEntity).watch();
-    return query.switchMap((cs) {
+    final query = select(orderEntity);
+    return query
+        .watch()
+        .switchIfEmpty(Stream.fromFuture(query.get()))
+        .switchMap((cs) {
       final orderStreams = cs.map((order) => watchOrder(order.id));
-      return Rx.combineLatestList(orderStreams);
+      return Rx.combineLatestList(orderStreams).startWith([]);
     });
   }
 
@@ -359,7 +406,7 @@ class AppDatabase extends _$AppDatabase {
     final itemsQuery = select(orderItemEntity)
       ..where((tbl) => tbl.orderId.equals(orderId));
     final itemsStream = itemsQuery.watch();
-    return itemsStream;
+    return itemsStream.switchIfEmpty(Stream.fromFuture(itemsQuery.get()));
   }
 
   Future<ExtendedAssociation> insertAssociation(
@@ -383,7 +430,8 @@ class AppDatabase extends _$AppDatabase {
 
   Stream<ExtendedAssociation> watchAssociation(String id) {
     final query = select(associationEntity)..where((tbl) => tbl.id.equals(id));
-    final uStream = query.watchSingle();
+    final uStream =
+        query.watchSingle().switchIfEmpty(Stream.fromFuture(query.getSingle()));
     final associationMembersStream = _getAssociationMembers(id);
     final associationChatsStream = _getAssociationChats(id);
     return Rx.combineLatest3(
@@ -399,11 +447,17 @@ class AppDatabase extends _$AppDatabase {
   }
 
   Stream<List<ExtendedAssociation>> watchAllAssociations() {
-    final query = select(associationEntity).watch();
-    return query.switchMap((cs) {
-      final associationStreams =
-          cs.map((association) => watchAssociation(association.id));
-      return Rx.combineLatestList(associationStreams);
+    final query = select(associationEntity);
+    final queryStream = query.watch();
+    final queryResult = query.get();
+    return queryStream
+        .switchIfEmpty(Stream.fromFuture(queryResult))
+        .switchMap((cs) {
+      log.d('Association count: ${cs.length}');
+      final associationStreams = cs.map(
+        (association) => watchAssociation(association.id),
+      );
+      return Rx.combineLatestList(associationStreams).startWith([]);
     });
   }
 
@@ -423,14 +477,14 @@ class AppDatabase extends _$AppDatabase {
     final membersQuery = select(associationMemberEntity)
       ..where((tbl) => tbl.associationId.equals(associationId));
     final membersStream = membersQuery.watch();
-    return membersStream;
+    return membersStream.switchIfEmpty(Stream.fromFuture(membersQuery.get()));
   }
 
   Stream<List<association_chats>> _getAssociationChats(String associationId) {
     final chatsQuery = select(associationChatEntity)
       ..where((tbl) => tbl.associationId.equals(associationId));
     final chatsStream = chatsQuery.watch();
-    return chatsStream;
+    return chatsStream.switchIfEmpty(Stream.fromFuture(chatsQuery.get()));
   }
 
   Future<void> deleteAssociation(
@@ -450,4 +504,7 @@ class AppDatabase extends _$AppDatabase {
   }
 }
 
-final dbProvider = Provider((ref) => AppDatabase());
+final dbProvider = Provider((ref) {
+  log.d('Initializing AppDatabase...');
+  return AppDatabase();
+});

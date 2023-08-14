@@ -60,6 +60,8 @@ dependencies:
   dio_cookie_manager: ^3.1.0
   native_dio_adapter: ^1.0.0+1
   dio_smart_retry: ^5.0.0
+  dio_cache_interceptor: ^3.4.2
+  dio_cache_interceptor_db_store: ^5.1.0
   openapi_generator_annotations: 4.11.0
 
   skakel_api:
@@ -81,6 +83,7 @@ dependencies:
   built_value: ^8.6.1
   meta: ^1.9.1
   freezed_annotation: ^2.4.1
+  basic_utils: ^5.6.1
 
 dev_dependencies:
   flutter_test:

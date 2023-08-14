@@ -43,7 +43,7 @@ final _keyMapper = <String, Wrapper>{}
 /// Returns a string with a maximum length of 20 characters.
 /// Complete with empty spaces if the name is shorter than 20 characters.
 /// Add an ellipsis if the name is longer than 20 characters.
-String _maxName(String name, {max = 24}) {
+String _maxName(String name, {max = 30}) {
   if (name.length > max) {
     return '${name.substring(0, max - 3)}...';
   }

@@ -22,7 +22,7 @@ class ProductRepo extends AbstractAppRepo<Product> {
           ProductRemoteDataSource(skakelApi.getProductApi()),
           connectionStatus,
         ) {
-    log.d('ProductRepo initialized!');
+    log.i('ProductRepo initialized!');
   }
 }
 

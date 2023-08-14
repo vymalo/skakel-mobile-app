@@ -66,7 +66,7 @@ class MqttServiceImpl implements MqttService {
         disconnect();
       }
     });
-    log.d('MqttService initialized!');
+    log.i('MqttService initialized!');
   }
 
   @override

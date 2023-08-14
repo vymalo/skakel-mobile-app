@@ -65,12 +65,13 @@ class ChatMessageRemoteDataSource extends BaseRepo<ChatMessage> {
       final data = response.data;
       if (data == null) {
         log.d('Data is null');
-        return;
+        throw Exception('ChatMessageRemoteDataSource.streamAll: data is null');
       }
 
       yield data.toModel();
     } catch (e, s) {
-      log.e('Error streaming all chats:', e, s);
+      log.e('Error streaming all messages:', e, s);
+      yield [];
     }
   }
 

@@ -30,6 +30,7 @@ class AssociationRemoteDataSource extends BaseRepo<Association> {
       final data = await fetchById(id);
       if (data == null) {
         log.d('Data is null');
+        yield* const Stream.empty();
         return;
       }
 
@@ -37,6 +38,7 @@ class AssociationRemoteDataSource extends BaseRepo<Association> {
       yield data;
     } catch (e, s) {
       log.e('Error getting chat by id:', e, s);
+      rethrow;
     }
   }
 
@@ -70,7 +72,8 @@ class AssociationRemoteDataSource extends BaseRepo<Association> {
 
       yield data.toModel();
     } catch (e, s) {
-      log.e('Error streaming all chats:', e, s);
+      log.e('Error streaming all associations:', e, s);
+      yield [];
     }
   }
 

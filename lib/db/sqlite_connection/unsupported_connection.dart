@@ -5,7 +5,7 @@ Never _unsupported() {
       'No suitable database implementation was found on this platform.');
 }
 
-DatabaseConnection connect() {
+DatabaseConnection connect(String databaseName) {
   _unsupported();
 }
 

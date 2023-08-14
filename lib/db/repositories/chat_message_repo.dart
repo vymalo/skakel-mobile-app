@@ -22,7 +22,7 @@ class ChatMessageRepo extends AbstractAppRepo<ChatMessage> {
           ChatMessageRemoteDataSource(skakelApi.getChatMessageApi()),
           connectionStatus,
         ) {
-    log.d('ChatMessageRepo initialized!');
+    log.i('ChatMessageRepo initialized!');
   }
 }
 

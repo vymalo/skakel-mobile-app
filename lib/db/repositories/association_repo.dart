@@ -22,7 +22,7 @@ class AssociationRepo extends AbstractAppRepo<Association> {
           AssociationRemoteDataSource(skakelApi.getAssociationApi()),
           connectionStatus,
         ) {
-    log.d('AssociationRepo initialized!');
+    log.i('AssociationRepo initialized!');
   }
 }
 

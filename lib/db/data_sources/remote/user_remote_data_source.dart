@@ -64,7 +64,8 @@ class UserRemoteDataSource extends BaseRepo<User> {
 
       yield data.toModel();
     } catch (e, s) {
-      log.e('Error streaming all chats:', e, s);
+      log.e('Error streaming all users:', e, s);
+      yield [];
     }
   }
 

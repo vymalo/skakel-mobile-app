@@ -25,10 +25,10 @@ abstract class AbstractAppRepo<T extends BaseModel>
 
   @override
   Stream<List<T>> streamAll({Map<String, dynamic>? query}) {
-    log.d('StreamAll $T[]');
+    log.d('[$T] Streaming All...');
     return _connectionStatus.stream.flatMap(
       (online) {
-        log.d('StreamAll $T[] online: $online');
+        log.d('[$T] StreamAll online: $online');
         // If we're offline, just stream the local data.
         final remoteStream =
             _remoteRepo.streamAll(query: query).asyncMap((remotes) async {
@@ -71,7 +71,7 @@ abstract class AbstractAppRepo<T extends BaseModel>
         // Only mark it as synced if remote saving also succeeds.
         saved = await _localRepo.save(remoteSaved);
       } catch (e, s) {
-        log.e('Cannot sync $T', e, s);
+        log.e('[$T] Cannot sync $T', e, s);
       }
     }
 
@@ -96,7 +96,7 @@ abstract class AbstractAppRepo<T extends BaseModel>
         // If the remote delete succeeds, delete the entity locally as well
         await _localRepo.delete(entity);
       } catch (e, s) {
-        log.e('Cannot delete $T', e, s);
+        log.e('[$T] Cannot delete $T', e, s);
       }
     }
     // If the device is offline, the entity will remain marked as deleted locally until you synchronize with the server later
@@ -119,17 +119,24 @@ abstract class AbstractAppRepo<T extends BaseModel>
 
   @override
   Future<void> sync() async {
+    log.d('[$T] Syncing...');
+
     try {
       await _syncFromRemoteToLocal();
+      log.d('[$T] Synced from [remote => local]');
     } catch (e, s) {
-      log.e('Error syncing from remote to local', e, s);
+      log.e('[$T] Error syncing from remote to local', e, s);
     }
 
     try {
+      log.d('[$T] Syncing from [local => remote]');
       await _syncFromLocalToRemote();
+      log.d('[$T] Synced from [local => remote]');
     } catch (e, s) {
-      log.e('Error syncing from local to remote', e, s);
+      log.e('[$T] Error syncing from local to remote', e, s);
     }
+
+    log.d('Synced $T');
   }
 
   /// Syncs from remote to local
@@ -148,13 +155,13 @@ abstract class AbstractAppRepo<T extends BaseModel>
         try {
           await _localRepo.save(remoteItem);
         } catch (e, s) {
-          log.e('Error saving to local repo', e, s);
+          log.e('[$T] Error saving to local repo', e, s);
         }
       } else {
         try {
           await _remoteRepo.save(localItem);
         } catch (e, s) {
-          log.e('Error saving to remote repo', e, s);
+          log.e('[$T] Error saving to remote repo', e, s);
         }
       }
     }
@@ -162,13 +169,17 @@ abstract class AbstractAppRepo<T extends BaseModel>
 
   /// Syncs from local to remote
   Future<void> _syncFromLocalToRemote() async {
+    log.d('[$T] Syncing from local to remote...');
+
     // Fetch all local items
     final localItems = await _localRepo
         .streamAll()
-        .map((event) => event
+        .asyncMap((event) async => event
             .whereType<SyncableModel>()
             .where((item) => item.syncStatus != SyncStatus.synced))
         .first;
+
+    log.d('[$T] Loaded data to sync: ${localItems.length}');
 
     for (final localItem in localItems) {
       var remoteItem = await _remoteRepo.fetchById(localItem.id);

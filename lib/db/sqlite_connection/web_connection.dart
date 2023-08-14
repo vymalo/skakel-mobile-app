@@ -6,11 +6,11 @@ import 'package:skakel_mobile/utils/logging.dart';
 final log = Logger('DatabaseWebConnection');
 
 /// Obtains a database connection for running drift on the web.
-DatabaseConnection connect() {
+DatabaseConnection connect(String databaseName) {
   return DatabaseConnection.delayed(Future(() async {
     log.d('Initializing database connection...');
     final db = await WasmDatabase.open(
-      databaseName: 'skakel-app',
+      databaseName: databaseName,
       sqlite3Uri: Uri.parse('/db/sqlite3.wasm'),
       driftWorkerUri: Uri.parse('/db/drift_worker.js'),
     );
@@ -30,5 +30,5 @@ Future<void> validateDatabaseSchema(GeneratedDatabase database) async {
   // right now.
   // As we also have migration tests (see the `Testing migrations` section in
   // the readme of this example), this is not a huge issue.
-  log.d('Cannot validate database schema on web.');
+  log.w('Cannot validate database schema on web.');
 }

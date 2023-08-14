@@ -22,7 +22,7 @@ class OrderRepo extends AbstractAppRepo<Order> {
           OrderRemoteDataSource(skakelApi.getOrderApi()),
           connectionStatus,
         ) {
-    log.d('OrderRepo initialized!');
+    log.i('OrderRepo initialized!');
   }
 }
 

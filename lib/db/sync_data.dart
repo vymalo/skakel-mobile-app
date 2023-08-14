@@ -30,13 +30,15 @@ class SyncManager {
 
   /// Syncs all repositories.
   Future<void> syncAll() async {
-    for (var repo in repos) {
+    final all = repos.map((repo) async {
       try {
         await repo.sync();
       } catch (e, s) {
         log.e('Error syncing repository: ${repo.runtimeType}', e, s);
       }
-    }
+    });
+
+    await Future.wait(all);
   }
 }
 

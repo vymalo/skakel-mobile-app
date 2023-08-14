@@ -22,7 +22,7 @@ class UserRepo extends AbstractAppRepo<User> {
           UserRemoteDataSource(skakelApi.getUserApi()),
           connectionStatus,
         ) {
-    log.d('UserRepo initialized!');
+    log.i('UserRepo initialized!');
   }
 }
 

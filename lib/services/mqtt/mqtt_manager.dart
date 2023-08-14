@@ -17,7 +17,7 @@ class MqttManager {
   MqttManager(this._mqttService, this._messageHandlers) {
     _mqttService.registerMessageListener(_handleMessageReceived);
     _mqttService.onConnected.listen(_handleConnected);
-    log.d('MqttManager initialized!');
+    log.i('MqttManager initialized!');
   }
 
   void init() async {}

@@ -1,8 +1,12 @@
+import 'package:logging/logging.dart';
 import 'package:skakel_mobile/db/base/base_repo.dart';
 import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/models/association.dart';
 import 'package:skakel_mobile/utils/extensions/association_mapper.dart';
 import 'package:skakel_mobile/utils/extensions/model_to_companion_mapper.dart';
+import 'package:skakel_mobile/utils/logging.dart';
+
+final log = Logger('AssociationLocalDataSource');
 
 class AssociationLocalDataSource extends BaseRepo<Association> {
   final AppDatabase _db;
@@ -33,8 +37,11 @@ class AssociationLocalDataSource extends BaseRepo<Association> {
 
   @override
   Stream<List<Association>> streamAll({Map<String, dynamic>? query}) {
+    log.d('StreamAll query: $query');
     final results = _db.watchAllAssociations();
-    return results.toModel();
+    final mapped = results.toModel();
+    log.d('StreamAll mapped results');
+    return mapped;
   }
 
   @override

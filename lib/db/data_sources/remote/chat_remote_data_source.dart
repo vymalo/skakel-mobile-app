@@ -33,6 +33,7 @@ class ChatRemoteDataSource extends BaseRepo<Chat> {
       yield data;
     } catch (e, s) {
       log.e('Error getting chat by id:', e, s);
+      rethrow;
     }
   }
 
@@ -59,12 +60,14 @@ class ChatRemoteDataSource extends BaseRepo<Chat> {
       final data = response.data;
       if (data == null) {
         log.d('Data is null');
+        yield [];
         return;
       }
 
       yield data.toModel();
     } catch (e, s) {
       log.e('Error streaming all chats:', e, s);
+      rethrow;
     }
   }
 
