@@ -4,4 +4,4 @@ import 'package:skakel_mobile/services/dio.dart';
 
 final apiProvider = Provider((ref) => SkakelApi(
       dio: ref.watch(dioProvider),
-));
+    ));

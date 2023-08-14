@@ -6,8 +6,8 @@ import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
-part 'blocked_user.g.dart';
 part 'blocked_user.freezed.dart';
+part 'blocked_user.g.dart';
 
 @appFreezed
 class BlockedUser

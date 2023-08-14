@@ -7,14 +7,12 @@ import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
 part 'user.freezed.dart';
-
 part 'user.g.dart';
 
 @appFreezed
 class User
     with _$User, ModelToCompanion<UserEntityCompanion>
     implements BaseModel {
-
   const User._();
 
   @Implements<SyncableModel>()

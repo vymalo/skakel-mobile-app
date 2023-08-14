@@ -1,10 +1,10 @@
 import 'package:skakel_api/skakel_api.dart' as api;
 import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/models/chat_message.dart';
+import 'package:skakel_mobile/utils/extensions/attachment_to_model.dart';
 import 'package:skakel_mobile/utils/extensions/chat_reaction_type_model.dart';
 import 'package:skakel_mobile/utils/extensions/reaction_mapper.dart';
 import 'package:skakel_mobile/utils/extensions/sync_status_mapper.dart';
-import 'package:skakel_mobile/utils/extensions/attachment_to_model.dart';
 
 /// This extension is used to convert a list of models to a list of api objects.
 extension ModelToApiChatMessage on ChatMessage {

@@ -4,7 +4,7 @@ import 'package:skakel_mobile/services/app_review/in_app_review_interface.dart';
 class InAppReviewServiceIO implements InAppReviewService {
   final InAppReview inAppReview;
 
-  InAppReviewServiceIO(): inAppReview = InAppReview.instance;
+  InAppReviewServiceIO() : inAppReview = InAppReview.instance;
 
   @override
   Future<void> requestReview() async {

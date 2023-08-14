@@ -8,14 +8,13 @@ import 'package:skakel_mobile/models/chat_type.dart';
 import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
-part 'chat.g.dart';
 part 'chat.freezed.dart';
+part 'chat.g.dart';
 
 @appFreezed
 class Chat
     with _$Chat, ModelToCompanion<ChatEntityCompanion>
     implements BaseModel {
-
   const Chat._();
 
   @Implements<SyncableModel>()

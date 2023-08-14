@@ -22,8 +22,14 @@ class ConnectionStatus {
 
   /// Initialize the connection status listener.
   Future<void> init() async {
-    Connectivity().onConnectivityChanged.listen(_handleStatusChange).onError(_handleError);
-    await Connectivity().checkConnectivity().then(_handleStatusChange).onError(_handleError);
+    Connectivity()
+        .onConnectivityChanged
+        .listen(_handleStatusChange)
+        .onError(_handleError);
+    await Connectivity()
+        .checkConnectivity()
+        .then(_handleStatusChange)
+        .onError(_handleError);
   }
 
   void _handleStatusChange(ConnectivityResult result) {

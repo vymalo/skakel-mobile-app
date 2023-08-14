@@ -6,8 +6,8 @@ import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
-part 'user_settings.g.dart';
 part 'user_settings.freezed.dart';
+part 'user_settings.g.dart';
 
 @appFreezed
 class UserSettings

@@ -9,14 +9,12 @@ import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
 part 'association.freezed.dart';
-
 part 'association.g.dart';
 
 @appFreezed
 class Association
     with _$Association, ModelToCompanion<AssociationEntityCompanion>
     implements BaseModel {
-
   const Association._();
 
   @Implements<SyncableModel>()

@@ -6,8 +6,8 @@ import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
-part 'order_item.g.dart';
 part 'order_item.freezed.dart';
+part 'order_item.g.dart';
 
 @appFreezed
 class OrderItem

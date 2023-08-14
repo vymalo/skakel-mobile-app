@@ -8,7 +8,6 @@ import 'package:skakel_mobile/utils/logging.dart';
 final log = Logger('PushyProvider');
 
 class PushyProvider {
-
   /// This method is used to initialize Pushy.
   void init() async {
     // Start the Pushy service

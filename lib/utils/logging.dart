@@ -56,7 +56,7 @@ void setupLogging() {
   Logger.root.onRecord.listen((record) {
     if (kDebugMode) {
       print(_keyMapper[record.level.name]!(
-        '${record.time}: ${_maxName(record.loggerName)} ${record.message}'));
+          '${record.time}: ${_maxName(record.loggerName)} ${record.message}'));
     }
   });
 }

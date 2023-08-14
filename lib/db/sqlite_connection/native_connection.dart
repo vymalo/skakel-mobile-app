@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:drift_dev/api/migrations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-import 'package:drift_dev/api/migrations.dart';
 import 'package:skakel_mobile/utils/logging.dart';
 
 final log = Logger('DatabaseNativeConnection');

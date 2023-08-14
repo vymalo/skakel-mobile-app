@@ -22,7 +22,7 @@ class OrderLocalDataSource extends BaseRepo<Order> {
   Future<Order> save(Order entity) async {
     final saved = await _db.insertOrder(
       entity.toCompanion(),
-        entity.items.map((e) => e.toCompanion()),
+      entity.items.map((e) => e.toCompanion()),
     );
     return saved.toModel();
   }

@@ -7,7 +7,6 @@ import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
 part 'association_chat.freezed.dart';
-
 part 'association_chat.g.dart';
 
 @appFreezed

@@ -6,8 +6,8 @@ import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
-part 'chat_member.g.dart';
 part 'chat_member.freezed.dart';
+part 'chat_member.g.dart';
 
 @appFreezed
 class ChatMember

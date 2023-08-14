@@ -8,9 +8,11 @@ abstract class Env {
   /// This is the base URL of the API.
   @EnviedField(varName: 'BROKER_URL')
   static const String brokerUrl = _Env.brokerUrl;
+
   /// This is the base URL of the API.
   @EnviedField(varName: 'BROKER_MQTT_PORT')
   static const int brokerMqttPort = _Env.brokerMqttPort;
+
   /// This is the base URL of the API.
   @EnviedField(varName: 'BROKER_WS_PORT')
   static const int brokerWsPort = _Env.brokerWsPort;

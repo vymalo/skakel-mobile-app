@@ -6,14 +6,13 @@ import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
-part 'product.g.dart';
 part 'product.freezed.dart';
+part 'product.g.dart';
 
 @appFreezed
 class Product
     with _$Product, ModelToCompanion<ProductEntityCompanion>
     implements BaseModel {
-
   const Product._();
 
   @Implements<SyncableModel>()

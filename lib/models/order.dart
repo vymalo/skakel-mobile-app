@@ -8,14 +8,12 @@ import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
 part 'order.freezed.dart';
-
 part 'order.g.dart';
 
 @appFreezed
 class Order
     with _$Order, ModelToCompanion<OrderEntityCompanion>
     implements BaseModel {
-
   const Order._();
 
   @Implements<SyncableModel>()

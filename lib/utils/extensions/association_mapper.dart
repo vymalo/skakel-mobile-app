@@ -1,8 +1,8 @@
 import 'package:skakel_api/skakel_api.dart' as api;
 import 'package:skakel_mobile/db/db.dart';
 import 'package:skakel_mobile/models/association.dart';
-import 'package:skakel_mobile/utils/extensions/association_member_mapper.dart';
 import 'package:skakel_mobile/utils/extensions/association_chat_mapper.dart';
+import 'package:skakel_mobile/utils/extensions/association_member_mapper.dart';
 import 'package:skakel_mobile/utils/extensions/sync_status_mapper.dart';
 
 extension ModelToApi on Association {

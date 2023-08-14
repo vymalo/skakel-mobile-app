@@ -8,8 +8,8 @@ import 'package:skakel_mobile/models/chat_reaction.dart';
 import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
-part 'chat_message.g.dart';
 part 'chat_message.freezed.dart';
+part 'chat_message.g.dart';
 
 @appFreezed
 class ChatMessage

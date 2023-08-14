@@ -8,7 +8,6 @@ import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
 part 'attachment.freezed.dart';
-
 part 'attachment.g.dart';
 
 @appFreezed

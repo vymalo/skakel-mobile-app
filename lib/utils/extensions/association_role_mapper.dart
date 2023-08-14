@@ -14,7 +14,7 @@ extension AssociationRoleToApi on AssociationRole {
 
 extension ApiToAssociationRole on api.AssociationRole {
   AssociationRole toModel() {
-    switch(this) {
+    switch (this) {
       case api.AssociationRole.admin:
         return AssociationRole.admin;
       case api.AssociationRole.member:

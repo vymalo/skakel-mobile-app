@@ -36,8 +36,7 @@ extension ChatReactionToApi on ChatReaction {
       ..userId = userId
       ..messageId = messageId
       ..reactionType = reactionType.toApi()
-      ..content = content
-    ;
+      ..content = content;
 
     return apiChatReaction.build();
   }

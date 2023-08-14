@@ -38,8 +38,7 @@ extension ApiAssociationChatToModel on api.AssociationChat {
   }
 }
 
-extension ApiIterableAssociationChatToModel
-    on Iterable<api.AssociationChat> {
+extension ApiIterableAssociationChatToModel on Iterable<api.AssociationChat> {
   List<AssociationChat> toModel() {
     return map((event) => event.toModel()).toList();
   }

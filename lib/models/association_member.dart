@@ -7,8 +7,8 @@ import 'package:skakel_mobile/models/association_role.dart';
 import 'package:skakel_mobile/utils/freezed.dart';
 import 'package:skakel_mobile/utils/mixins/model_to_companion.dart';
 
-part 'association_member.g.dart';
 part 'association_member.freezed.dart';
+part 'association_member.g.dart';
 
 @appFreezed
 class AssociationMember
