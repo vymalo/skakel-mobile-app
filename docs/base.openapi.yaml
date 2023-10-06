@@ -1,0 +1,59 @@
+openapi: 3.0.3
+info:
+  title: Nkobani API Documentation
+  description: |-
+    The Nkobani API is used to send data across devices and persist them into the cloud database. It supports various functionalities like video calls, file upload, payment validation, and more. The ultimate goal is to have decentralized backend implementations across the web for each user.
+
+    Useful Links:
+    - [Nkobani Mobile App Repository](https://github.com/vymalo/nkobani-mobile-app)
+    - [Nkobani Server App Repository](https://github.com/vymalo/nkobani-server)
+  termsOfService: https://swagger.io/terms/
+  contact:
+    email: dev@vymalo.com
+  license:
+    name: MIT
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+servers:
+  - url: https://{env_name}.apps.ssegning.com/api
+    description: The API server
+    variables:
+      env_name:
+        enum:
+          - nkobani
+          - nkobani-dev
+          - nkobani-staging
+        default: nkobani
+        description: The environment name
+
+paths: { }
+
+components:
+  schemas:
+    Base:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        version:
+          type: integer
+        syncStatus:
+          $ref: "#/components/schemas/SyncStatus"
+    SyncStatus:
+      type: string
+      enum:
+        - Synced
+        - Updated
+        - Deleted
+
+  securitySchemes:
+    oauth2:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

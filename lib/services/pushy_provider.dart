@@ -40,18 +40,6 @@ void backgroundNotificationListener(Map<String, dynamic> data) async {
   // Print notification payload data
   log.i('Received notification: $data');
 
-  // Notification title
-  String notificationTitle = 'MyApp';
-
-  // Attempt to extract the "message" property from the payload: {"message":"Hello World!"}
-  String notificationText = data['message'] ?? 'Hello World!';
-
-  // Android: Displays a system notification
-  // iOS: Displays an alert dialog
-  Pushy.notify(notificationTitle, notificationText, data);
-
-  // Clear iOS app badge number
-  Pushy.clearBadge();
 }
 
 final pushyProvider = Provider((ref) {

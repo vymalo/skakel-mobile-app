@@ -13,9 +13,9 @@ class ChatRemoteDataSource extends BaseRepo<Chat> {
   ChatRemoteDataSource(this._chatApi);
 
   @override
-  Future<void> delete(Chat entity) async {
+  Future<void> delete(Chat model) async {
     try {
-      await _chatApi.deleteChat(id: entity.id);
+      await _chatApi.deleteChat(id: model.id);
     } catch (e, s) {
       log.e('Error deleting chat:', e, s);
     }

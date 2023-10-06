@@ -7,7 +7,7 @@ import 'package:openapi_generator_annotations/openapi_generator_annotations.dart
       pubAuthor: 'Vymalo Team',
       pubAuthorEmail: 'dev@vymalo.com',
       pubHomepage: 'https://vymalo.com/skakel'),
-  inputSpecFile: 'docs/openapi.yaml',
+  inputSpecFile: 'docs/user.openapi.yaml',
   generatorName: Generator.dio,
   outputDirectory: 'api/skakel_api',
   runSourceGenOnOutput: true,

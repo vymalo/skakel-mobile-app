@@ -1,0 +1,186 @@
+openapi: 3.0.3
+info:
+  title: Nkobani Attachment API Documentation
+  description: |-
+    The Nkobani Attachment API is used to send data across devices and persist them into the cloud database. It supports various functionalities like video calls, file upload, payment validation, and more. The ultimate goal is to have decentralized backend implementations across the web for each user.
+
+    Useful Links:
+    - [Nkobani Mobile App Repository](https://github.com/vymalo/nkobani-mobile-app)
+    - [Nkobani Server App Repository](https://github.com/vymalo/nkobani-server)
+  termsOfService: https://swagger.io/terms/
+  contact:
+    email: dev@vymalo.com
+  license:
+    name: MIT
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+servers:
+  - url: https://{env_name}.apps.ssegning.com/api
+    description: The API server
+    variables:
+      env_name:
+        enum:
+          - nkobani
+          - nkobani-dev
+          - nkobani-staging
+        default: nkobani
+        description: The environment name
+tags:
+  - name: attachment
+    description: Operations related to attachments
+
+paths:
+  /attachments:
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - attachment
+      summary: Get attachments by query parameters
+      operationId: getAttachmentsByQuery
+      parameters:
+        - name: ownerId
+          in: query
+          description: ID of the owner associated with the attachments
+          required: false
+          schema:
+            type: string
+        - name: attachmentType
+          in: query
+          description: Type of attachments (e.g., image, document, video)
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of attachments matching the query parameters
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Attachment'
+    post:
+      security:
+        - oauth2: [ ]
+      tags:
+        - attachment
+      summary: Upload a new attachment
+      operationId: uploadAttachment
+      requestBody:
+        description: Attachment data to be uploaded
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                type:
+                  $ref: "#/components/schemas/AttachmentType"
+                ownerId:
+                  type: string
+                metaData:
+                  type: object
+                  additionalProperties:
+                    type: string
+      responses:
+        '201':
+          description: Attachment uploaded successfully
+          headers:
+            Location:
+              description: The URL of the uploaded attachment
+              schema:
+                type: string
+                format: uri
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attachment"
+  /attachments/{id}:
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - attachment
+      summary: Get an attachment by ID
+      operationId: getAttachmentById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Attachment retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attachment"
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Attachment not found
+    delete:
+      security:
+        - oauth2: [ ]
+      tags:
+        - attachment
+      summary: Delete an attachment by ID
+      operationId: deleteAttachment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Attachment deleted successfully
+        '404':
+          description: Attachment not found
+components:
+  schemas:
+    Base:
+      $ref: "base.openapi.yaml#/components/schemas/Base"
+    AttachmentInfo:
+      type: object
+      properties:
+        ownerId:
+          type: string
+        type:
+          $ref: "#/components/schemas/AttachmentType"
+        url:
+          type: string
+        metaData:
+          type: object
+          additionalProperties:
+            type: string
+      required:
+        - type
+        - url
+    Attachment:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/AttachmentInfo"
+    AttachmentType:
+      type: string
+      enum:
+        - image
+        - video
+        - audio
+        - file
+        - location
+        - contact
+        - sticker
+        - link
+        - poll
+        - other
+
+  securitySchemes:
+    oauth2:
+      $ref: "base.openapi.yaml#/components/securitySchemes/oauth2"

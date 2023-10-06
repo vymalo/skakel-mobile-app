@@ -1,0 +1,855 @@
+openapi: 3.0.3
+info:
+  title: Chat Nkobani API Documentation
+  description: |-
+    The Skakel API is used to send data across devices and persist them into the cloud database. It supports various functionalities like video calls, file upload, payment validation, and more. The ultimate goal is to have decentralized backend implementations across the web for each user.
+
+    Useful Links:
+    - [Nkobani Mobile App Repository](https://github.com/vymalo/nkobani-mobile-app)
+    - [Nkobani Server App Repository](https://github.com/vymalo/nkobani-server)
+  termsOfService: https://swagger.io/terms/
+  contact:
+    email: dev@nkobani.com
+  license:
+    name: MIT
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+servers:
+  - url: https://{env_name}.apps.ssegning.com/api
+    description: The API server
+    variables:
+      env_name:
+        enum:
+          - nkobani
+          - nkobani-dev
+          - nkobani-staging
+        default: nkobani
+        description: The environment name
+tags:
+  - name: chat
+    description: Operations related to chats
+  - name: chat-message
+    description: Operations related to chat messages
+  - name: chat-member
+    description: Operations related to chat member
+  - name: chat-reaction
+    description: Operations related to chat reaction
+
+paths:
+  /chats:
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat
+      summary: Get all chats
+      operationId: getAllChats
+      responses:
+        '200':
+          description: A list of chats
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Chat'
+    post:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat
+      summary: Create a new chat
+      operationId: createChat
+      requestBody:
+        description: Chat object that needs to be created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatInfo'
+      responses:
+        '201':
+          description: Chat created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chat'
+
+  /chats/{id}:
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat
+      summary: Get a chat by ID
+      operationId: getChatById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Chat retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chat'
+        '404':
+          description: Chat not found
+
+    put:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat
+      summary: Update an existing chat
+      operationId: updateChat
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Chat object that needs to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatInfo'
+      responses:
+        '200':
+          description: Chat updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chat'
+        '404':
+          description: Chat not found
+
+    delete:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat
+      summary: Delete a chat by ID
+      operationId: deleteChat
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Chat deleted successfully
+        '404':
+          description: Chat not found
+
+  /chats-messages:
+    post:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-message
+      summary: Send a message to a chat
+      operationId: sendMessageToChat
+      requestBody:
+        required: true
+        description: ChatMessage object that needs to be sent
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatMessageInfo'
+      responses:
+        '201':
+          description: Message sent successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMessage'
+  /chats-members:
+    post:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-member
+      summary: Add a member to a chat
+      operationId: addMemberToChat
+      requestBody:
+        description: User object that needs to be added as a member
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatMemberInfo'
+      responses:
+        '200':
+          description: Member added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMember'
+        '404':
+          description: Chat or user not found
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-member
+      summary: Get chat members by chat ID
+      operationId: getChatMembersByChatId
+      parameters:
+        - name: chatId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Member added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMember'
+        '404':
+          description: Chat or user not found
+  /chats-members/{id}:
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-member
+      summary: Get a chat member by ID
+      operationId: getChatMemberById
+      parameters:
+        - name: id
+          description: Chat member ID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Chat member retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMember'
+        '404':
+          description: Chat or member not found
+    put:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-member
+      summary: Update an existing chat member
+      operationId: updateChatMember
+      parameters:
+        - name: id
+          description: Chat member ID
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: ChatMember object that needs to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatMemberInfo'
+      responses:
+        '200':
+          description: Chat member retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMember'
+        '404':
+          description: Chat or member not found
+    delete:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-member
+      summary: Remove a member from a chat
+      operationId: removeMemberFromChat
+      parameters:
+        - name: id
+          description: Chat member ID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Member removed successfully
+        '404':
+          description: Chat or member not found
+  /chat-messages:
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-message
+      summary: Get all chat messages
+      operationId: getAllChatMessages
+      responses:
+        '200':
+          description: A list of chat messages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChatMessage'
+
+  /chat-messages/{id}:
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-message
+      summary: Get a chat message by ID
+      operationId: getChatMessageById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Chat message retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMessage'
+        '404':
+          description: Chat message not found
+
+    put:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-message
+      summary: Update an existing chat message
+      operationId: updateChatMessage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: ChatMessage object that needs to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatMessageInfo'
+      responses:
+        '200':
+          description: Chat message updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMessage'
+        '404':
+          description: Chat message not found
+
+    delete:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-message
+      summary: Delete a chat message by ID
+      operationId: deleteChatMessage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Chat message deleted successfully
+        '404':
+          description: Chat message not found
+
+  /chat-reactions:
+    post:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-reaction
+      summary: Add a reaction to a chat message
+      operationId: addReactionToChatMessage
+      requestBody:
+        description: Reaction object that needs to be added to the chat message
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatReaction'
+      responses:
+        '200':
+          description: Reaction added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatReaction'
+        '404':
+          description: Chat message not found
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-reaction
+      summary: Get reactions from a chat message
+      operationId: getReactionsFromChatMessage
+      parameters:
+        - name: chatId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Reaction added successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChatReaction'
+        '404':
+          description: Chat message not found
+  /chat-reactions/{id}:
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-reaction
+      summary: Remove a reaction from a chat message
+      operationId: getReactionFromChatMessage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Reaction removed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatReaction'
+        '404':
+          description: Chat message or reaction not found/calls
+    put:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-reaction
+      summary: Put a reaction from a chat message
+      operationId: putReactionFromChatMessage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Reaction object that needs to be added to the chat message
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatReactionInfo'
+      responses:
+        '204':
+          description: Reaction removed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChatReaction'
+        '404':
+          description: Chat message or reaction not found/calls
+    delete:
+      security:
+        - oauth2: [ ]
+      tags:
+        - chat-reaction
+      summary: Remove a reaction from a chat message
+      operationId: removeReactionFromChatMessage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Reaction removed successfully
+        '404':
+          description: Chat message or reaction not found/calls
+components:
+  schemas:
+    Base:
+      $ref: "base.openapi.yaml#/components/schemas/Base"
+    SimpleChat:
+      type: object
+      properties:
+        members:
+          type: array
+          maxLength: 2
+          minLength: 2
+          items:
+            $ref: "#/components/schemas/ChatMember"
+        chatType:
+          $ref: "#/components/schemas/ChatType"
+      required:
+        - members
+        - chatType
+    GroupChat:
+      type: object
+      properties:
+        name:
+          type: string
+        members:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChatMember"
+        chatType:
+          $ref: "#/components/schemas/ChatType"
+      required:
+        - name
+        - members
+        - chatType
+    ChatInfo:
+      oneOf:
+        - $ref: "#/components/schemas/SimpleChat"
+        - $ref: "#/components/schemas/GroupChat"
+      discriminator:
+        propertyName: chatType
+        mapping:
+          Simple: "#/components/schemas/SimpleChat"
+          Group: "#/components/schemas/GroupChat"
+    Chat:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/ChatInfo"
+    ChatMemberInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        chatId:
+          type: string
+        role:
+          type: string
+      required:
+        - userId
+        - chatId
+        - role
+    ChatMember:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/ChatMemberInfo"
+    ChatType:
+      type: string
+      enum:
+        - Simple
+        - Group
+    ChatMessageType:
+      type: string
+      enum:
+        - Text
+        - Audio
+        - Image
+        - Video
+        - File
+        - Location
+        - Contact
+        - Sticker
+        - Poll
+        - Reference
+        - System
+    TextChatMessage:
+      type: object
+      properties:
+        content:
+          type: string
+        type:
+          $ref: "#/components/schemas/ChatMessageType"
+      required:
+        - content
+    AudioChatMessage:
+      type: object
+      properties:
+        content:
+          type: string
+          format: binary
+        type:
+          $ref: "#/components/schemas/ChatMessageType"
+      required:
+        - content
+    ImageChatMessage:
+      type: object
+      properties:
+        uri:
+          type: string
+          format: uri
+        size:
+          type: integer
+        format:
+          type: string
+        type:
+          $ref: "#/components/schemas/ChatMessageType"
+      required:
+        - uri
+    VideoChatMessage:
+      type: object
+      properties:
+        uri:
+          type: string
+          format: uri
+        size:
+          type: integer
+        format:
+          type: string
+        type:
+          $ref: "#/components/schemas/ChatMessageType"
+      required:
+        - uri
+    FileChatMessage:
+      type: object
+      properties:
+        uri:
+          type: string
+          format: uri
+        size:
+          type: integer
+        format:
+          type: string
+        type:
+          $ref: "#/components/schemas/ChatMessageType"
+      required:
+        - uri
+    LocationChatMessagePosition:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        altitude:
+          type: number
+          format: double
+      required:
+        - latitude
+        - longitude
+    LocationChatMessage:
+      type: object
+      properties:
+        position:
+          $ref: "#/components/schemas/LocationChatMessagePosition"
+        name:
+          type: string
+        type:
+          $ref: "#/components/schemas/ChatMessageType"
+    ContactChatMessagePhoneNumber:
+      type: object
+      properties:
+        number:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+      required:
+        - number
+    ContactChatMessageEmail:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        type:
+          type: string
+      required:
+        - email
+    ContactChatMessage:
+      type: object
+      properties:
+        name:
+          type: string
+        avatar:
+          type: string
+          format: uri
+        phoneNumbers:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContactChatMessagePhoneNumber"
+        emails:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContactChatMessageEmail"
+        type:
+          $ref: "#/components/schemas/ChatMessageType"
+      required:
+        - name
+        - phoneNumbers
+    StickerChatMessage:
+      type: object
+      properties:
+        content:
+          type: string
+          format: binary
+        provider:
+          type: string
+          format: uri
+        type:
+          $ref: "#/components/schemas/ChatMessageType"
+      required:
+        - content
+    PollChatMessageVote:
+      type: object
+      properties:
+        pollId:
+          type: string
+        userId:
+          type: string
+        option:
+          type: string
+      required:
+        - userId
+        - option
+    PollChatMessageOption:
+      type: object
+      properties:
+        option:
+          type: string
+      required:
+        - option
+    PollChatMessage:
+      type: object
+      properties:
+        multiple:
+          type: boolean
+        options:
+          $ref: "#/components/schemas/PollChatMessageOption"
+        votes:
+          type: array
+          items:
+            $ref: "#/components/schemas/PollChatMessageVote"
+        type:
+          $ref: "#/components/schemas/ChatMessageType"
+      required:
+        - options
+        - votes
+    ReferenceChatMessage:
+      type: object
+      properties:
+        content:
+          type: string
+          format: uri
+        ref:
+          type: string
+        type:
+          $ref: "#/components/schemas/ChatMessageType"
+      required:
+        - uri
+    SystemChatMessage:
+      type: object
+      properties:
+        content:
+          type: string
+        type:
+          $ref: "#/components/schemas/ChatMessageType"
+      required:
+        - content
+    ChatMessageBase:
+      oneOf:
+        - $ref: "#/components/schemas/TextChatMessage"
+        - $ref: "#/components/schemas/AudioChatMessage"
+        - $ref: "#/components/schemas/ImageChatMessage"
+        - $ref: "#/components/schemas/VideoChatMessage"
+        - $ref: "#/components/schemas/FileChatMessage"
+        - $ref: "#/components/schemas/LocationChatMessage"
+        - $ref: "#/components/schemas/ContactChatMessage"
+        - $ref: "#/components/schemas/StickerChatMessage"
+        - $ref: "#/components/schemas/PollChatMessage"
+        - $ref: "#/components/schemas/ReferenceChatMessage"
+        - $ref: "#/components/schemas/SystemChatMessage"
+      discriminator:
+        propertyName: type
+        mapping:
+          Text: "#/components/schemas/TextChatMessage"
+          Audio: "#/components/schemas/AudioChatMessage"
+          Image: "#/components/schemas/ImageChatMessage"
+          Video: "#/components/schemas/VideoChatMessage"
+          File: "#/components/schemas/FileChatMessage"
+          Location: "#/components/schemas/LocationChatMessage"
+          Contact: "#/components/schemas/ContactChatMessage"
+          Sticker: "#/components/schemas/StickerChatMessage"
+          Poll: "#/components/schemas/PollChatMessage"
+          Reference: "#/components/schemas/ReferenceChatMessage"
+          System: "#/components/schemas/SystemChatMessage"
+    ChatMessageInfo:
+      allOf:
+        - $ref: "#/components/schemas/ChatMessageBase"
+        - type: object
+          properties:
+            authorId:
+              type: string
+            chatId:
+              type: string
+          required:
+            - content
+            - authorId
+            - chatId
+    ChatMessage:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/ChatMessageInfo"
+    ReactionType:
+      type: string
+      enum:
+        - Emoji
+    ChatReactionInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        messageId:
+          type: string
+        reactionType:
+          $ref: "#/components/schemas/ReactionType"
+        content:
+          type: string
+      required:
+        - userId
+        - messageId
+        - reactionType
+    ChatReaction:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/ChatReactionInfo"
+      required:
+        - id
+        - userId
+        - messageId
+        - reactionType
+
+  securitySchemes:
+    oauth2:
+      $ref: "base.openapi.yaml#/components/securitySchemes/oauth2"

@@ -9,28 +9,9 @@ skinparam class {
   ArrowColor Color_OrangeOrange_White
 }
 
-enum CallType {
-  Video
-  Audio
-}
-
 enum ChatType {
   Simple
   Group
-}
-
-enum PaymentType {
-  CreditCard
-  PayPal
-  ApplePay
-  GooglePay
-  BankTransfer
-}
-
-enum PaymentStatus {
-  Pending
-  Completed
-  Failed
 }
 
 class User {
@@ -39,9 +20,7 @@ class User {
   +phoneNumber: string
   +profilePicture: string
   +createChat(): Chat
-  +initiateCall(receiver: User, callType: CallType): Call
   +updateSettings(settings: UserSettings): UserSettings
-  +makePayment(amount: decimal, currency: string, recipient: User, type: PaymentType, reason: string): PaymentTransaction
 }
 
 class Chat {
@@ -51,7 +30,6 @@ class Chat {
   +updatedAt: timestamp
   +members: User[]
   +addMember(user: User)
-  +callType: ChatType
   +addMessage(message: ChatMessage)
   +removeMessage(message: ChatMessage)
   +pinMessage(message: ChatMessage)
@@ -74,38 +52,12 @@ class ChatMessage {
   +removeReaction(reaction: string)
 }
 
-class Call {
-  +id: int
-  +startTime: timestamp
-  +endTime: timestamp
-  +participants: User[]
-  +callType: CallType
-  +initiator: User
-  +evictParticipant(user: User)
-  +inviteParticipant(user: User)
-}
-
 class Attachment {
   +id: int
   +type: string
   +url: string
   +createdAt: timestamp
   +message: ChatMessage
-}
-
-class PaymentTransaction {
-  +id: int
-  +amount: decimal
-  +currency: string
-  +timestamp: timestamp
-  +sender: User
-  +recipient: User
-  +type: PaymentType
-  +reason: string
-  +status: PaymentStatus
-  +confirmPayment(): PaymentTransaction
-  +cancelPayment(): PaymentTransaction
-  +refundPayment(user: User): PaymentTransaction
 }
 
 class Order {
@@ -137,15 +89,11 @@ class UserSettings {
 
 User --> Chat: Creates
 User --> Chat: Sends Message
-User --> Call: Initiates Call
 User --> UserSettings: Accesses and Updates
 
 Chat o-- "0..*" User: Contains
 Chat --> ChatMessage: Has
 ChatMessage --> Attachment: Contains (Optional)
-
-User --> PaymentTransaction: Initiates Payment
-PaymentTransaction --> User: Payment Confirmation
 
 User --> Order: Places Order
 Order --> Product: Contains
@@ -159,18 +107,6 @@ ChatMessage --> ChatMessage: Remove Reaction
 ChatMessage --> Chat: Forward Message
 ChatMessage --> Attachment: Add Attachment
 ChatMessage --> Attachment: Remove Attachment
-
-Call --> User: Evict Participant
-Call --> User: Invite Participant
-
-PaymentTransaction --> PaymentTransaction: Confirm Payment
-PaymentTransaction --> PaymentTransaction: Cancel Payment
-PaymentTransaction --> User: Refund Payment
-PaymentTransaction --> User: Send Payment
-PaymentTransaction --> User: Receive Payment
-PaymentTransaction --> User: Request Payment
-PaymentTransaction --> User: Accept Payment
-PaymentTransaction --> User: Reject Payment
 
 Product --> User: Add Product To Wishlist
 Product --> User: Remove Product From Wishlist

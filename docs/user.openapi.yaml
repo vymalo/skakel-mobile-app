@@ -1,0 +1,344 @@
+openapi: 3.0.3
+info:
+  title: Nkobani Users API Documentation
+  description: |-
+    The Nkobani Users API is used to send data across devices and persist them into the cloud database. It supports various functionalities like video calls, file upload, payment validation, and more. The ultimate goal is to have decentralized backend implementations across the web for each user.
+
+    Useful Links:
+    - [Nkobani Users Mobile App Repository](https://github.com/vymalo/nkobani-mobile-app)
+    - [Nkobani Users Server App Repository](https://github.com/vymalo/nkobani-server)
+  termsOfService: https://swagger.io/terms/
+  contact:
+    email: dev@vymalo.com
+  license:
+    name: MIT
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+servers:
+  - url: https://{env_name}.apps.ssegning.com/api
+    description: The API server
+    variables:
+      env_name:
+        enum:
+          - nkobani
+          - nkobani-dev
+          - nkobani-staging
+        default: nkobani
+        description: The environment name
+tags:
+  - name: user
+    description: Operations related to users
+  - name: user-settings
+    description: Operations related to user settings
+  - name: user-credentials
+    description: Operations related to user credentials
+
+paths:
+  /users:
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - user
+      summary: Get all users
+      operationId: getAllUsers
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      security:
+        - oauth2: [ ]
+      tags:
+        - user
+      summary: Create a new user
+      operationId: createUser
+      requestBody:
+        description: User object that needs to be added
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInfo'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /users/{identifier}:
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - user
+      summary: Get a user by ID
+      operationId: getUserById
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+    put:
+      security:
+        - oauth2: [ ]
+      tags:
+        - user
+      summary: Update an existing user
+      operationId: updateUser
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: User object that needs to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInfo'
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+    delete:
+      security:
+        - oauth2: [ ]
+      tags:
+        - user
+      summary: Delete a user by ID
+      operationId: deleteUser
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: User deleted successfully
+        '404':
+          description: User not found
+
+  /users/{id}/settings:
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - user-settings
+      summary: Get user settings by user ID
+      operationId: getUserSettingsById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User settings retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSettings'
+        '404':
+          description: User settings not found
+    put:
+      security:
+        - oauth2: [ ]
+      tags:
+        - user-settings
+      summary: Update user settings
+      operationId: updateUserSettings
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: User settings object that needs to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSettingsInfo'
+      responses:
+        '200':
+          description: User settings updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSettings'
+        '404':
+          description: User settings not found
+
+  /users/{id}/credentials:
+    post:
+      security:
+        - oauth2: [ ]
+      tags:
+        - user-credentials
+      summary: Update user credentials
+      operationId: updateUserCredentials
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: User credentials object that needs to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCredentialInfo'
+      responses:
+        '200':
+          description: User credentials updated successfully
+        '404':
+          description: User not found
+    put:
+      security:
+        - oauth2: [ ]
+      tags:
+        - user-credentials
+      summary: Update user credentials
+      operationId: updateUserCredentials
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: User credentials object that needs to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCredentialInfo'
+      responses:
+        '200':
+          description: User credentials updated successfully
+        '404':
+          description: User not found
+
+components:
+  schemas:
+    Base:
+      $ref: "base.openapi.yaml#/components/schemas/Base"
+    UserCredentialType:
+      type: string
+      enum:
+        - password
+        - otp
+    PasswordUserCredentialInfo:
+      type: object
+      properties:
+        password:
+          type: string
+        type:
+          $ref: "#/components/schemas/UserCredentialType"
+      required:
+        - password
+    OtpUserCredentialInfo:
+      type: object
+      properties:
+        otp:
+          type: string
+        type:
+          $ref: "#/components/schemas/UserCredentialType"
+      required:
+        - password
+    UserCredentialInfo:
+      oneOf:
+        - $ref: "#/components/schemas/PasswordUserCredentialInfo"
+        - $ref: "#/components/schemas/OtpUserCredentialInfo"
+      discriminator:
+        propertyName: type
+        mapping:
+          password: "#/components/schemas/PasswordUserCredentialInfo"
+          otp: "#/components/schemas/OtpUserCredentialInfo"
+    UserInfo:
+      type: object
+      properties:
+        email:
+          type: string
+          nullable: true
+        emailVerified:
+          type: boolean
+          nullable: true
+        enabled:
+          type: boolean
+          nullable: true
+        username:
+          type: string
+          nullable: true
+        phoneNumber:
+          type: string
+          nullable: true
+        phoneNumberVerified:
+          type: boolean
+          nullable: true
+        region:
+          type: string
+          nullable: true
+        firstname:
+          type: string
+          nullable: true
+        lastname:
+          type: string
+          nullable: true
+        locale:
+          type: string
+          nullable: true
+      required:
+        - username
+    User:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/UserInfo"
+    UserSettingsInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        user:
+          $ref: "#/components/schemas/User"
+        language:
+          type: string
+        theme:
+          type: string
+        notifications:
+          type: boolean
+      required:
+        - user
+    UserSettings:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/UserSettingsInfo"
+
+  securitySchemes:
+    oauth2:
+      $ref: "base.openapi.yaml#/components/securitySchemes/oauth2"

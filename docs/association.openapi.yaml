@@ -1,0 +1,431 @@
+openapi: 3.0.3
+info:
+  title: Nkobani Association API Documentation
+  description: |-
+    The Nkobani Association API is used to send data across devices and persist them into the cloud database. It supports various functionalities like video calls, file upload, payment validation, and more. The ultimate goal is to have decentralized backend implementations across the web for each user.
+
+    Useful Links:
+    - [Nkobani Mobile App Repository](https://github.com/vymalo/nkobani-mobile-app)
+    - [Nkobani Server App Repository](https://github.com/vymalo/nkobani-server)
+  termsOfService: https://swagger.io/terms/
+  contact:
+    email: dev@vymalo.com
+  license:
+    name: MIT
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+servers:
+  - url: https://{env_name}.apps.ssegning.com/api
+    description: The API server
+    variables:
+      env_name:
+        enum:
+          - nkobani
+          - nkobani-dev
+          - nkobani-staging
+        default: nkobani
+        description: The environment name
+tags:
+  - name: association
+    description: Operations related to Associations
+  - name: association-member
+    description: Operations related to Association Members
+  - name: association-chat
+    description: Operations related to Association Chats
+
+paths:
+  /associations:
+    post:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association
+      summary: Add an association by ID
+      operationId: addAssociation
+      requestBody:
+        description: Association details for adding the association
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssociationInfo'
+      responses:
+        '200':
+          description: Association retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Association'
+        '404':
+          description: Association not found
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association
+      summary: Get all Associations
+      operationId: queryAssociations
+      responses:
+        '204':
+          description: Association deleted successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Association'
+  /associations/{id}:
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association
+      summary: Get a association by ID
+      operationId: getAssociationById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Association retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Association'
+        '404':
+          description: Association not found
+    put:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association
+      summary: Update a association by ID
+      operationId: updateAssociationById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Association details for adding the association
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssociationInfo'
+      responses:
+        '200':
+          description: Association updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Association'
+        '404':
+          description: Association not found
+    delete:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association
+      summary: Delete an Association by ID
+      operationId: deleteAssociationById
+      responses:
+        '204':
+          description: Association deleted successfully
+        '404':
+          description: Association not found
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+
+  /association-members:
+    post:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association-member
+      summary: Add an association Member by ID
+      operationId: addAssociationMember
+      requestBody:
+        description: Adding the association Member
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssociationMemberInfo'
+      responses:
+        '200':
+          description: Association Member retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssociationMember'
+        '404':
+          description: Association not found
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association-member
+      summary: Get all AssociationMembers
+      operationId: queryAssociationMembers
+      responses:
+        '204':
+          description: Association Member deleted successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AssociationMember'
+  /association-members/{id}:
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association-member
+      summary: Get a association Member by ID
+      operationId: getAssociationMemberById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Association Member retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssociationMember'
+        '404':
+          description: Association Member not found
+    put:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association-member
+      summary: Update a association Member by ID
+      operationId: updateAssociationMemberById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Association Member details for adding the association
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssociationMemberInfo'
+      responses:
+        '200':
+          description: Association Member updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssociationMember'
+        '404':
+          description: Association not found
+    delete:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association-member
+      summary: Delete an Association Member by ID
+      operationId: deleteAssociationMemberById
+      responses:
+        '204':
+          description: Association Member deleted successfully
+        '404':
+          description: Association Member not found
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+
+  /association-chats:
+    post:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association-chat
+      summary: Add an association Chat by ID
+      operationId: addAssociationChat
+      requestBody:
+        description: Adding the association Member
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssociationChatInfo'
+      responses:
+        '200':
+          description: Association Chat retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssociationChat'
+        '404':
+          description: Association Chat not found
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association-chat
+      summary: Get all AssociationChats
+      operationId: queryAssociationChats
+      responses:
+        '204':
+          description: Association Chat deleted successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AssociationChat'
+  /association-chats/{id}:
+    get:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association-chat
+      summary: Get a association Chat by ID
+      operationId: getAssociationChatById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Association Chat retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssociationChat'
+        '404':
+          description: Association Chat not found
+    put:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association-chat
+      summary: Update a association Chat by ID
+      operationId: updateAssociationChatById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Association Chat details for adding the association
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssociationChatInfo'
+      responses:
+        '200':
+          description: Association Chat updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssociationChat'
+        '404':
+          description: Association Chat not found
+    delete:
+      security:
+        - oauth2: [ ]
+      tags:
+        - association-chat
+      summary: Delete an Association Chat by ID
+      operationId: deleteAssociationChatById
+      responses:
+        '204':
+          description: Association Chat deleted successfully
+        '404':
+          description: Association Chat not found
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+
+components:
+  schemas:
+    Base:
+      $ref: "base.openapi.yaml#/components/schemas/Base"
+    AssociationInfo:
+      type: object
+      properties:
+        description:
+          type: string
+        name:
+          type: string
+        members:
+          type: array
+          items:
+            $ref: "#/components/schemas/AssociationMember"
+      required:
+        - name
+        - description
+        - chatId
+        - members
+    AssociationRole:
+      type: string
+      enum:
+        - Admin
+        - Member
+    AssociationChatInfo:
+      type: object
+      properties:
+        associationId:
+          type: string
+        chatId:
+          type: string
+      required:
+        - associationId
+        - chatId
+    AssociationChat:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/AssociationChatInfo"
+    AssociationMemberInfo:
+      type: object
+      properties:
+        userId:
+          type: string
+        associationId:
+          type: string
+        role:
+          $ref: "#/components/schemas/AssociationRole"
+    AssociationMember:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/AssociationMemberInfo"
+    Association:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/AssociationInfo"
+        - type: object
+          properties:
+            chats:
+              type: array
+              items:
+                $ref: "#/components/schemas/AssociationChat"
+          required:
+            - chats
+
+  securitySchemes:
+    oauth2:
+      $ref: "base.openapi.yaml#/components/securitySchemes/oauth2"
